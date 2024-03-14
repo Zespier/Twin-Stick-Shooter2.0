@@ -61,7 +61,7 @@ MonoBehaviour:
   - {fileID: 744810918047140712}
   - {fileID: 6418259353478918049}
   currentState: {fileID: 744810918047140712}
-  wolfSpeed: 11
+  wolfSpeed: 14
   movementDirectionHelper: {fileID: 6631665340016989641}
 --- !u!95 &2957290133340791507
 Animator:
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 5012240210877050051}
-  selfieStickSize: 7.5
+  selfieStickSize: 7.2
   huntTime: 3
 --- !u!114 &6418259353478918049
 MonoBehaviour:
