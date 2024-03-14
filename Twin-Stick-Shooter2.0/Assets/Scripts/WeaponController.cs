@@ -22,7 +22,6 @@ public class WeaponController : MonoBehaviour {
     [HideInInspector] public Rect bulletLivingArea = new Rect();
 
     private Vector2 _screenSize;
-    private float _screenSizeY;
     private Vector3 _offset;
     private Bullet _auxBullet;
     private ShotgunBullet _auxShotgunBullet;
@@ -69,16 +68,15 @@ public class WeaponController : MonoBehaviour {
 
                 _auxBullet.gameObject.SetActive(true);
                 _auxBullet.transform.position = shootPoints[i].position;
-                _auxBullet.Shoot(_playerController.body.up, fireDesviationAngle);
+                _auxBullet.Shoot(_playerController.body.forward, fireDesviationAngle);
                 _generatedBullets.Enqueue(_auxBullet);
 
             } else {
                 if (_auxBullet != null) {
                     _generatedBullets.Enqueue(_auxBullet);
                 }
-
                 Bullet newBullet = Instantiate(bullet, shootPoints[i].position, Quaternion.identity, bulletParent).GetComponent<Bullet>();
-                newBullet.Shoot(_playerController.body.up, fireDesviationAngle);
+                newBullet.Shoot(_playerController.body.forward, fireDesviationAngle);
                 newBullet.weaponController = this;
                 newBullet.damage = PlayerStats.instance.Atk;
                 _generatedBullets.Enqueue(newBullet);
@@ -105,7 +103,7 @@ public class WeaponController : MonoBehaviour {
 
                 _auxShotgunBullet.gameObject.SetActive(true);
                 _auxShotgunBullet.transform.position = shootPoint;
-                _auxShotgunBullet.Shoot(_playerController.body.up, 15);
+                _auxShotgunBullet.Shoot(_playerController.body.forward, 15);
                 _generatedShotgunBullets.Enqueue(_auxShotgunBullet);
 
             } else {
@@ -114,7 +112,7 @@ public class WeaponController : MonoBehaviour {
                 }
 
                 ShotgunBullet newShotgunBullet = Instantiate(shotgunBullet, shootPoint, Quaternion.identity, bulletParent).GetComponent<ShotgunBullet>();
-                newShotgunBullet.Shoot(_playerController.body.up, 15);
+                newShotgunBullet.Shoot(_playerController.body.forward, 15);
                 newShotgunBullet.weaponController = this;
                 newShotgunBullet.damage = PlayerStats.instance.Atk;
                 _generatedShotgunBullets.Enqueue(newShotgunBullet);

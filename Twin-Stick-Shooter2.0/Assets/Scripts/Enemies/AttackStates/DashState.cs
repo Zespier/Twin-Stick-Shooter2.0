@@ -8,11 +8,12 @@ public class DashState : AttackBaseState {
     public float dashDistance = 20f;
 
     private float _distanceTraveled = 0;
-    private Vector2 _dashDirection;
+    private Vector3 _dashDirection;
 
     public override void OnStateEnter() {
         _distanceTraveled = 0;
-        _dashDirection = -(controller as Wolf).movementDirectionHelper.up;
+        _dashDirection = (controller as Wolf).movementDirectionHelper.forward;
+        controller.rb.velocity = controller.Speed * 1.5f * _dashDirection;
     }
 
     public override void OnStateExit() {
@@ -25,7 +26,6 @@ public class DashState : AttackBaseState {
     }
 
     public override void StateUpdate() {
-        controller.rb.velocity = controller.Speed * _dashDirection;
         _distanceTraveled += (Time.deltaTime * controller.Speed * _dashDirection).magnitude;
     }
 

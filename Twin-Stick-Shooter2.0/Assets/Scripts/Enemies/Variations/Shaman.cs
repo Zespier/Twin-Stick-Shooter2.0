@@ -21,7 +21,6 @@ public class Shaman : Enemy {
         if (_exploded) { return; }
         _exploded = true;
 
-        sprite.enabled = false;
         explosion.Play();
         rb.velocity = Vector3.zero;
         rb.isKinematic = false;

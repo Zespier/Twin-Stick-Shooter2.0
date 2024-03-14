@@ -16,7 +16,6 @@ public class Turret : Enemy {
 
     protected override void Update() {
         base.Update();
-        RotateBody();
     }
 
     #region Behaviour with States
@@ -35,10 +34,6 @@ public class Turret : Enemy {
     private void RotateBody() {
         float rotationValue = Vector3.SignedAngle(body.up, player.position - body.transform.position, Vector3.forward) > 0 ? RotationSpeed : -RotationSpeed;
         body.up = Quaternion.AngleAxis(rotationValue * Time.deltaTime, Vector3.forward) * body.up;
-    }
-
-    protected override void FlipSprite() {
-        //Don't want to flip, just rotate
     }
 
 }

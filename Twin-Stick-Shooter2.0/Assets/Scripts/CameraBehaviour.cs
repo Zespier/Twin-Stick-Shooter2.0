@@ -71,7 +71,7 @@ public class CameraBehaviour : MonoBehaviour {
         return distance - (playerSpeedInfluence / 3f) + (movementMagnitude * playerSpeedInfluence);
     }
 
-    private void MoveTarget(Vector2 position) {
+    private void MoveTarget(Vector3 position) {
         _nextTarget = position * targetMultiplier;
     }
 

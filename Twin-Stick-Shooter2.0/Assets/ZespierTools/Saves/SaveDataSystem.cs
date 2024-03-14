@@ -101,6 +101,7 @@ public class DataUser {
     }
 }
 
+[System.Serializable]
 public struct UpgradeSaved {
     public int type;
     public float amount;

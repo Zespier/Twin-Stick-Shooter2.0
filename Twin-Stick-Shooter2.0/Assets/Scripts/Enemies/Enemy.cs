@@ -6,9 +6,8 @@ using UnityEngine;
 public class Enemy : Damageable {
 
     [Header("Enemy Base Attributes")]
-    public Rigidbody2D rb;
+    public Rigidbody rb;
     public float speed = 10f;
-    public SpriteRenderer sprite;
     public Transform player;
     public float baseDamage = 1f;
     public float attackRate = 1f;
@@ -38,16 +37,11 @@ public class Enemy : Damageable {
     }
 
     protected virtual void Update() {
-        FlipSprite();
         currentState.StateUpdate();
     }
 
     private void LateUpdate() {
         currentState.StateLateUpdate();
-    }
-
-    protected virtual void FlipSprite() {
-        sprite.flipX = (player.position - transform.position).x < 0;
     }
 
     public virtual void ChangeState(Type state) {
@@ -61,6 +55,13 @@ public class Enemy : Damageable {
         currentState.OnStateExit();
         currentState = states.Find(s => s.GetType() == state);
         currentState.OnStateEnter();
+    }
+
+    private void OnTriggerEnter(Collider collision) {
+        if (collision.TryGetComponent(out IBullet bullet)) {
+            TakeDamage(transform.position, bullet.Damage * bullet.BaseDamagePercentage, UnityEngine.Random.Range(0, 100) < 10, "energy");
+            bullet.Deactivate();
+        }
     }
 
     #region Behaviour with player

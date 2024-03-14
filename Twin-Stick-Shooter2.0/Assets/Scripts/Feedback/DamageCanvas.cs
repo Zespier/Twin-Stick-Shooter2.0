@@ -35,7 +35,7 @@ public class DamageCanvas : MonoBehaviour {
     private IEnumerator DamageAnimation() {
 
         //Random position around the player
-        transform.position = new Vector3(enemyPosition.x + Random.Range(-0.7f, 0.7f), enemyPosition.y + Random.Range(0, 1f), 0);
+        transform.position = new Vector3(enemyPosition.x + Random.Range(-0.7f, 0.7f), 0, enemyPosition.z + Random.Range(0, 1f));
         //Increase the size based in crit
         transform.localScale = _isCrit ? _defaultScale * (1 + increasedSize * 2.5f) : _defaultScale * (1 + increasedSize);
 

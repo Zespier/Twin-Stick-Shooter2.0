@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour {
+public class Bullet : MonoBehaviour, IBullet {
 
-    public Rigidbody2D rb;
+    public Rigidbody rb;
     public float speed = 20f;
     public float damage = 1f;
     public float baseDamagePercentage = 100f;
@@ -14,7 +14,8 @@ public class Bullet : MonoBehaviour {
     protected float _deathTimer;
     protected float _timeToDie = 3f;
 
-    public float DamagePercentage { get => (baseDamagePercentage/* + PlayerStats.instance.*/) / 100f; }
+    public float Damage { get => damage; set => damage = value; }
+    public float BaseDamagePercentage { get => (baseDamagePercentage/* + PlayerStats.instance.*/) / 100f; set => baseDamagePercentage = value; }
 
     protected virtual void Update() {
         _deathTimer += Time.deltaTime;
@@ -34,18 +35,18 @@ public class Bullet : MonoBehaviour {
     /// </summary>
     /// <param name="direction"></param>
     /// <param name="desviationAngle"></param>
-    public void Shoot(Vector2 direction, float desviationAngle) {
+    public void Shoot(Vector3 direction, float desviationAngle) {
         Rotate(direction);
-        transform.up = BulletFireDesviation.RandomBulletFireDesviation2D(transform, desviationAngle, ShootDirectionReference.up);
-        rb.velocity = speed * transform.up;
+        transform.forward = BulletFireDesviation.RandomBulletFireDesviation(transform, desviationAngle);
+        rb.velocity = speed * transform.forward;
     }
 
     /// <summary>
     /// Rotates towards the specified direction
     /// </summary>
     /// <param name="direction"></param>
-    private void Rotate(Vector2 direction) {
-        transform.up = direction;
+    private void Rotate(Vector3 direction) {
+        transform.forward = direction;
     }
 
     /// <summary>
@@ -55,12 +56,4 @@ public class Bullet : MonoBehaviour {
         gameObject.SetActive(false);
         _deathTimer = 0;
     }
-
-    public virtual void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.collider.TryGetComponent(out IDamageable damageable)) {
-            damageable.TakeDamage(collision.transform.position, damage * DamagePercentage, Random.Range(0, 100) < 10, "energy");
-            Deactivate();
-        }
-    }
-
 }

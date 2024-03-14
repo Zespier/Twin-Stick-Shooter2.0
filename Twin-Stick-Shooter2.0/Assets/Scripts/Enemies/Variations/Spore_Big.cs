@@ -69,7 +69,6 @@ public class Spore_Big : Enemy {
         if (_exploded) { return; }
         _exploded = true;
 
-        sprite.enabled = false;
         explosion.Play();
         rb.velocity = Vector3.zero;
         rb.isKinematic = false;
