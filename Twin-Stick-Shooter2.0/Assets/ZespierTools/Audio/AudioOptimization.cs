@@ -4,12 +4,14 @@ using UnityEngine;
 public class AudioOptimization : MonoBehaviour {
 
     public AudioSource audioSource;
+    public bool constantSound = false;
 
     private AudioListener _audioListener;
     private float _distanceFromPlayer;
 
     private void Start() {
         _audioListener = AudioListenerSingleton.instance.audioListener;
+        Deactivate();
     }
 
     void Update() {
@@ -23,8 +25,27 @@ public class AudioOptimization : MonoBehaviour {
 
         if (!isAudible && audioSource.isPlaying) {
             audioSource.Pause();
-        } else if (isAudible && !audioSource.isPlaying) {
+        } else if (constantSound && isAudible && !audioSource.isPlaying) {
             audioSource.Play();
         }
+    }
+
+    public void Activate() {
+        enabled = true;
+        audioSource.enabled = true;
+    }
+
+    public void Activate(Vector3 position) {
+        enabled = true;
+        audioSource.enabled = true;
+
+        transform.position = position;
+    }
+
+    public void Deactivate() {
+        audioSource.enabled = false;
+        enabled = false;
+
+        transform.position = Vector3.zero;
     }
 }

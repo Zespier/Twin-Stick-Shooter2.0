@@ -17,4 +17,6 @@ public class Events : MonoBehaviour {
     public static Action<Vector3> OnTargetMove;
     //---------------Enemies---------------------
     public static Action<Enemy> OnEnemyDeath;
+
+    public static Action<Vector3> OnBulletImpact;
 }

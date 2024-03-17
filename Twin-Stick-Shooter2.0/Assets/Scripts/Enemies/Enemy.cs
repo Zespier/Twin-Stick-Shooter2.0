@@ -61,6 +61,7 @@ public class Enemy : Damageable {
         if (collision.TryGetComponent(out IBullet bullet)) {
             TakeDamage(transform.position, bullet.Damage * bullet.BaseDamagePercentage, UnityEngine.Random.Range(0, 100) < 10, "energy");
             bullet.Deactivate();
+            Events.OnBulletImpact?.Invoke(transform.position);
         }
     }
 
