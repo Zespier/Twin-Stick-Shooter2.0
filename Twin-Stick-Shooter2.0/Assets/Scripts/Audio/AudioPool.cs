@@ -12,7 +12,6 @@ public class AudioPool : MonoBehaviour {
         for (int i = 0; i < sources.Count; i++) {
             if (!sources[i].enabled) {
 
-                sources[i].Activate();
                 return sources[i];
             }
         }

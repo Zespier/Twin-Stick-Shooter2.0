@@ -8,6 +8,7 @@ public class AudioOptimization : MonoBehaviour {
 
     private AudioListener _audioListener;
     private float _distanceFromPlayer;
+    private double _soundTime;
 
     private void Start() {
         _audioListener = AudioListenerSingleton.instance.audioListener;
@@ -19,6 +20,10 @@ public class AudioOptimization : MonoBehaviour {
         _distanceFromPlayer = Vector3.Distance(transform.position, _audioListener.transform.position);
 
         ToggleAudioSource(_distanceFromPlayer <= audioSource.maxDistance);
+
+        if (AudioSettings.dspTime >= _soundTime) {
+            Deactivate();
+        }
     }
 
     void ToggleAudioSource(bool isAudible) {
@@ -33,11 +38,15 @@ public class AudioOptimization : MonoBehaviour {
     public void Activate() {
         enabled = true;
         audioSource.enabled = true;
+
+        _soundTime = AudioSettings.dspTime + (double)audioSource.clip.length;
     }
 
     public void Activate(Vector3 position) {
         enabled = true;
         audioSource.enabled = true;
+
+        _soundTime = AudioSettings.dspTime + (double)audioSource.clip.length;
 
         transform.position = position;
     }

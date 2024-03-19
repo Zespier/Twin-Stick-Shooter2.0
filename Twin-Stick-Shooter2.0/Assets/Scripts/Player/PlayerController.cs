@@ -42,6 +42,8 @@ public class PlayerController : Damageable {
 
         _moveDirectionLerped = Vector2.Lerp(_moveDirectionLerped, _moveValue, Time.deltaTime / 0.1f);
         transform.position += Time.deltaTime * speed * new Vector3(_moveDirectionLerped.x, 0, _moveDirectionLerped.y);
+
+        AudioManager.instance.ShipSound(_moveValue * speed);
     }
 
     /// <summary>
