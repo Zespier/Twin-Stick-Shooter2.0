@@ -9,6 +9,7 @@ public class Enemy : Damageable {
     public Rigidbody rb;
     public float speed = 10f;
     public Transform player;
+    public Transform body;
     public float baseDamage = 1f;
     public float attackRate = 1f;
     [SerializeField] private float distanceToReachPlayer = 0.6f;
@@ -37,11 +38,16 @@ public class Enemy : Damageable {
     }
 
     protected virtual void Update() {
+        RotateBody();
         currentState.StateUpdate();
     }
 
     private void LateUpdate() {
         currentState.StateLateUpdate();
+    }
+
+    protected virtual void RotateBody() {
+        body.forward = player.transform.position - transform.position;
     }
 
     public virtual void ChangeState(Type state) {
