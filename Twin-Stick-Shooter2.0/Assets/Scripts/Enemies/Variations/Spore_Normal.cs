@@ -41,7 +41,8 @@ public class Spore_Normal : Enemy {
     #endregion
 
     public override void ReachingPlayer() {
-        ChangeState(typeof(ShootInConeState));
+        Debug.LogError("Remember the shoot in cone state is commented");
+        //ChangeState(typeof(ShootInConeState));
     }
 
     private void Attack() {

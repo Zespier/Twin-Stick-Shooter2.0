@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShootState : AttackBaseState {
+public class ShootMovingState : AttackBaseState {
 
+    public float shootingMovementSpeed = 4f;
     public Transform shootPoint;
     public GameObject bulletPrefab;
     public float fireRate = 8f;
     public float shootingDuration = -1f;
-    public bool changeStateWhenPlayerOutOfReach;
+
 
     private float _shootTimer;
     private float _shootDurationTime;
@@ -21,8 +22,6 @@ public class ShootState : AttackBaseState {
     public override void OnStateEnter() {
         _shootDurationTime = 0;
         _shootTimer = Time.time;
-
-        controller.rb.velocity = Vector3.zero;
     }
 
     public override void OnStateExit() {
@@ -30,8 +29,8 @@ public class ShootState : AttackBaseState {
 
     public override void StateLateUpdate() {
 
-        if (changeStateWhenPlayerOutOfReach && Vector3.Distance(controller.player.position, transform.position) > controller.DistanceToReachPlayer) {
-            controller.PlayerOutOfReach();
+        if (Vector3.Distance(controller.player.position, transform.position) < controller.DistanceToReachPlayer) {
+            controller.ReachingPlayer();
         }
 
         if (shootingDuration == -1) { return; }
@@ -40,10 +39,12 @@ public class ShootState : AttackBaseState {
         if (_shootDurationTime >= shootingDuration) {
             controller.FinishedShooting();
         }
-
     }
 
     public override void StateUpdate() {
+
+        controller.rb.velocity = (controller.player.position - transform.position).normalized * shootingMovementSpeed;
+
         if (_shootTimer + 1f / fireRate < Time.time) {
             _shootTimer = Time.time;
             Shoot();

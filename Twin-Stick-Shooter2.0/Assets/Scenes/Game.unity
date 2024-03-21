@@ -132,6 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5704768}
+  - component: {fileID: 5704769}
   m_Layer: 0
   m_Name: BulletContainer
   m_TagString: Untagged
@@ -154,6 +155,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1864626986}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5704769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5704767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688d903dac63ed446976c5cda32bf6f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &13552593
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,6 +480,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss_Small
       objectReference: {fileID: 0}
+    - target: {fileID: 6033318669788209936, guid: a9083faf7fbd28249864b4727a78619b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -624,6 +642,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 159703232}
+  - component: {fileID: 159703233}
   m_Layer: 0
   m_Name: EnemyContainer
   m_TagString: Untagged
@@ -646,6 +665,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1864626986}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &159703233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159703231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e30e4a173b6685a40bbe1a61bd12d78b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &197430250
 GameObject:
   m_ObjectHideFlags: 0
@@ -6485,6 +6516,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wolf
       objectReference: {fileID: 0}
+    - target: {fileID: 4109757639539293933, guid: 322b833815a9e3943aa926a28c75f3f0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4584236463679792625, guid: 322b833815a9e3943aa926a28c75f3f0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8422,8 +8458,8 @@ SceneRoots:
   - {fileID: 1864626986}
   - {fileID: 1077592321}
   - {fileID: 5126328121685205786}
-  - {fileID: 1843522117}
   - {fileID: 13552597}
   - {fileID: 220855151}
   - {fileID: 452022407}
+  - {fileID: 1843522117}
   - {fileID: 95357753}

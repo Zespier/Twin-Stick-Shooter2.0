@@ -7,15 +7,18 @@ public class Enemy : Damageable {
 
     [Header("Enemy Base Attributes")]
     public Rigidbody rb;
-    public float speed = 10f;
+    [SerializeField] private float speed = 10f;
     public Transform player;
     public Transform body;
     public float baseDamage = 1f;
     public float attackRate = 1f;
     [SerializeField] private float distanceToReachPlayer = 0.6f;
+    [SerializeField] private float rotationLerpSpeed = 0.1f;
+
 
     public virtual float Speed => speed;
     public virtual float DistanceToReachPlayer => distanceToReachPlayer;
+    public virtual float RotationLerpSpeed => rotationLerpSpeed;
 
     [Header("Damageable")]
     public float hp = 1000f;
@@ -47,7 +50,9 @@ public class Enemy : Damageable {
     }
 
     protected virtual void RotateBody() {
-        body.forward = player.transform.position - transform.position;
+        Vector3 targetLookDirection = player.transform.position - transform.position;
+        targetLookDirection.y = 0f;
+        body.forward = Vector3.Lerp(body.forward, targetLookDirection, Time.deltaTime / RotationLerpSpeed);
     }
 
     public virtual void ChangeState(Type state) {
@@ -89,6 +94,10 @@ public class Enemy : Damageable {
 
     }
 
+    public virtual void PlayerOutOfReach() {
+
+    }
+
     #endregion
 
     #region Taking damage and deactivation
@@ -107,9 +116,9 @@ public class Enemy : Damageable {
     }
 
     public void Deactivate() {
-        gameObject.SetActive(false);
+        Events.OnEnemyDeath?.Invoke(this);
 
-        Events.OnEnemyDeath(this);
+        gameObject.SetActive(false);
     }
 
     #endregion
