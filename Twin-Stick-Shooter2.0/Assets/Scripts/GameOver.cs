@@ -30,6 +30,8 @@ public class GameOver : MonoBehaviour {
             yield return null;
             timer += Time.deltaTime;
         }
+
+        canvasGroup.alpha = 1;
     }
 
     public void Canvas_SetActive(bool active) {

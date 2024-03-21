@@ -100,5 +100,6 @@ public class PlayerController : Damageable {
         _dead = true;
 
         AudioManager.instance.ExplosionSound(transform.position, "player");
+        GameOver.instance.ShowGameOverPanel();
     }
 }
