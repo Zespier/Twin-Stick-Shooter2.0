@@ -21,7 +21,7 @@ public class AudioOptimization : MonoBehaviour {
 
         ToggleAudioSource(_distanceFromPlayer <= audioSource.maxDistance);
 
-        if (AudioSettings.dspTime >= _soundTime) {
+        if (!constantSound && AudioSettings.dspTime >= _soundTime) {
             Deactivate();
         }
     }

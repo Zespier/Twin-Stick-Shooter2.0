@@ -404,6 +404,74 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Asset: {fileID: -944628639613478452, guid: cd7c54000a5b9b64fb753149d72cea17, type: 3}
   m_ActionId: cb699898-294f-4393-a20f-d20dda07c609
+--- !u!1001 &95357753
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4798652945367271929, guid: a9083faf7fbd28249864b4727a78619b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 4798652945367271929, guid: a9083faf7fbd28249864b4727a78619b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4798652945367271929, guid: a9083faf7fbd28249864b4727a78619b,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 6.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 4798652945367271929, guid: a9083faf7fbd28249864b4727a78619b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4798652945367271929, guid: a9083faf7fbd28249864b4727a78619b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4798652945367271929, guid: a9083faf7fbd28249864b4727a78619b,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4798652945367271929, guid: a9083faf7fbd28249864b4727a78619b,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4798652945367271929, guid: a9083faf7fbd28249864b4727a78619b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4798652945367271929, guid: a9083faf7fbd28249864b4727a78619b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4798652945367271929, guid: a9083faf7fbd28249864b4727a78619b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033318669788209936, guid: a9083faf7fbd28249864b4727a78619b,
+        type: 3}
+      propertyPath: m_Name
+      value: Boss_Small
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a9083faf7fbd28249864b4727a78619b, type: 3}
 --- !u!1 &154916951
 GameObject:
   m_ObjectHideFlags: 0
@@ -1987,7 +2055,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24d8014fffedaad40a44d33097c9109f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layer: 0
+  spriteRenderer: {fileID: 494834778}
   bounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  _canBeUsed: 1
+  _cameraBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
 --- !u!212 &494834778
@@ -2282,7 +2356,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24d8014fffedaad40a44d33097c9109f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layer: 2
+  spriteRenderer: {fileID: 515357156}
   bounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  _canBeUsed: 1
+  _cameraBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
 --- !u!114 &638146141
@@ -4107,7 +4187,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1137855984
 Transform:
   m_ObjectHideFlags: 0
@@ -4553,7 +4633,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24d8014fffedaad40a44d33097c9109f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layer: 3
+  spriteRenderer: {fileID: 1264040175}
   bounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  _canBeUsed: 1
+  _cameraBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
 --- !u!1 &1264824147
@@ -5871,10 +5957,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1264040176}
-  - {fileID: 515357155}
   - {fileID: 494834776}
   - {fileID: 1833112957}
+  - {fileID: 515357155}
+  - {fileID: 1264040176}
   - {fileID: 1892306822}
   m_Father: {fileID: 1864626986}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6325,7 +6411,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24d8014fffedaad40a44d33097c9109f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layer: 1
+  spriteRenderer: {fileID: 1833112959}
   bounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  _canBeUsed: 1
+  _cameraBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
 --- !u!212 &1833112959
@@ -6527,7 +6619,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24d8014fffedaad40a44d33097c9109f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layer: 4
+  spriteRenderer: {fileID: 1892306824}
   bounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  _canBeUsed: 1
+  _cameraBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
 --- !u!212 &1892306824
@@ -6550,7 +6648,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 780834edd6753b840befd65c6a95e3dc, type: 2}
+  - {fileID: 2100000, guid: 985aa4d0e610e544a8bffee46912cdb4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8328,3 +8426,4 @@ SceneRoots:
   - {fileID: 13552597}
   - {fileID: 220855151}
   - {fileID: 452022407}
+  - {fileID: 95357753}

@@ -8,12 +8,14 @@ public class Spore_Small : Enemy {
 
     [Header("Spore_Small Attributes")]
     public float speed_Spore_Small = 15f;
-    public float distanceToReachPlayer_Spore_Small = 0.1f;
+    public float distanceToReachPlayer_Boss_Small = 0.1f;
+    public ParticleSystem explosion;
+    public BoxCollider boxCollider;
 
-    private float _attackTimer;
+    private bool _exploded;
 
     public override float Speed => speed_Spore_Small;
-    public override float DistanceToReachPlayer => distanceToReachPlayer_Spore_Small;
+    public override float DistanceToReachPlayer => distanceToReachPlayer_Boss_Small;
 
     private void OnEnable() {
         StartCoroutine(C_WaitForSpore_MindInstantiation(1, result => { Spore_Mind.instance.TotalSpore_Small += result; }));
@@ -36,19 +38,24 @@ public class Spore_Small : Enemy {
     }
 
     public override void ReachingPlayer() {
-
-        if (_attackTimer + (1f / attackRate) < Time.time) {
-
-            _attackTimer = Time.time;
-            Attack();
-
-        } else {
-            return;
-        }
+        Explode();
     }
 
-    private void Attack() {
-        //TODO: Damageplayer
+    private void Explode() {
+        if (_exploded) { return; }
+        _exploded = true;
+
+        explosion.Play();
+        rb.velocity = Vector3.zero;
+        rb.isKinematic = false;
+        boxCollider.enabled = false;
+        enabled = false;
+
+        StartCoroutine(C_WaitSecondsToDestroy(explosion.main.startLifetime.constant + 0.1f));
     }
 
+    private IEnumerator C_WaitSecondsToDestroy(float seconds) {
+        yield return new WaitForSeconds(seconds);
+        Destroy(gameObject);
+    }
 }
