@@ -8,6 +8,7 @@ public class PlayerController : Damageable {
     public float speed = 9f;
     public Transform body;
     public PlayerInputs playerInputs;
+    public float hp = 2000f;
 
     [HideInInspector] public Vector2 _moveValue;
     [HideInInspector] public Vector2 _moveDirectionLerped;
@@ -72,6 +73,18 @@ public class PlayerController : Damageable {
         if (collision.GetComponent<Collider>().TryGetComponent(out IBullet bullet)) {
             TakeDamage(transform.position, bullet.Damage * bullet.BaseDamagePercentage, Random.Range(0, 100) < 10, "player");
             bullet.Deactivate();
+            RemoveHealth(bullet.Damage * bullet.BaseDamagePercentage);
         }
+    }
+
+    private void RemoveHealth(float amount) {
+        hp -= amount;
+        if (hp < 0) {
+            Death();
+        }
+    }
+
+    private void Death() {
+        Debug.Log("Morido");
     }
 }
