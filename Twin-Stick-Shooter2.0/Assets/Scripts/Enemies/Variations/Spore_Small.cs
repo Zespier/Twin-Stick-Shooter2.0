@@ -24,8 +24,8 @@ public class Spore_Small : Enemy {
     private void OnDisable() {
         if (Spore_Mind.instance == null) {
             Debug.LogError("The spore died without a Spore mind");
+            Spore_Mind.instance.TotalSpore_Small--;
         }
-        Spore_Mind.instance.TotalSpore_Small--;
     }
 
     private IEnumerator C_WaitForSpore_MindInstantiation(int value, Action<int> action) {

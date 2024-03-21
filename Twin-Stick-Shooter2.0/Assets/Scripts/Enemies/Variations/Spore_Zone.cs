@@ -14,8 +14,8 @@ public class Spore_Zone : Generator {
     private void OnDisable() {
         if (Spore_Mind.instance == null) {
             Debug.LogError("The spore died without a Spore mind");
+            Spore_Mind.instance.totalSpore_Zones--;
         }
-        Spore_Mind.instance.totalSpore_Zones--;
     }
 
     private IEnumerator C_WaitForSpore_MindInstantiation(int value, Action<int> action) {

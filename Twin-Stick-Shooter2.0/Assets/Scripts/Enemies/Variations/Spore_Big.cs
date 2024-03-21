@@ -29,8 +29,8 @@ public class Spore_Big : Enemy {
     private void OnDisable() {
         if (Spore_Mind.instance == null) {
             Debug.LogError("The spore died without a Spore mind");
+            Spore_Mind.instance.TotalSpore_Big--;
         }
-        Spore_Mind.instance.TotalSpore_Big--;
     }
 
     protected override void Update() {
