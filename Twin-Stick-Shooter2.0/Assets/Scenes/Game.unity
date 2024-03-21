@@ -2185,6 +2185,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7027936552722618945, guid: 1bfc58422517cd54d9abc893f7883c77,
         type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7027936552722618945, guid: 1bfc58422517cd54d9abc893f7883c77,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -3143,7 +3148,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 880478520}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -3402,6 +3407,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_text
       value: Resume
+      objectReference: {fileID: 0}
+    - target: {fileID: 7027936552722618945, guid: 1bfc58422517cd54d9abc893f7883c77,
+        type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7027936552722618945, guid: 1bfc58422517cd54d9abc893f7883c77,
         type: 3}
@@ -5733,6 +5743,12 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &1495152615 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7784252801023545860, guid: 1bfc58422517cd54d9abc893f7883c77,
+    type: 3}
+  m_PrefabInstance: {fileID: 949926217}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1515730394
 GameObject:
   m_ObjectHideFlags: 0
@@ -6055,7 +6071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 1495152615}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &1737244001
@@ -7800,6 +7816,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: a80e7e9c-12af-462c-a97b-d266f541ec8b
     m_ActionName: Player/Shotgun[/XInputControllerWindows/leftTrigger,/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 880478523}
+        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+        m_MethodName: MimicEscapeButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ba2159b4-9eed-4289-9f21-3e4926e6ef6b
+    m_ActionName: Player/Pause[/XInputControllerWindows/start]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: Player

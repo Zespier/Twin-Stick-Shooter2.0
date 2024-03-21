@@ -12,9 +12,14 @@ public class PauseMenu : MonoBehaviour {
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            Canvas_SetActive(true);
-            PauseGame(true);
+            PauseGame(canvasGroup.alpha == 0 ? true : false);
+            Canvas_SetActive(canvasGroup.alpha == 0 ? true : false);
         }
+    }
+
+    public void MimicEscapeButton() {
+        PauseGame(canvasGroup.alpha == 0 ? true : false);
+        Canvas_SetActive(canvasGroup.alpha == 0 ? true : false);
     }
 
     public void PauseGame(bool pause) {
