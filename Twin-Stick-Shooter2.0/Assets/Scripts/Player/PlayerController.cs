@@ -9,7 +9,10 @@ public class PlayerController : Damageable {
     public Transform body;
     public PlayerInputs playerInputs;
     public float hp = 2000f;
+    public ParticleSystem deathExplosion;
+    public GameObject mesh;
 
+    [HideInInspector] public bool _dead;
     [HideInInspector] public Vector2 _moveValue;
     [HideInInspector] public Vector2 _moveDirectionLerped;
 
@@ -31,6 +34,9 @@ public class PlayerController : Damageable {
     }
 
     private void Update() {
+        if (_dead) {
+            return;
+        }
         Movement();
         Rotation();
     }
@@ -70,6 +76,10 @@ public class PlayerController : Damageable {
     }
 
     private void OnTriggerEnter(Collider collision) {
+        if (_dead) {
+            return;
+        }
+
         if (collision.GetComponent<Collider>().TryGetComponent(out IBullet bullet)) {
             TakeDamage(transform.position, bullet.Damage * bullet.BaseDamagePercentage, Random.Range(0, 100) < 10, "player");
             bullet.Deactivate();
@@ -85,6 +95,10 @@ public class PlayerController : Damageable {
     }
 
     private void Death() {
-        Debug.Log("Morido");
+        mesh.SetActive(false);
+        deathExplosion.Play();
+        _dead = true;
+
+        AudioManager.instance.ExplosionSound(transform.position, "player");
     }
 }

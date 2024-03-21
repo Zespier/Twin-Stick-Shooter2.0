@@ -7,12 +7,20 @@ public class AudioManager : MonoBehaviour {
 
     public AudioMixer audioMixer;
     public AudioPool audioPool;
+
     public float shootsVolume = 0.3f;
     public List<AudioClip> shootClips;
+
     public float bulletImpactVolume = 0.3f;
     public List<AudioClip> bulletImpacClips;
+
     public float enemyLasersVolume = 0.3f;
     public List<AudioClip> enemyLasersClips;
+
+    public float explosionVolume = 0.3f;
+    public AudioClip explosionClip;
+    public AudioClip playerExplosionClip;
+
     public float pitchRange = 0.1f;
     public AudioSource shipSoundSource;
     public float shipSoundMaxPitch = 3f;
@@ -74,6 +82,27 @@ public class AudioManager : MonoBehaviour {
         _audioSource.audioSource.clip = enemyLasersClips[Random.Range(0, enemyLasersClips.Count)];
         _audioSource.audioSource.pitch = Random.Range(1.1f - pitchRange, 1.1f + pitchRange);
         _audioSource.audioSource.volume = enemyLasersVolume;
+        _audioSource.Activate(position);
+        _audioSource.audioSource.Play();
+    }
+
+    public void ExplosionSound(Vector3 position, string whoGotExploded) {
+        _audioSource = audioPool.GetAvailableSource();
+        switch (whoGotExploded) {
+            case "enemy":
+            case "Enemy":
+                _audioSource.audioSource.clip = explosionClip;
+                break;
+
+            case "player":
+            case "Player":
+                _audioSource.audioSource.clip = playerExplosionClip;
+                break;
+
+            default:
+                break;
+        }
+        _audioSource.audioSource.volume = explosionVolume;
         _audioSource.Activate(position);
         _audioSource.audioSource.Play();
     }

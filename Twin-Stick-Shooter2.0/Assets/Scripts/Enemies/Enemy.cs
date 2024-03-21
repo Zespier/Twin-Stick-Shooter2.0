@@ -41,11 +41,20 @@ public class Enemy : Damageable {
     }
 
     protected virtual void Update() {
+        if (PlayerController.instance._dead) {
+            rb.velocity = Vector3.zero;
+            return;
+        }
+
         RotateBody();
         currentState.StateUpdate();
     }
 
     private void LateUpdate() {
+        if (PlayerController.instance._dead) {
+            rb.velocity = Vector3.zero;
+            return;
+        }
         currentState.StateLateUpdate();
     }
 
@@ -119,6 +128,7 @@ public class Enemy : Damageable {
         Events.OnEnemyDeath?.Invoke(this);
 
         gameObject.SetActive(false);
+        AudioManager.instance.ExplosionSound(transform.position, "enemy");
     }
 
     #endregion

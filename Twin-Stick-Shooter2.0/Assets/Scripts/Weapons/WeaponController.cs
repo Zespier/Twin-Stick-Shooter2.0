@@ -36,6 +36,9 @@ public class WeaponController : MonoBehaviour {
     }
 
     private void Update() {
+        if (PlayerController.instance._dead) {
+            return;
+        }
         _debugSize = _generatedBullets.Count;
 
         SetBulletLivingArea();
@@ -58,6 +61,10 @@ public class WeaponController : MonoBehaviour {
     /// If there is no bullets on the pool, it will instantiate another one
     /// </summary>
     public void Shoot() {
+        if (PlayerController.instance._dead) {
+            return;
+        }
+
         Events.OnShootBullet?.Invoke();
         for (int i = 0; i < shootPoints.Count; i++) {
 
@@ -86,6 +93,11 @@ public class WeaponController : MonoBehaviour {
     }
 
     public void ShootShotgun() {
+
+        if (PlayerController.instance._dead) {
+            return;
+        }
+
         if (shootPoints.Count != 2) {
             return;
         }
