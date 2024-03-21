@@ -569,7 +569,7 @@ MonoBehaviour:
   attackRate: 1
   distanceToReachPlayer: 0.6
   rotationLerpSpeed: 0.4
-  hp: 1000
+  hp: 150044
   states:
   - {fileID: 4103163787759368633}
   - {fileID: 3261515849167882871}
@@ -594,7 +594,7 @@ MonoBehaviour:
   shootPoint: {fileID: 8325405330353274711}
   bulletPrefab: {fileID: 7204759068860087085, guid: bd1fac6077551c2408b6273cb69422b2,
     type: 3}
-  fireRate: 1.5
+  fireRate: 2.5
   shootingDuration: -1
 --- !u!114 &3261515849167882871
 MonoBehaviour:
@@ -612,6 +612,6 @@ MonoBehaviour:
   shootPoint: {fileID: 8325405330353274711}
   bulletPrefab: {fileID: 7204759068860087085, guid: bd1fac6077551c2408b6273cb69422b2,
     type: 3}
-  fireRate: 4
+  fireRate: 6
   shootingDuration: -1
   changeStateWhenPlayerOutOfReach: 1

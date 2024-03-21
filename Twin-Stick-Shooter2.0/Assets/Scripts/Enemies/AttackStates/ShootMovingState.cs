@@ -17,6 +17,8 @@ public class ShootMovingState : AttackBaseState {
     public void Shoot() {
         Bullet newBullet = Instantiate(bulletPrefab, shootPoint.position, Quaternion.identity, BulletContainer.instance.transform).GetComponent<Bullet>();
         newBullet.Shoot(shootPoint.forward, 2f);
+
+        AudioManager.instance.EnemyLaserSound(transform.position);
     }
 
     public override void OnStateEnter() {

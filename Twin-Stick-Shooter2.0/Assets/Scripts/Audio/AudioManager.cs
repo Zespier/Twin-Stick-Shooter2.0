@@ -11,6 +11,8 @@ public class AudioManager : MonoBehaviour {
     public List<AudioClip> shootClips;
     public float bulletImpactVolume = 0.3f;
     public List<AudioClip> bulletImpacClips;
+    public float enemyLasersVolume = 0.3f;
+    public List<AudioClip> enemyLasersClips;
     public float pitchRange = 0.1f;
     public AudioSource shipSoundSource;
     public float shipSoundMaxPitch = 3f;
@@ -64,6 +66,15 @@ public class AudioManager : MonoBehaviour {
         _audioSource.audioSource.pitch = Random.Range(1 - pitchRange, 1 + pitchRange);
         _audioSource.audioSource.volume = shootsVolume;
         _audioSource.Activate();
+        _audioSource.audioSource.Play();
+    }
+
+    public void EnemyLaserSound(Vector3 position) {
+        _audioSource = audioPool.GetAvailableSource();
+        _audioSource.audioSource.clip = enemyLasersClips[Random.Range(0, enemyLasersClips.Count)];
+        _audioSource.audioSource.pitch = Random.Range(1.1f - pitchRange, 1.1f + pitchRange);
+        _audioSource.audioSource.volume = enemyLasersVolume;
+        _audioSource.Activate(position);
         _audioSource.audioSource.Play();
     }
 
