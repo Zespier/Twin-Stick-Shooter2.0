@@ -70,7 +70,7 @@ public class PlayerController : Damageable {
 
     private void OnTriggerEnter(Collider collision) {
         if (collision.GetComponent<Collider>().TryGetComponent(out IBullet bullet)) {
-            TakeDamage(transform.position, bullet.Damage * bullet.BaseDamagePercentage, Random.Range(0, 100) < 10, "energy");
+            TakeDamage(transform.position, bullet.Damage * bullet.BaseDamagePercentage, Random.Range(0, 100) < 10, "player");
             bullet.Deactivate();
         }
     }

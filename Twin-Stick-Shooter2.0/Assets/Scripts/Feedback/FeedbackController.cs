@@ -9,6 +9,7 @@ public class FeedbackController : MonoBehaviour {
     public GameObject healingFeedBackPrefab;
     public GameObject damageCanvas;
     public Color damageColor = Color.white;
+    public Color playerDamagedColor = Color.red;
 
     public static FeedbackController instance;
     private void Awake() {
@@ -27,6 +28,11 @@ public class FeedbackController : MonoBehaviour {
             default:
                 damageCanvas.damageText.color = damageColor;
                 break;
+
+            case "player":
+            case "Player":
+                damageCanvas.damageText.color = playerDamagedColor;
+                break;
         }
     }
     public void DamageFeedBack(Vector3 position, float damage, bool crit, string damageType) {
@@ -38,6 +44,11 @@ public class FeedbackController : MonoBehaviour {
             case "Energy":
             default:
                 damageCanvas.damageText.color = damageColor;
+                break;
+
+            case "player":
+            case "Player":
+                damageCanvas.damageText.color = playerDamagedColor;
                 break;
         }
     }
