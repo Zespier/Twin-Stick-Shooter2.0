@@ -6,7 +6,7 @@ using UnityEngine.InputSystem.XR;
 public class Turret : Enemy {
 
     public float turretSpeed = 0f;
-    public Transform body;
+    public Transform Body;
     public float guard_RotationSpeed = 50f;
     public float shoot_RotationSpeed = 150f;
 
@@ -31,9 +31,9 @@ public class Turret : Enemy {
 
     #endregion
 
-    private void RotateBody() {
-        float rotationValue = Vector3.SignedAngle(body.up, player.position - body.transform.position, Vector3.forward) > 0 ? RotationSpeed : -RotationSpeed;
-        body.up = Quaternion.AngleAxis(rotationValue * Time.deltaTime, Vector3.forward) * body.up;
+    protected override void RotateBody() {
+        float rotationValue = Vector3.SignedAngle(Body.up, player.position - Body.transform.position, Vector3.forward) > 0 ? RotationSpeed : -RotationSpeed;
+        Body.up = Quaternion.AngleAxis(rotationValue * Time.deltaTime, Vector3.forward) * Body.up;
     }
 
 }
