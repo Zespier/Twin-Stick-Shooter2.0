@@ -569,7 +569,7 @@ MonoBehaviour:
   attackRate: 1
   distanceToReachPlayer: 0.6
   rotationLerpSpeed: 0.4
-  hp: 150044
+  hp: 1500
   states:
   - {fileID: 4103163787759368633}
   - {fileID: 3261515849167882871}
