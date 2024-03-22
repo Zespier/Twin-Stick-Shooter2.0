@@ -6,4 +6,8 @@ public class Menu : MonoBehaviour {
     private void Awake() {
         gameObject.SetActive(true);
     }
+
+    public void ExitGame() {
+        Application.Quit();
+    }
 }
