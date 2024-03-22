@@ -102,7 +102,7 @@ public class PlayerController : Damageable {
     /// removes health
     /// </summary>
     /// <param name="amount"></param>
-    private void RemoveHealth(float amount) {
+    public void RemoveHealth(float amount) {
         hp -= amount;
         playerHealth.ReduceHealthBar(hp, _maxHp);
         if (hp < 0) {
@@ -117,11 +117,14 @@ public class PlayerController : Damageable {
         mesh.SetActive(false);
         deathExplosion.Play();
         _dead = true;
+        rb.velocity = Vector3.zero;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
 
         CameraBehaviour.instance.CameraShake();
 
         AudioManager.instance.ExplosionSound(transform.position, "player");
         GameOver.instance.ShowGameOverPanel();
+
     }
 
     /// <summary>

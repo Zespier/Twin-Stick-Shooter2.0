@@ -47,6 +47,9 @@ public class Spore_Small : Enemy {
         boxCollider.enabled = false;
         enabled = false;
 
+        PlayerController.instance.TakeDamage(transform.position, 500, true, "player");
+        PlayerController.instance.RemoveHealth(500);
+
 
         explosion.transform.SetParent(EnemyContainer.instance.transform);
         Deactivate();
