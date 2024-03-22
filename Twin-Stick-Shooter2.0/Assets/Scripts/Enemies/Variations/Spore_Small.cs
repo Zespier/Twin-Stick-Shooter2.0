@@ -25,6 +25,16 @@ public class Spore_Small : Enemy {
     }
 
     /// <summary>
+    /// Also explodes
+    /// </summary>
+    protected override void CheckDeath() {
+        if (Hp < 0) {
+            Explode();
+        }
+        base.CheckDeath();
+    }
+
+    /// <summary>
     /// Expllodes
     /// </summary>
     private void Explode() {

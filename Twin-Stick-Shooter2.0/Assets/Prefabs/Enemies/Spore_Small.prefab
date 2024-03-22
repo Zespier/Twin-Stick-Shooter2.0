@@ -278,7 +278,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1677940680394099865}
-  speed: 9.3
+  speed: 8.9
   player: {fileID: 0}
   body: {fileID: 3746152818658498379}
   baseDamage: 1
@@ -550,6 +550,26 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 7dc1830b52852ce44857f7f45e363494,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 61bf5b419df30d8438613f02f6927fad, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 7dc1830b52852ce44857f7f45e363494,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 779ce689bc66b2b4dbed091f4fc5963f, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 7dc1830b52852ce44857f7f45e363494,
+        type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 63a3266bbfea9a84790799786d1e2cce, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 7dc1830b52852ce44857f7f45e363494,
+        type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: 48e033fa143750b4f9dba132f7fb69b9, type: 2}
     - target: {fileID: 919132149155446097, guid: 7dc1830b52852ce44857f7f45e363494,
         type: 3}
       propertyPath: m_Name

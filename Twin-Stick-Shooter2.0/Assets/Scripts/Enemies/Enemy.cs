@@ -150,7 +150,7 @@ public class Enemy : Damageable {
     /// <summary>
     /// Checks if the enemy us dead
     /// </summary>
-    private void CheckDeath() {
+    protected virtual void CheckDeath() {
         if (Hp < 0) {
             Deactivate();
         }
