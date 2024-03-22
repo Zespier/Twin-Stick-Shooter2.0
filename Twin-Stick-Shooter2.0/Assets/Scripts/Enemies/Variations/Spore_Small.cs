@@ -37,16 +37,8 @@ public class Spore_Small : Enemy {
         boxCollider.enabled = false;
         enabled = false;
 
-        StartCoroutine(C_WaitSecondsToDestroy(explosion.main.startLifetime.constant + 0.1f));
-    }
 
-    /// <summary>
-    /// Waits bofre destroygin this enemy
-    /// </summary>
-    /// <param name="seconds"></param>
-    /// <returns></returns>
-    private IEnumerator C_WaitSecondsToDestroy(float seconds) {
-        yield return new WaitForSeconds(seconds);
+        explosion.transform.SetParent(EnemyContainer.instance.transform);
         Deactivate();
     }
 }

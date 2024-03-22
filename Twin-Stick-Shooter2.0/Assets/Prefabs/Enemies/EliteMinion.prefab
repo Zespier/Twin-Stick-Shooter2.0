@@ -59,7 +59,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.81, y: 0.81, z: 0.81}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7603049488738761871}
@@ -92,10 +92,10 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b1f9ed0ee7f2b0945a7801b2fa7551bd, type: 2}
-  - {fileID: 2100000, guid: 7625e5e84e18b5a4a99153743aacf280, type: 2}
-  - {fileID: 2100000, guid: 7bad2cf97bf3cfa47b4d909066837377, type: 2}
-  - {fileID: 2100000, guid: 9decb5f667382d540b6a66d05e55dd77, type: 2}
+  - {fileID: 2100000, guid: f65ccbc96bef48644b646ae8ae69b968, type: 2}
+  - {fileID: 2100000, guid: 745351c44384f554f8704a92ac57a1d1, type: 2}
+  - {fileID: 2100000, guid: be1e0a8f7adcc6f4f936da7040478772, type: 2}
+  - {fileID: 2100000, guid: 5bc3c3544c1867f4d8b25851ddb23d72, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -594,7 +594,7 @@ MonoBehaviour:
   shootPoint: {fileID: 8325405330353274711}
   bulletPrefab: {fileID: 7204759068860087085, guid: bd1fac6077551c2408b6273cb69422b2,
     type: 3}
-  fireRate: 2.5
+  fireRate: 3
   shootingDuration: -1
 --- !u!114 &3261515849167882871
 MonoBehaviour:
@@ -612,6 +612,6 @@ MonoBehaviour:
   shootPoint: {fileID: 8325405330353274711}
   bulletPrefab: {fileID: 7204759068860087085, guid: bd1fac6077551c2408b6273cb69422b2,
     type: 3}
-  fireRate: 6
+  fireRate: 8
   shootingDuration: -1
   changeStateWhenPlayerOutOfReach: 1

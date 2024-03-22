@@ -19,6 +19,7 @@ public class Enemy : Damageable {
     public virtual float Speed => speed;
     public virtual float DistanceToReachPlayer => distanceToReachPlayer;
     public virtual float RotationLerpSpeed => rotationLerpSpeed;
+    public float Hp { get; set; }
 
     [Header("Damageable")]
     public float hp = 1000f;
@@ -33,6 +34,8 @@ public class Enemy : Damageable {
         } else {
             Debug.LogError("You forgot to put states in this enemy: " + this.GetType().ToString());
         }
+
+        Hp = hp * EnemiesHealthMultiplier.instance.HealthMultiplier;
     }
 
     private void Start() {
@@ -140,7 +143,7 @@ public class Enemy : Damageable {
     public override void TakeDamage(Vector3 position, float damage, bool crit, string damageType) {
         base.TakeDamage(position, damage, crit, damageType);
 
-        hp -= damage;
+        Hp -= damage;
         CheckDeath();
     }
 
@@ -148,7 +151,7 @@ public class Enemy : Damageable {
     /// Checks if the enemy us dead
     /// </summary>
     private void CheckDeath() {
-        if (hp < 0) {
+        if (Hp < 0) {
             Deactivate();
         }
     }
