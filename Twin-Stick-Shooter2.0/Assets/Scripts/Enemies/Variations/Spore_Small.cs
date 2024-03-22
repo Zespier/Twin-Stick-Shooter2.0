@@ -21,6 +21,9 @@ public class Spore_Small : Enemy {
     /// Explodes when reaching the player
     /// </summary>
     public override void ReachingPlayer() {
+        if (_exploded) { return; }
+        PlayerController.instance.RemoveHealth(500);
+
         Explode();
     }
 
@@ -32,6 +35,7 @@ public class Spore_Small : Enemy {
             Explode();
         }
         base.CheckDeath();
+
     }
 
     /// <summary>
@@ -48,7 +52,6 @@ public class Spore_Small : Enemy {
         enabled = false;
 
         PlayerController.instance.TakeDamage(transform.position, 500, true, "player");
-        PlayerController.instance.RemoveHealth(500);
 
 
         explosion.transform.SetParent(EnemyContainer.instance.transform);
