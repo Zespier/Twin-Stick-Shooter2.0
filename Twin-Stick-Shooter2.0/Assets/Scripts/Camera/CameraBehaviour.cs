@@ -17,6 +17,7 @@ public class CameraBehaviour : MonoBehaviour {
     public float targetMultiplier = 1f;
     public float shakeDuration = 0.2f;
     public float shakeAmplitude = 0.1f;
+    public float shakeSpeed = 5f;
     [Range(5, 20)] public float distance = 7f;
     public float debuggCurrentDistance;
 
@@ -85,15 +86,26 @@ public class CameraBehaviour : MonoBehaviour {
     private IEnumerator CameraShakeAnimation() {
 
         float timer = shakeDuration;
+        Vector3 nextTarget = new Vector3(UnityEngine.Random.Range(-shakeAmplitude, shakeAmplitude), mainCamera.transform.localPosition.y, UnityEngine.Random.Range(-shakeAmplitude, shakeAmplitude));
         while (timer >= 0) {
 
-            mainCamera.transform.localPosition = new Vector3(UnityEngine.Random.Range(-shakeAmplitude, shakeAmplitude), UnityEngine.Random.Range(-shakeAmplitude, shakeAmplitude), UnityEngine.Random.Range(-shakeAmplitude, shakeAmplitude));
+            if (Vector3.Distance(mainCamera.transform.localPosition, nextTarget) <= 0.1f) {
+                nextTarget = new Vector3(UnityEngine.Random.Range(-shakeAmplitude, shakeAmplitude), mainCamera.transform.localPosition.y, UnityEngine.Random.Range(-shakeAmplitude, shakeAmplitude));
+            }
+
+            mainCamera.transform.localPosition = Vector3.MoveTowards(mainCamera.transform.localPosition, nextTarget, Time.deltaTime * shakeSpeed);
 
             timer -= Time.deltaTime;
             yield return null;
         }
 
-        mainCamera.transform.localPosition = Vector3.zero;
+        nextTarget= new Vector3(0, mainCamera.transform.localPosition.y, 0);
+
+        while (Vector3.Distance(mainCamera.transform.localPosition, nextTarget) > 0.1f) {
+            mainCamera.transform.localPosition = Vector3.MoveTowards(mainCamera.transform.localPosition, nextTarget, Time.deltaTime * shakeSpeed);
+        }
+
+        mainCamera.transform.localPosition = new Vector3(0, mainCamera.transform.localPosition.y, 0);
     }
 
 }

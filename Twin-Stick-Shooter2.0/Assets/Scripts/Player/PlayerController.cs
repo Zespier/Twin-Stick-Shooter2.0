@@ -11,10 +11,12 @@ public class PlayerController : Damageable {
     public float hp = 2000f;
     public ParticleSystem deathExplosion;
     public GameObject mesh;
+    public PlayerHealth playerHealth;
 
     [HideInInspector] public bool _dead;
     [HideInInspector] public Vector2 _moveValue;
     [HideInInspector] public Vector2 _moveDirectionLerped;
+    private float _maxHp;
 
     public static PlayerController instance;
     private void Awake() {
@@ -23,6 +25,7 @@ public class PlayerController : Damageable {
         }
 
         playerInputs = new PlayerInputs();
+        _maxHp = hp;
     }
 
     private void OnEnable() {
@@ -89,17 +92,27 @@ public class PlayerController : Damageable {
 
     private void RemoveHealth(float amount) {
         hp -= amount;
+        playerHealth.ReduceHealthBar(hp, _maxHp);
         if (hp < 0) {
             Death();
         }
     }
 
-    private void Death() {
+    public void Death() {
         mesh.SetActive(false);
         deathExplosion.Play();
         _dead = true;
 
+        CameraBehaviour.instance.CameraShake();
+
         AudioManager.instance.ExplosionSound(transform.position, "player");
         GameOver.instance.ShowGameOverPanel();
+    }
+
+    public void Heal() {
+        hp = _maxHp;
+
+        playerHealth.ReduceHealthBar(hp, _maxHp);
+
     }
 }

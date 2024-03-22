@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Wall : Damageable {
 
-    public override void TakeDamage(Vector3 position, float damage, bool crit, string damageType) {
-
+    private void OnTriggerEnter(Collider collision) {
+        if (collision.GetComponent<Collider>().TryGetComponent(out IBullet bullet)) {
+            bullet.Deactivate();
+        }
     }
 
 }
