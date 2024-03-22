@@ -26,7 +26,7 @@ public class FeedbackController : MonoBehaviour {
     /// <param name="crit"></param>
     /// <param name="damageType"></param>
     public void DamageFeedBack(Enemy enemy, float damage, bool crit, string damageType) {
-        DamageCanvas damageCanvas = Instantiate(this.damageCanvas, enemy.transform.position, Quaternion.identity).GetComponent<DamageCanvas>();
+        DamageCanvas damageCanvas = Instantiate(this.damageCanvas, enemy.transform.position, Quaternion.identity, BulletContainer.instance.transform).GetComponent<DamageCanvas>();
         damageCanvas.Initialize(enemy, damage, crit);
 
         switch (damageType) {
@@ -51,7 +51,7 @@ public class FeedbackController : MonoBehaviour {
     /// <param name="crit"></param>
     /// <param name="damageType"></param>
     public void DamageFeedBack(Vector3 position, float damage, bool crit, string damageType) {
-        DamageCanvas damageCanvas = Instantiate(this.damageCanvas, position, Quaternion.identity).GetComponent<DamageCanvas>();
+        DamageCanvas damageCanvas = Instantiate(this.damageCanvas, position, Quaternion.identity, BulletContainer.instance.transform).GetComponent<DamageCanvas>();
         damageCanvas.Initialize(position, damage, crit);
 
         switch (damageType) {

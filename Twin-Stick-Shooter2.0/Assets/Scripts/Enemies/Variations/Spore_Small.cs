@@ -17,32 +17,6 @@ public class Spore_Small : Enemy {
     public override float Speed => speed_Spore_Small;
     public override float DistanceToReachPlayer => distanceToReachPlayer_Boss_Small;
 
-    private void OnEnable() {
-        StartCoroutine(C_WaitForSpore_MindInstantiation(1, result => { Spore_Mind.instance.TotalSpore_Small += result; }));
-    }
-
-    private void OnDisable() {
-        if (Spore_Mind.instance == null) {
-            Debug.LogError("The spore died without a Spore mind");
-            Spore_Mind.instance.TotalSpore_Small--;
-        }
-    }
-
-    /// <summary>
-    /// Watis for the spore mind to be alive
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="action"></param>
-    /// <returns></returns>
-    private IEnumerator C_WaitForSpore_MindInstantiation(int value, Action<int> action) {
-
-        while (Spore_Mind.instance == null) {
-            yield return null;
-        }
-
-        action?.Invoke(value);
-    }
-
     /// <summary>
     /// Explodes when reaching the player
     /// </summary>
@@ -73,6 +47,6 @@ public class Spore_Small : Enemy {
     /// <returns></returns>
     private IEnumerator C_WaitSecondsToDestroy(float seconds) {
         yield return new WaitForSeconds(seconds);
-        Destroy(gameObject);
+        Deactivate();
     }
 }

@@ -162,6 +162,8 @@ public class Enemy : Damageable {
 
         gameObject.SetActive(false);
         AudioManager.instance.ExplosionSound(transform.position, "enemy");
+
+        EnemySpawner.instance.RemoveEnemyFromGenerated(this);
     }
 
     #endregion
