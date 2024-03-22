@@ -18,6 +18,7 @@ public class AudioManager : MonoBehaviour {
     public List<AudioClip> enemyLasersClips;
 
     public float explosionVolume = 0.3f;
+    public float enemyExplosionVolume = 0.6f;
     public AudioClip explosionClip;
     public AudioClip playerExplosionClip;
 
@@ -92,17 +93,18 @@ public class AudioManager : MonoBehaviour {
             case "enemy":
             case "Enemy":
                 _audioSource.audioSource.clip = explosionClip;
+                _audioSource.audioSource.volume = enemyExplosionVolume;
                 break;
 
             case "player":
             case "Player":
                 _audioSource.audioSource.clip = playerExplosionClip;
+                _audioSource.audioSource.volume = explosionVolume;
                 break;
 
             default:
                 break;
         }
-        _audioSource.audioSource.volume = explosionVolume;
         _audioSource.Activate(position);
         _audioSource.audioSource.Play();
     }

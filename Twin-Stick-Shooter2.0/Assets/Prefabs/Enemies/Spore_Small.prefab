@@ -278,12 +278,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1677940680394099865}
-  speed: 10
+  speed: 9.3
   player: {fileID: 0}
   body: {fileID: 3746152818658498379}
   baseDamage: 1
   attackRate: 1
   distanceToReachPlayer: 0.6
+  rotationLerpSpeed: 0.1
   hp: 200
   states:
   - {fileID: 568618742530149507}

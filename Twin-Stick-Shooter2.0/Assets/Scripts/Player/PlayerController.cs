@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : Damageable {
 
+    public Rigidbody rb;
     public float speed = 9f;
     public Transform body;
     public PlayerInputs playerInputs;
@@ -12,6 +13,7 @@ public class PlayerController : Damageable {
     public ParticleSystem deathExplosion;
     public GameObject mesh;
     public PlayerHealth playerHealth;
+    public TrailRenderer trailRenderer;
 
     [HideInInspector] public bool _dead;
     [HideInInspector] public Vector2 _moveValue;
@@ -20,6 +22,7 @@ public class PlayerController : Damageable {
 
     public static PlayerController instance;
     private void Awake() {
+        Application.targetFrameRate = 100;
         if (!instance) {
             instance = this;
         }
@@ -51,7 +54,8 @@ public class PlayerController : Damageable {
         _moveValue = playerInputs.Player.Move.ReadValue<Vector2>();
 
         _moveDirectionLerped = Vector2.Lerp(_moveDirectionLerped, _moveValue, Time.deltaTime / 0.1f);
-        transform.position += Time.deltaTime * speed * new Vector3(_moveDirectionLerped.x, 0, _moveDirectionLerped.y);
+        //transform.position += Time.deltaTime * speed * new Vector3(_moveDirectionLerped.x, 0, _moveDirectionLerped.y);
+        rb.velocity = speed * new Vector3(_moveDirectionLerped.x, 0, _moveDirectionLerped.y);
 
         AudioManager.instance.ShipSound(_moveValue * speed);
     }

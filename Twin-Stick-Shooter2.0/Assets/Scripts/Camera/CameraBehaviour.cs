@@ -40,11 +40,17 @@ public class CameraBehaviour : MonoBehaviour {
         Events.OnTargetMove -= MoveTarget;
     }
 
-    private void LateUpdate() {
+    public void Update() {
         DistanceMovement();
         TargetMovement();
         CameraMovement(player.position, _currentTarget);
     }
+
+    //private void LateUpdate() {
+    //    DistanceMovement();
+    //    TargetMovement();
+    //    CameraMovement(player.position, _currentTarget);
+    //}
 
     private void CameraMovement(Vector3 playerPosition, Vector3 target) {
         transform.position = Vector3.Lerp(transform.position, playerPosition + target, Time.deltaTime / movementDivision);

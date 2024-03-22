@@ -402,7 +402,7 @@ PrefabInstance:
     - target: {fileID: 4798652945367271929, guid: a9083faf7fbd28249864b4727a78619b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.17
+      value: -13.69
       objectReference: {fileID: 0}
     - target: {fileID: 4798652945367271929, guid: a9083faf7fbd28249864b4727a78619b,
         type: 3}
@@ -412,7 +412,7 @@ PrefabInstance:
     - target: {fileID: 4798652945367271929, guid: a9083faf7fbd28249864b4727a78619b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.48
+      value: 8.13
       objectReference: {fileID: 0}
     - target: {fileID: 4798652945367271929, guid: a9083faf7fbd28249864b4727a78619b,
         type: 3}
@@ -2329,7 +2329,7 @@ GameObject:
   - component: {fileID: 556076707}
   - component: {fileID: 556076708}
   - component: {fileID: 556076710}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3240,6 +3240,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EliteMinion
       objectReference: {fileID: 0}
+    - target: {fileID: 8125623855738493412, guid: c497589408574bf41a4afc4d30892d5e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3503,7 +3508,7 @@ PrefabInstance:
     - target: {fileID: 8125623855738493412, guid: c497589408574bf41a4afc4d30892d5e,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7844,7 +7849,7 @@ PrefabInstance:
     - target: {fileID: 8125623855738493412, guid: c497589408574bf41a4afc4d30892d5e,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10114,12 +10119,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b2241501afd72469fba6611eb4a4b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 11
+  rb: {fileID: 7447961375675580989}
+  speed: 12
   body: {fileID: 2746840524215331850}
   hp: 2000
   deathExplosion: {fileID: 1926485232}
   mesh: {fileID: 1236083763}
   playerHealth: {fileID: 1289151587}
+  trailRenderer: {fileID: 0}
   _dead: 0
   _moveValue: {x: 0, y: 0}
   _moveDirectionLerped: {x: 0, y: 0}
@@ -10155,6 +10162,8 @@ GameObject:
   - component: {fileID: 1222990490134097977}
   - component: {fileID: 7447961375675580986}
   - component: {fileID: 7447961375675580987}
+  - component: {fileID: 7447961375675580988}
+  - component: {fileID: 7447961375675580989}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -10365,6 +10374,56 @@ CapsuleCollider:
   m_Height: 1.31
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &7447961375675580988
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5265442199395045909}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 1015
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.38
+  m_Height: 1.31
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &7447961375675580989
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5265442199395045909}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &7585326199092770280
 GameObject:
   m_ObjectHideFlags: 0
@@ -10540,7 +10599,7 @@ SceneRoots:
   - {fileID: 452022407}
   - {fileID: 1843522117}
   - {fileID: 95357753}
-  - {fileID: 788080768}
   - {fileID: 857315303}
+  - {fileID: 788080768}
   - {fileID: 1604854925}
   - {fileID: 556076706}

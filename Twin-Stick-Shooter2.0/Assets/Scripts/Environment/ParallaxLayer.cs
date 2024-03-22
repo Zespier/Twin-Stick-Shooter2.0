@@ -26,9 +26,9 @@ public class ParallaxLayer : MonoBehaviour {
     }
 
     private void Update() {
-        SetCameraBounds(GetWidthFromCenter(), GetHeightFromCenter());
-        CheckDeactivate();
-        CheckBorders();
+        //SetCameraBounds(GetWidthFromCenter(), GetHeightFromCenter());
+        //CheckDeactivate();
+        //CheckBorders();
     }
 
     public float GetWidthFromCenter() {
