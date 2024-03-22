@@ -13,6 +13,9 @@ public class SplashManager : MonoBehaviour {
 
     private float _timeCounter = 0;
 
+    /// <summary>
+    /// Fade of the splash image
+    /// </summary>
     private void Update() {
 
         _timeCounter += Time.deltaTime;

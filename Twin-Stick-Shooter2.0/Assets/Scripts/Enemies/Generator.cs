@@ -40,6 +40,9 @@ public abstract class Generator : MonoBehaviour {
         _lifetimeTimer += Time.deltaTime;
     }
 
+    /// <summary>
+    /// Spawn the override enemy prefab
+    /// </summary>
     protected void Spawn() {
         if (Spore_Mind.instance.TotalSpores >= 100) { return; }
 
@@ -50,12 +53,19 @@ public abstract class Generator : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// increases the amount of enemies that are going to spawn based on spore zones => This enemy doesn't exist anymore due to assets changed
+    /// </summary>
+    /// <returns></returns>
     public float ReduceSpawnTimeBasedOnSpore_Zones() {
 
         int totalSpawnZones = Spore_Mind.instance.totalSpore_Zones > 30 ? 30 : Spore_Mind.instance.totalSpore_Zones;
         return Mathf.Log(totalSpawnZones, Mathf.Exp(1) + 1);
     }
 
+    /// <summary>
+    /// Changes the size of the Spore_Zone => This enemy doesn't exist anymore due to assets changed
+    /// </summary>
     public void SetSize() {
 
         switch (size) {
@@ -77,6 +87,10 @@ public abstract class Generator : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Actual change of size  => This enemy doesn't exist anymore due to assets changed
+    /// </summary>
+    /// <param name="ratio"></param>
     public void ProportionalSize(float ratio) {
         _sizeRatio = ratio;
         body.localScale = Vector3.one * _defaultBodySize * ratio;

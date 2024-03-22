@@ -17,12 +17,19 @@ public class MenuDeTrucos : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Opens the tricks menu
+    /// </summary>
     public void MimicF1() {
         if (PlayerController.instance._dead) { return; }
 
         Canvas_SetActive(canvasGroup.alpha == 0 ? true : false);
     }
 
+    /// <summary>
+    /// Set up for hte canvas group
+    /// </summary>
+    /// <param name="active"></param>
     public void Canvas_SetActive(bool active) {
         if (PlayerController.instance != null && PlayerController.instance._dead) { return; }
 

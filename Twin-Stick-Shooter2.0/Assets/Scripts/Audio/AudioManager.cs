@@ -48,6 +48,10 @@ public class AudioManager : MonoBehaviour {
         Events.OnShootBullet -= ShootSound;
     }
 
+    /// <summary>
+    /// Lerps the pitch of the sound of the ship depending on the speed
+    /// </summary>
+    /// <param name="speed"></param>
     public void ShipSound(Vector3 speed) {
         float max = Mathf.Abs(speed.x) > Mathf.Abs(speed.y) ? Mathf.Abs(speed.x) : Mathf.Abs(speed.y);
         float targetValue = Mathf.Lerp(shipSoundMinPitch, shipSoundMaxPitch, (PlayerController.instance.speed * max) / PlayerController.instance.speed);
@@ -60,6 +64,11 @@ public class AudioManager : MonoBehaviour {
         shipSoundSource.pitch = Mathf.Lerp(shipSoundSource.pitch, targetValue, Time.deltaTime / pitchLerpSpeed);
     }
 
+    /// <summary>
+    /// Sound for bullets impact
+    /// Gets the next available audio source on the pool
+    /// </summary>
+    /// <param name="position"></param>
     public void BulletImpactSound(Vector3 position) {
         _audioSource = audioPool.GetAvailableSource();
         _audioSource.audioSource.clip = bulletImpacClips[Random.Range(0, bulletImpacClips.Count)];
@@ -69,6 +78,11 @@ public class AudioManager : MonoBehaviour {
         _audioSource.audioSource.Play();
     }
 
+    /// <summary>
+    /// Sound for playerShooting
+    /// Gets the next available audio source on the pool
+    /// </summary>
+    /// <param name="position"></param>
     public void ShootSound() {
         _audioSource = audioPool.GetAvailableSource();
         _audioSource.audioSource.clip = shootClips[Random.Range(0, shootClips.Count)];
@@ -78,6 +92,11 @@ public class AudioManager : MonoBehaviour {
         _audioSource.audioSource.Play();
     }
 
+    /// <summary>
+    /// Sound for enemies lasers
+    /// Gets the next available audio source on the pool
+    /// </summary>
+    /// <param name="position"></param>
     public void EnemyLaserSound(Vector3 position) {
         _audioSource = audioPool.GetAvailableSource();
         _audioSource.audioSource.clip = enemyLasersClips[Random.Range(0, enemyLasersClips.Count)];
@@ -87,6 +106,11 @@ public class AudioManager : MonoBehaviour {
         _audioSource.audioSource.Play();
     }
 
+    /// <summary>
+    /// Sound for explosions, depending on player or enemy
+    /// Gets the next available audio source on the pool
+    /// </summary>
+    /// <param name="position"></param>
     public void ExplosionSound(Vector3 position, string whoGotExploded) {
         _audioSource = audioPool.GetAvailableSource();
         switch (whoGotExploded) {
@@ -111,14 +135,26 @@ public class AudioManager : MonoBehaviour {
 
     #region Volume management
 
+    /// <summary>
+    /// Changes the volume of master
+    /// </summary>
+    /// <param name="volume"></param>
     public void VolumeMaster(float volume) {
         audioMixer.SetFloat("Master", Mathf.Log10(volume) * 20);
     }
 
+    /// <summary>
+    /// Changes the volume of sounds
+    /// </summary>
+    /// <param name="volume"></param>
     public void VolumeSounds(float volume) {
         audioMixer.SetFloat("Sounds", Mathf.Log10(volume) * 20);
     }
 
+    /// <summary>
+    /// Changes the volume of music
+    /// </summary>
+    /// <param name="volume"></param>
     public void VolumeMusic(float volume) {
         audioMixer.SetFloat("Music", Mathf.Log10(volume) * 20);
     }

@@ -31,6 +31,10 @@ public class ParallaxLayer : MonoBehaviour {
         //CheckBorders();
     }
 
+    /// <summary>
+    /// Trigonometry to get the distance from the center to the camera border in that layer (horizontally)
+    /// </summary>
+    /// <returns></returns>
     public float GetWidthFromCenter() {
         //Angle of view(in degrees) = 2 ArcTan(sensor width / (2 x focal length))) *(180 / π)
 
@@ -45,6 +49,10 @@ public class ParallaxLayer : MonoBehaviour {
         return widthFromCenter;
     }
 
+    /// <summary>
+    /// Trigonometry to get the distance from the center to the camera border in that layer (vertically)
+    /// </summary>
+    /// <returns></returns>
     public float GetHeightFromCenter() {
 
 
@@ -59,6 +67,12 @@ public class ParallaxLayer : MonoBehaviour {
         return heightFromCenter;
     }
 
+    /// <summary>
+    /// Sets the bounds of this parallax
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="distance"></param>
+    /// <param name="sizePerDistance"></param>
     public void SetBounds(Vector3 position, float distance, float sizePerDistance) {
 
         _sizePerDistance = sizePerDistance;
@@ -75,12 +89,18 @@ public class ParallaxLayer : MonoBehaviour {
         right = bounds.center + Vector3.right * bounds.extents.x;
     }
 
+    /// <summary>
+    /// Checks if its out of the camera view
+    /// </summary>
     private void CheckDeactivate() {
         if (!bounds.Intersects(_cameraBounds)) {
             Deactivate();
         }
     }
 
+    /// <summary>
+    /// Checks if it needs to spawn another parallax 
+    /// </summary>
     private void CheckBorders() {
 
         if (_cameraBounds.Contains(up)) {
@@ -114,15 +134,27 @@ public class ParallaxLayer : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Sets the camera bounds
+    /// </summary>
+    /// <param name="widthFromCenter"></param>
+    /// <param name="heightFromCenter"></param>
     private void SetCameraBounds(float widthFromCenter, float heightFromCenter) {
         _cameraBounds.center = new Vector3(_mainCamera.transform.position.x, transform.position.y, _mainCamera.transform.position.z);
         _cameraBounds.size = new Vector3(widthFromCenter * 2, 1, heightFromCenter * 2f);
     }
 
+    /// <summary>
+    /// activate this parllax
+    /// </summary>
     public void Activate() {
         _canBeUsed = false;
         gameObject.SetActive(true);
     }
+
+    /// <summary>
+    /// Deactivate this parallax
+    /// </summary>
     private void Deactivate() {
         _canBeUsed = true;
         gameObject.SetActive(false);

@@ -15,6 +15,12 @@ public class DamageCanvas : MonoBehaviour {
     private Vector3 _defaultScale;
     private bool _isCrit;
 
+    /// <summary>
+    /// Initializes the damage canvas on the enemy position
+    /// </summary>
+    /// <param name="enemy"></param>
+    /// <param name="damage"></param>
+    /// <param name="crit"></param>
     public void Initialize(Enemy enemy, float damage, bool crit) {
         damageText.text = damage.ToString("F0");
         enemyPosition = enemy.transform.position;
@@ -23,6 +29,12 @@ public class DamageCanvas : MonoBehaviour {
         Destroy(gameObject, deinflationTime + standByTime + fadeOutTime + 0.2f);
         StartCoroutine(DamageAnimation());
     }
+    /// <summary>
+    /// Iitializes but in a specific position
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="damage"></param>
+    /// <param name="crit"></param>
     public void Initialize(Vector3 position, float damage, bool crit) {
         damageText.text = damage.ToString("F0");
         enemyPosition = position;
@@ -32,6 +44,10 @@ public class DamageCanvas : MonoBehaviour {
         StartCoroutine(DamageAnimation());
     }
 
+    /// <summary>
+    /// The animation of the damage canvas
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator DamageAnimation() {
 
         //Random position around the player

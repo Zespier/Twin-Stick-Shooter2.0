@@ -7,6 +7,10 @@ public class AudioPool : MonoBehaviour {
 
     public List<AudioOptimization> sources;
 
+    /// <summary>
+    /// Gets the nex available audio source
+    /// </summary>
+    /// <returns></returns>
     public AudioOptimization GetAvailableSource() {
 
         for (int i = 0; i < sources.Count; i++) {

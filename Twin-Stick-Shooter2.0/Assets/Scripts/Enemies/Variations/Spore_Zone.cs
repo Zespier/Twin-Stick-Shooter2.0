@@ -18,6 +18,12 @@ public class Spore_Zone : Generator {
         }
     }
 
+    /// <summary>
+    /// Waits for spoew mind to be alive
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="action"></param>
+    /// <returns></returns>
     private IEnumerator C_WaitForSpore_MindInstantiation(int value, Action<int> action) {
 
         while (Spore_Mind.instance == null) {

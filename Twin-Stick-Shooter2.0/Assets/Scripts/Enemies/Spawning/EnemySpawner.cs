@@ -42,14 +42,23 @@ public class EnemySpawner : MonoBehaviour {
         Events.OnWaveEnded -= StopAskingForMoney;
     }
 
+    /// <summary>
+    /// Initializes the amount of money for spawning => This spawner will not be used anymore due to feedback from the teacher
+    /// </summary>
     private void InitializeMoney() {
         _currentMoney = SpawnArea.initialMoney;
     }
 
+    /// <summary>
+    /// Generates money constantly  => This spawner will not be used anymore due to feedback from the teacher
+    /// </summary>
     private void GenerateMoney() {
         _currentMoney += MoneyPerSecondThisWave() * Time.deltaTime;
     }
 
+    /// <summary>
+    /// Shares the money between active waves => This spawner will not be used anymore due to feedback from the teacher
+    /// </summary>
     private void ShareMoneyBetweenWaves() {
         if (_wavesAskingForMoney.Count > 0) {
             float moneyPerWave = _currentMoney / _wavesAskingForMoney.Count;
@@ -64,6 +73,10 @@ public class EnemySpawner : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Returns how much moeny is generating the wave => This spawner will not be used anymore due to feedback from the teacher
+    /// </summary>
+    /// <returns></returns>
     private float MoneyPerSecondThisWave() {
         return Mathf.Lerp(SpawnArea.moneyPerSecond, SpawnArea.moneyPerSecond * 2, (float)CurrentWaveIndex / (waves.Count - 1));
     }
@@ -147,17 +160,34 @@ public class EnemySpawner : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Adds the wave to the ones that need money to spwan => This spawner will not be used anymore due to feedback from the teacher
+    /// </summary>
+    /// <param name="wave"></param>
     private void WaveStartsAskingForMoney(Wave wave) {
         _wavesAskingForMoney.Add(wave);
     }
 
+    /// <summary>
+    /// The wave doesn't need moneey anymore => This spawner will not be used anymore due to feedback from the teacher
+    /// </summary>
+    /// <param name="wave"></param>
     private void StopAskingForMoney(Wave wave) {
         _wavesAskingForMoney.Remove(wave);
     }
 
+    /// <summary>
+    /// The wave consumes money to spawn => This spawner will not be used anymore due to feedback from the teacher
+    /// </summary>
+    /// <param name="wave"></param>
     private void WaveConsumesMoney(Wave wave) {
         wave.money -= wave.nextMoneyPeak;
     }
+
+    /// <summary>
+    /// Sets the next peak of money needed to spawn => This spawner will not be used anymore due to feedback from the teacher
+    /// </summary>
+    /// <param name="wave"></param>
     private void SetNextMoneyPeak(Wave wave) {
         if (wave.waveType == WaveType.continuos) {
             wave.nextMoneyPeak = 10;
@@ -166,6 +196,10 @@ public class EnemySpawner : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Starts the wave spawning cicle  => This spawner will not be used anymore due to feedback from the teacher
+    /// </summary>
+    /// <param name="spawnArea"></param>
     public void StartWaveSpawning(SpawnArea spawnArea) {
         AssignNewSpawnArea(spawnArea);
         AssignNewWaves(spawnArea);
@@ -178,6 +212,10 @@ public class EnemySpawner : MonoBehaviour {
         c_waveSpawning = StartCoroutine(C_WaveSpawning());
     }
 
+    /// <summary>
+    /// Coroutine that spawns enemies  => This spawner will not be used anymore due to feedback from the teacher
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator C_WaveSpawning() {
         _waveTimer = SpawnArea.timeBetweenWaves;
 
@@ -200,6 +238,9 @@ public class EnemySpawner : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Stops the wave spawning => This spawner will not be used anymore due to feedback from the teacher
+    /// </summary>
     private void FinishWaveSpawning() {
         RemoveSpawnArea();
         RemoveWaves();
@@ -209,14 +250,25 @@ public class EnemySpawner : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Assigns the spawn area => This spawner will not be used anymore due to feedback from the teacher
+    /// </summary>
+    /// <param name="spawnArea"></param>
     private void AssignNewSpawnArea(SpawnArea spawnArea) {
         SpawnArea = spawnArea;
     }
 
+    /// <summary>
+    /// Remove the spawn area => This spawner will not be used anymore due to feedback from the teacher
+    /// </summary>
     private void RemoveSpawnArea() {
         SpawnArea = null;
     }
 
+    /// <summary>
+    /// Assigns new waves to a spawn area => This spawner will not be used anymore due to feedback from the teacher
+    /// </summary>
+    /// <param name="spawnArea"></param>
     private void AssignNewWaves(SpawnArea spawnArea) {
         RemoveWaves();
 
@@ -225,10 +277,17 @@ public class EnemySpawner : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Eliminna todas las waves => This spawner will not be used anymore due to feedback from the teacher
+    /// </summary>
     private void RemoveWaves() {
         waves.Clear();
     }
 
+    /// <summary>
+    /// Spawns an enemy  => This spawner will not be used anymore due to feedback from the teacher
+    /// </summary>
+    /// <param name="wave"></param>
     private void SpawnEnemy(Wave wave) {
 
         switch (wave.enemyType) {
@@ -250,6 +309,10 @@ public class EnemySpawner : MonoBehaviour {
         wave.amount--;
     }
 
+    /// <summary>
+    /// Gets the new spawn position => This spawner will not be used anymore due to feedback from the teacher
+    /// </summary>
+    /// <returns></returns>
     private Vector2 GetNewSpawnPosition() {
         Vector2 newPosition;
 

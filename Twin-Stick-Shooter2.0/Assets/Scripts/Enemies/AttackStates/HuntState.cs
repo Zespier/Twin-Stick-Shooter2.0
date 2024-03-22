@@ -16,6 +16,9 @@ public class HuntState : AttackBaseState {
     public override void OnStateExit() {
     }
 
+    /// <summary>
+    /// Check wheter it should change to dash state
+    /// </summary>
     public override void StateLateUpdate() {
         _huntTimer += Time.deltaTime;
         if (_huntTimer >= huntTime) {
@@ -23,6 +26,9 @@ public class HuntState : AttackBaseState {
         }
     }
 
+    /// <summary>
+    /// Clamps the position to a circle around the player, so it can't scape
+    /// </summary>
     public override void StateUpdate() {
         Vector3 newForward = controller.player.position - transform.position;
         newForward.y = 0;

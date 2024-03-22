@@ -20,10 +20,17 @@ public class Turret : Enemy {
 
     #region Behaviour with States
 
+    /// <summary>
+    /// Changes to guard state after shooting
+    /// </summary>
     public override void FinishedShooting() {
         RotationSpeed = guard_RotationSpeed;
         ChangeState(typeof(GuardState));
     }
+
+    /// <summary>
+    /// Changes to shoot state after guarding
+    /// </summary>
     public override void FinishedGuarding() {
         RotationSpeed = shoot_RotationSpeed;
         ChangeState(typeof(ShootState));

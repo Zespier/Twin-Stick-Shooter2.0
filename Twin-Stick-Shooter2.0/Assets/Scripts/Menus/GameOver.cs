@@ -14,6 +14,9 @@ public class GameOver : MonoBehaviour {
         Canvas_SetActive(false);
     }
 
+    /// <summary>
+    /// Shows the game over panle
+    /// </summary>
     public void ShowGameOverPanel() {
         Time.timeScale = 1;
         StartCoroutine(C_ShowGameOverPanel());
@@ -21,6 +24,10 @@ public class GameOver : MonoBehaviour {
         canvasGroup.blocksRaycasts = true;
     }
 
+    /// <summary>
+    /// Animation of the game over panel
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator C_ShowGameOverPanel() {
 
         float timer = 0;
@@ -34,6 +41,10 @@ public class GameOver : MonoBehaviour {
         canvasGroup.alpha = 1;
     }
 
+    /// <summary>
+    /// Canvas group set up
+    /// </summary>
+    /// <param name="active"></param>
     public void Canvas_SetActive(bool active) {
 
         canvasGroup.alpha = active ? 1 : 0;

@@ -7,6 +7,9 @@ public class Menu : MonoBehaviour {
         gameObject.SetActive(true);
     }
 
+    /// <summary>
+    /// Exits the game
+    /// </summary>
     public void ExitGame() {
         Application.Quit();
     }

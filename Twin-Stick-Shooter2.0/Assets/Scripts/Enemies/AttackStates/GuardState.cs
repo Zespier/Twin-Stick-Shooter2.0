@@ -14,7 +14,9 @@ public class GuardState : AttackBaseState {
 
     public override void OnStateExit() {
     }
-
+    /// <summary>
+    /// Checks if the guard time has finished
+    /// </summary>
     public override void StateLateUpdate() {
         if (guardTime == -1) { return; }
 

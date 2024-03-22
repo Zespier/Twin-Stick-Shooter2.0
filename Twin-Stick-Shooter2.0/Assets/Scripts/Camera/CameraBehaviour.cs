@@ -46,16 +46,20 @@ public class CameraBehaviour : MonoBehaviour {
         CameraMovement(player.position, _currentTarget);
     }
 
-    //private void LateUpdate() {
-    //    DistanceMovement();
-    //    TargetMovement();
-    //    CameraMovement(player.position, _currentTarget);
-    //}
-
+    /// <summary>
+    /// Lerped movement of the camera
+    /// </summary>
+    /// <param name="playerPosition"></param>
+    /// <param name="target"></param>
     private void CameraMovement(Vector3 playerPosition, Vector3 target) {
         transform.position = Vector3.Lerp(transform.position, playerPosition + target, Time.deltaTime / movementDivision);
     }
 
+    /// <summary>
+    /// Lerped movement of the camera distance from the player (vertically)
+    /// </summary>
+    /// <param name="playerPosition"></param>
+    /// <param name="target"></param>
     private void DistanceMovement() {
         float distanceDivision = this.distanceDivision;
         if (mainCamera.orthographicSize > GetDistance()) {
@@ -66,10 +70,19 @@ public class CameraBehaviour : MonoBehaviour {
         debuggCurrentDistance = mainCamera.orthographicSize;
     }
 
+    /// <summary>
+    /// Lerped movement of the camera target
+    /// </summary>
+    /// <param name="playerPosition"></param>
+    /// <param name="target"></param>
     private void TargetMovement() {
         _currentTarget = Vector2.Lerp(_currentTarget, _nextTarget, Time.deltaTime / targetDivision);
     }
 
+    /// <summary>
+    /// Gets the current distance from the player depending on the speed
+    /// </summary>
+    /// <returns></returns>
     private float GetDistance() {
         float movementMagnitude = playerController._moveValue.sqrMagnitude;
         if (movementMagnitude > 1) {
@@ -78,10 +91,17 @@ public class CameraBehaviour : MonoBehaviour {
         return distance - (playerSpeedInfluence / 3f) + (movementMagnitude * playerSpeedInfluence);
     }
 
+    /// <summary>
+    /// Sets the next target value that is going to be lerped later
+    /// </summary>
+    /// <param name="position"></param>
     private void MoveTarget(Vector3 position) {
         _nextTarget = position * targetMultiplier;
     }
 
+    /// <summary>
+    /// Shakes the camera
+    /// </summary>
     public void CameraShake() {
         if (_cameraShakeAnimation != null) {
             StopCoroutine(_cameraShakeAnimation);
@@ -89,6 +109,11 @@ public class CameraBehaviour : MonoBehaviour {
 
         _cameraShakeAnimation = StartCoroutine(CameraShakeAnimation());
     }
+
+    /// <summary>
+    /// Coroutine that imitates the shake animation
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator CameraShakeAnimation() {
 
         float timer = shakeDuration;

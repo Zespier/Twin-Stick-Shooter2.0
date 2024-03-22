@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class AttackBaseState : MonoBehaviour {
 
+    //Base state of enemies attacks
+
     public Enemy controller;
 
     public abstract void OnStateEnter();

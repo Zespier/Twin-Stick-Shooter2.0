@@ -13,7 +13,6 @@ public class Debris : MonoBehaviour {
     private float _timer;
 
     public float Speed { get; set; }
-    public RotationType RotationType { get; set; }
 
     private void Awake() {
         ChooseDirection(false);
@@ -35,35 +34,25 @@ public class Debris : MonoBehaviour {
         _timer += Time.deltaTime;
     }
 
+    /// <summary>
+    /// Moves the debri
+    /// </summary>
     private void Movement() {
         transform.position += _direction * Time.deltaTime * Speed;
     }
 
+    /// <summary>
+    /// Rotates the debris
+    /// </summary>
     private void Rotation() {
-        switch (RotationType) {
-            case RotationType._1:
-            case RotationType._2:
-            case RotationType._3:
-            case RotationType._4:
-            case RotationType._5:
-            case RotationType._6:
-                transform.forward = Quaternion.AngleAxis(rotationSpeed, transform.right) * transform.forward;
-                break;
-                transform.forward = Quaternion.AngleAxis(rotationSpeed, transform.up) * transform.forward;
-                break;
-                transform.up = Quaternion.AngleAxis(rotationSpeed, transform.right) * transform.forward;
-                break;
-                transform.up = Quaternion.AngleAxis(rotationSpeed, transform.forward) * transform.forward;
-                break;
-                transform.right = Quaternion.AngleAxis(rotationSpeed, transform.up) * transform.forward;
-                break;
-                transform.right = Quaternion.AngleAxis(rotationSpeed, transform.forward) * transform.forward;
-                break;
-            default:
-                break;
-        }
+
+        transform.forward = Quaternion.AngleAxis(rotationSpeed, transform.right) * transform.forward;
     }
 
+    /// <summary>
+    /// Chooses next direction to travel out of player vision
+    /// </summary>
+    /// <param name="toPlayer"></param>
     private void ChooseDirection(bool toPlayer) {
         if (toPlayer) {
             _direction = PlayerController.instance.transform.position - transform.position;
@@ -78,12 +67,6 @@ public class Debris : MonoBehaviour {
 
         _direction = _direction.normalized;
         Speed = speed + Random.Range(0, speedRange);
-
-        RotationType = (RotationType)Random.Range(0, 7);
     }
 
-}
-
-public enum RotationType {
-    _1, _2, _3, _4, _5, _6,
 }

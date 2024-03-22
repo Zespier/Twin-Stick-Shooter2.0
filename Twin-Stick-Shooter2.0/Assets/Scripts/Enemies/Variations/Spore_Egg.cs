@@ -23,11 +23,18 @@ public class Spore_Egg : Generator, IDamageable {
         _spawnTimer += Time.deltaTime;
     }
 
+    /// <summary>
+    /// Reaches next level 
+    /// </summary>
     private void NextLevel() {
         if ((int)Size >= 2) { return; }
         Size = (Spore_ZoneSize)((int)Size + 1);
     }
 
+    /// <summary>
+    /// Gets the next enemy that is going to spawn
+    /// </summary>
+    /// <returns></returns>
     private GameObject GetNextSporePrefab() {
 
         return Size switch {
@@ -39,6 +46,10 @@ public class Spore_Egg : Generator, IDamageable {
         };
     }
 
+    /// <summary>
+    /// Gets the next amount of enemies to spawn
+    /// </summary>
+    /// <returns></returns>
     private int GetNextAmountOfSpores() {
 
         return Size switch {
@@ -50,18 +61,31 @@ public class Spore_Egg : Generator, IDamageable {
         };
     }
 
+    /// <summary>
+    /// Takes damage
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="damage"></param>
+    /// <param name="crit"></param>
+    /// <param name="damageType"></param>
     public void TakeDamage(Vector3 position, float damage, bool crit, string damageType) {
         FeedbackController.instance.DamageFeedBack(position, damage, crit, damageType);
         hp -= damage;
         CheckDeath();
     }
 
+    /// <summary>
+    /// Checks if it died
+    /// </summary>
     private void CheckDeath() {
         if (hp < 0 || (int)Size >= 2) {
             Deactivate();
         }
     }
 
+    /// <summary>
+    /// Deactivate the enemy
+    /// </summary>
     public void Deactivate() {
         gameObject.SetActive(false);
     }

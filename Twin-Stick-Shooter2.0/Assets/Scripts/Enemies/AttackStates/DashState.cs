@@ -19,12 +19,18 @@ public class DashState : AttackBaseState {
     public override void OnStateExit() {
     }
 
+    /// <summary>
+    /// Checks if the dash should end
+    /// </summary>
     public override void StateLateUpdate() {
         if (_distanceTraveled > dashDistance) {
             controller.ChangeState(typeof(HuntState));
         }
     }
 
+    /// <summary>
+    /// Calculates the distance traveled
+    /// </summary>
     public override void StateUpdate() {
         _distanceTraveled += (Time.deltaTime * controller.Speed * _dashDirection).magnitude;
     }

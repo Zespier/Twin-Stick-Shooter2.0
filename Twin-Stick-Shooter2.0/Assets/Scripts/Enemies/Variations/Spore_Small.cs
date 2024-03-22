@@ -28,6 +28,12 @@ public class Spore_Small : Enemy {
         }
     }
 
+    /// <summary>
+    /// Watis for the spore mind to be alive
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="action"></param>
+    /// <returns></returns>
     private IEnumerator C_WaitForSpore_MindInstantiation(int value, Action<int> action) {
 
         while (Spore_Mind.instance == null) {
@@ -37,10 +43,16 @@ public class Spore_Small : Enemy {
         action?.Invoke(value);
     }
 
+    /// <summary>
+    /// Explodes when reaching the player
+    /// </summary>
     public override void ReachingPlayer() {
         Explode();
     }
 
+    /// <summary>
+    /// Expllodes
+    /// </summary>
     private void Explode() {
         if (_exploded) { return; }
         _exploded = true;
@@ -54,6 +66,11 @@ public class Spore_Small : Enemy {
         StartCoroutine(C_WaitSecondsToDestroy(explosion.main.startLifetime.constant + 0.1f));
     }
 
+    /// <summary>
+    /// Waits bofre destroygin this enemy
+    /// </summary>
+    /// <param name="seconds"></param>
+    /// <returns></returns>
     private IEnumerator C_WaitSecondsToDestroy(float seconds) {
         yield return new WaitForSeconds(seconds);
         Destroy(gameObject);

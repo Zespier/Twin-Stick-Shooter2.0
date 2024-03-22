@@ -15,10 +15,16 @@ public class Minion : Enemy {
     public override float DistanceToReachPlayer => distanceToReachPlayer_Boss_Small;
     public override float RotationLerpSpeed => rotationLerpSpeed_Minion;
 
+    /// <summary>
+    /// Change to shootstate when reaching the player
+    /// </summary>
     public override void ReachingPlayer() {
         ChangeState(typeof(ShootState));
     }
 
+    /// <summary>
+    /// Change to ShootMovingState when PlayerOutOfReach
+    /// </summary>
     public override void PlayerOutOfReach() {
         ChangeState(typeof(ShootMovingState));
     }

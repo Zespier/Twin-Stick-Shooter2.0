@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SpawnArea : MonoBehaviour {
 
+    //The spawn area will be a collider that triggers the start of wave spawning
+
     public float initialMoney = 1000f;
     public float moneyPerSecond = 100f;
     public float timeBetweenWaves = 3f;

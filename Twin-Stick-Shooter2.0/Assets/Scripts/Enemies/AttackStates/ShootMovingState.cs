@@ -14,6 +14,9 @@ public class ShootMovingState : AttackBaseState {
     private float _shootTimer;
     private float _shootDurationTime;
 
+    /// <summary>
+    /// Shots a bullet
+    /// </summary>
     public void Shoot() {
         Bullet newBullet = Instantiate(bulletPrefab, shootPoint.position, Quaternion.identity, BulletContainer.instance.transform).GetComponent<Bullet>();
         newBullet.Shoot(shootPoint.forward, 2f);
@@ -29,6 +32,9 @@ public class ShootMovingState : AttackBaseState {
     public override void OnStateExit() {
     }
 
+    /// <summary>
+    /// Checks if reached the player or finished shooting
+    /// </summary>
     public override void StateLateUpdate() {
 
         if (Vector3.Distance(controller.player.position, transform.position) < controller.DistanceToReachPlayer) {
@@ -43,6 +49,9 @@ public class ShootMovingState : AttackBaseState {
         }
     }
 
+    /// <summary>
+    /// Moves and waits for next shoot
+    /// </summary>
     public override void StateUpdate() {
 
         controller.rb.velocity = (controller.player.position - transform.position).normalized * shootingMovementSpeed;

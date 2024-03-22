@@ -42,6 +42,9 @@ public class Spore_Mind : MonoBehaviour {
         Events.OnEnemyDeath -= SporeDeath;
     }
 
+    /// <summary>
+    /// Checks if spores can fuse
+    /// </summary>
     public void CheckSporeFusion() {
         if (TotalSpore_Normal * hierarchyRatio >= TotalSpore_Small) {
             //TODO: Small fusion => normal
@@ -58,6 +61,11 @@ public class Spore_Mind : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Spawns a spore
+    /// </summary>
+    /// <param name="prefab"></param>
+    /// <param name="position"></param>
     public void SpawnSpore(GameObject prefab, Vector3 position) {
 
         if (TotalSpores >= 100) { return; }
@@ -65,12 +73,21 @@ public class Spore_Mind : MonoBehaviour {
         Instantiate(prefab, position, Quaternion.identity, EnemyContainer.instance.transform);
     }
 
+    /// <summary>
+    /// Spawns a spore_zone
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="spore_ZoneSize"></param>
     public void Spore_Zone(Vector3 position, Spore_ZoneSize spore_ZoneSize) {
 
         Spore_Zone newSpore_zone = Instantiate(spore_Zone, position, Quaternion.identity, EnemyContainer.instance.transform);
         newSpore_zone.Size = spore_ZoneSize;
     }
 
+    /// <summary>
+    /// Dpenes on the spore that died, something can happen, tpically spawn more spores
+    /// </summary>
+    /// <param name="spore"></param>
     public void SporeDeath(Enemy spore) {
 
         Enum.TryParse(spore.GetType().ToString(), out SporeType sporeType);

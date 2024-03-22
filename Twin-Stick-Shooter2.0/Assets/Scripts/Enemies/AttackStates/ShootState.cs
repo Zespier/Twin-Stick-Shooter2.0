@@ -13,6 +13,9 @@ public class ShootState : AttackBaseState {
     private float _shootTimer;
     private float _shootDurationTime;
 
+    /// <summary>
+    /// Shoots a butllet
+    /// </summary>
     public void Shoot() {
         Bullet newBullet = Instantiate(bulletPrefab, shootPoint.position, Quaternion.identity, BulletContainer.instance.transform).GetComponent<Bullet>();
         newBullet.Shoot(shootPoint.forward, 2f);
@@ -30,6 +33,9 @@ public class ShootState : AttackBaseState {
     public override void OnStateExit() {
     }
 
+    /// <summary>
+    /// Checks if the player is out of reach or finished shooting
+    /// </summary>
     public override void StateLateUpdate() {
 
         if (changeStateWhenPlayerOutOfReach && Vector3.Distance(controller.player.position, transform.position) > controller.DistanceToReachPlayer) {
@@ -45,6 +51,9 @@ public class ShootState : AttackBaseState {
 
     }
 
+    /// <summary>
+    /// Waits for next shoot
+    /// </summary>
     public override void StateUpdate() {
         if (_shootTimer + 1f / fireRate < Time.time) {
             _shootTimer = Time.time;

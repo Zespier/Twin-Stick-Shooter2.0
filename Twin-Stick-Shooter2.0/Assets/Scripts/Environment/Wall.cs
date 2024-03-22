@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Wall : Damageable {
 
+    /// <summary>
+    /// If a bullet impacts, destroy it
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnTriggerEnter(Collider collision) {
         if (collision.GetComponent<Collider>().TryGetComponent(out IBullet bullet)) {
             bullet.Deactivate();

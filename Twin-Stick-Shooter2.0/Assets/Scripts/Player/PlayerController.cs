@@ -72,6 +72,10 @@ public class PlayerController : Damageable {
         Events.OnTargetMove?.Invoke(lookValue3D.normalized);
     }
 
+    /// <summary>
+    /// Gets the look value
+    /// </summary>
+    /// <returns></returns>
     private Vector2 GetLookValue() {
         Vector2 lookValue = playerInputs.Player.Look.ReadValue<Vector2>();
 
@@ -94,6 +98,10 @@ public class PlayerController : Damageable {
         }
     }
 
+    /// <summary>
+    /// removes health
+    /// </summary>
+    /// <param name="amount"></param>
     private void RemoveHealth(float amount) {
         hp -= amount;
         playerHealth.ReduceHealthBar(hp, _maxHp);
@@ -102,6 +110,9 @@ public class PlayerController : Damageable {
         }
     }
 
+    /// <summary>
+    /// Death method
+    /// </summary>
     public void Death() {
         mesh.SetActive(false);
         deathExplosion.Play();
@@ -113,6 +124,9 @@ public class PlayerController : Damageable {
         GameOver.instance.ShowGameOverPanel();
     }
 
+    /// <summary>
+    /// heals the player
+    /// </summary>
     public void Heal() {
         hp = _maxHp;
 

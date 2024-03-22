@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Upgrade : MonoBehaviour {
 
+    //In the end I'm not using upgrades
+
     public UpgradeType upgradeType;
     public float amount = 1f;
 

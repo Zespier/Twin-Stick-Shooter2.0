@@ -18,6 +18,13 @@ public class FeedbackController : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Creates a damage canvas with the parameters on the enemy position
+    /// </summary>
+    /// <param name="enemy"></param>
+    /// <param name="damage"></param>
+    /// <param name="crit"></param>
+    /// <param name="damageType"></param>
     public void DamageFeedBack(Enemy enemy, float damage, bool crit, string damageType) {
         DamageCanvas damageCanvas = Instantiate(this.damageCanvas, enemy.transform.position, Quaternion.identity).GetComponent<DamageCanvas>();
         damageCanvas.Initialize(enemy, damage, crit);
@@ -35,6 +42,14 @@ public class FeedbackController : MonoBehaviour {
                 break;
         }
     }
+
+    /// <summary>
+    /// Creates a damage canvas with the parameters on the position 
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="damage"></param>
+    /// <param name="crit"></param>
+    /// <param name="damageType"></param>
     public void DamageFeedBack(Vector3 position, float damage, bool crit, string damageType) {
         DamageCanvas damageCanvas = Instantiate(this.damageCanvas, position, Quaternion.identity).GetComponent<DamageCanvas>();
         damageCanvas.Initialize(position, damage, crit);

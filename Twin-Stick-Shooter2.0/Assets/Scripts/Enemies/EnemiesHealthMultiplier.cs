@@ -6,6 +6,9 @@ public class EnemiesHealthMultiplier : MonoBehaviour {
 
     [SerializeField] private float _healthMultiplier = 1f;
 
+    /// <summary>
+    /// Multiplies the health of the enemies, to balance the game easier
+    /// </summary>
     public float HealthMultiplier { get => _healthMultiplier; }
 
     public static EnemiesHealthMultiplier instance;

@@ -42,7 +42,9 @@ public class Spore_Big : Enemy {
         _spawnTimer += Time.deltaTime;
     }
 
-
+    /// <summary>
+    /// Spawns an egg
+    /// </summary>
     protected void Spawn() {
         if (Spore_Mind.instance.TotalSpores >= 100) { return; }
 
@@ -51,7 +53,12 @@ public class Spore_Big : Enemy {
         Spore_Mind.instance.SpawnSpore(spore_EggPrefab, transform.position);
     }
 
-
+    /// <summary>
+    /// Waits for Spore_Mind to be alive
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="action"></param>
+    /// <returns></returns>
     private IEnumerator C_WaitForSpore_MindInstantiation(int value, Action<int> action) {
 
         while (Spore_Mind.instance == null) {
@@ -61,10 +68,16 @@ public class Spore_Big : Enemy {
         action?.Invoke(value);
     }
 
+    /// <summary>
+    /// Explodes when reaching the player
+    /// </summary>
     public override void ReachingPlayer() {
         Explode();
     }
 
+    /// <summary>
+    /// Explodes
+    /// </summary>
     private void Explode() {
         if (_exploded) { return; }
         _exploded = true;
@@ -78,6 +91,11 @@ public class Spore_Big : Enemy {
         StartCoroutine(C_WaitSecondsToDestroy(explosion.main.startLifetime.constant + 0.1f));
     }
 
+    /// <summary>
+    /// Waits before destroying this enmy
+    /// </summary>
+    /// <param name="seconds"></param>
+    /// <returns></returns>
     private IEnumerator C_WaitSecondsToDestroy(float seconds) {
         yield return new WaitForSeconds(seconds);
         Deactivate();

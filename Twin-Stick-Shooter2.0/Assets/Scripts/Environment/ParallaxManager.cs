@@ -19,6 +19,11 @@ public class ParallaxManager : MonoBehaviour {
         SetInitialLayersBounds();
     }
 
+    /// <summary>
+    /// Gets the next usable parallax layer
+    /// </summary>
+    /// <param name="layerIndex"></param>
+    /// <returns></returns>
     public ParallaxLayer GetUsableLayer(int layerIndex) {
         for (int i = 0; i < layers.Count; i++) {
             if (layers[i].layer == layerIndex && !layers[i].gameObject.activeSelf) {
@@ -31,12 +36,18 @@ public class ParallaxManager : MonoBehaviour {
         return _newLayer;
     }
 
+    /// <summary>
+    /// Writes the initial layers
+    /// </summary>
     private void SetInitialLayerIndexs() {
         for (int i = 0; i < layers.Count; i++) {
             layers[i].layer = i;
         }
     }
 
+    /// <summary>
+    /// Sets the initial bounds
+    /// </summary>
     public void SetInitialLayersBounds() {
         for (int i = 0; i < layers.Count; i++) {
             layers[i].SetBounds(Vector3.zero, GetLayerDistance(layers[i].layer), sizePerDistance);
@@ -45,6 +56,11 @@ public class ParallaxManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Gets the distance from the camera of the parallax layer
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns></returns>
     public float GetLayerDistance(int index) {
         return -(initialLayerDistance + distanceBetweenLayers * index);
     }

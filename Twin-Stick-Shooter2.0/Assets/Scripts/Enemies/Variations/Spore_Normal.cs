@@ -23,6 +23,12 @@ public class Spore_Normal : Enemy {
         }
     }
 
+    /// <summary>
+    /// Waits for Spore mind to be alive
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="action"></param>
+    /// <returns></returns>
     private IEnumerator C_WaitForSpore_MindInstantiation(int value, Action<int> action) {
 
         while (Spore_Mind.instance == null) {
@@ -34,17 +40,26 @@ public class Spore_Normal : Enemy {
 
     #region Behaviour with States
 
+    /// <summary>
+    /// When finished shooting change to zombie state
+    /// </summary>
     public override void FinishedShooting() {
         ChangeState(typeof(ZombieState));
     }
 
     #endregion
 
+    /// <summary>
+    /// When reaching player start shooting
+    /// </summary>
     public override void ReachingPlayer() {
         Debug.LogError("Remember the shoot in cone state is commented");
         //ChangeState(typeof(ShootInConeState));
     }
 
+    /// <summary>
+    /// Attack the layer
+    /// </summary>
     private void Attack() {
         //TODO: Damageplayer
     }

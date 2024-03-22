@@ -17,6 +17,9 @@ public class Shaman : Enemy {
         Explode();
     }
 
+    /// <summary>
+    /// Explodes
+    /// </summary>
     private void Explode() {
         if (_exploded) { return; }
         _exploded = true;
@@ -30,6 +33,11 @@ public class Shaman : Enemy {
         StartCoroutine(C_WaitSecondsToDestroy(explosion.main.startLifetime.constant + 0.1f));
     }
 
+    /// <summary>
+    /// Waits before destroying this enemy
+    /// </summary>
+    /// <param name="seconds"></param>
+    /// <returns></returns>
     private IEnumerator C_WaitSecondsToDestroy(float seconds) {
         yield return new WaitForSeconds(seconds);
         Destroy(gameObject);

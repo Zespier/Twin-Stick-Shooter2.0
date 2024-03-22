@@ -17,6 +17,9 @@ public class PauseMenu : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// On escape, opesn the menu
+    /// </summary>
     public void MimicEscapeButton() {
         if (PlayerController.instance._dead) { return; }
 
@@ -24,12 +27,20 @@ public class PauseMenu : MonoBehaviour {
         Canvas_SetActive(canvasGroup.alpha == 0 ? true : false);
     }
 
+    /// <summary>
+    /// Pauses the game
+    /// </summary>
+    /// <param name="pause"></param>
     public void PauseGame(bool pause) {
         if (PlayerController.instance != null && PlayerController.instance._dead) { Time.timeScale = 1; return; }
 
         Time.timeScale = pause ? 0 : 1;
     }
 
+    /// <summary>
+    /// Set up for hte canvas group
+    /// </summary>
+    /// <param name="active"></param>
     public void Canvas_SetActive(bool active) {
         if (PlayerController.instance!= null && PlayerController.instance._dead) { return; }
 

@@ -92,6 +92,9 @@ public class WeaponController : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Shoots the shotgun
+    /// </summary>
     public void ShootShotgun() {
 
         if (PlayerController.instance._dead) {
@@ -154,6 +157,10 @@ public class WeaponController : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Shoots shotgun
+    /// </summary>
+    /// <param name="context"></param>
     public void OnShotgunButton(InputAction.CallbackContext context) {
         if (context.started) {
             ShootShotgun();

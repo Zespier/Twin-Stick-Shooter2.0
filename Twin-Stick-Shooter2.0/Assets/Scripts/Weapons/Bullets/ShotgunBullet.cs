@@ -13,6 +13,9 @@ public class ShotgunBullet : Bullet {
         _timeToDie = 50;
     }
 
+    /// <summary>
+    /// Deactivates after bouncing
+    /// </summary>
     public override void Deactivate() {
         bounces--;
 

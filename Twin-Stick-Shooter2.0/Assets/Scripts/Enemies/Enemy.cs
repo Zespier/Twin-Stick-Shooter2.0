@@ -58,12 +58,19 @@ public class Enemy : Damageable {
         currentState.StateLateUpdate();
     }
 
+    /// <summary>
+    /// Rotates the body looking at the player with a lerp
+    /// </summary>
     protected virtual void RotateBody() {
         Vector3 targetLookDirection = player.transform.position - transform.position;
         targetLookDirection.y = 0f;
         body.forward = Vector3.Lerp(body.forward, targetLookDirection, Time.deltaTime / RotationLerpSpeed);
     }
 
+    /// <summary>
+    /// Changes state, calling the OnStateExit and onStateEnter
+    /// </summary>
+    /// <param name="state"></param>
     public virtual void ChangeState(Type state) {
         if (currentState.GetType() == state) { return; }
 
@@ -87,6 +94,9 @@ public class Enemy : Damageable {
 
     #region Behaviour with player
 
+    /// <summary>
+    /// How each enemy reacts when reaching the player, every herited class that want to do something special needs to override this
+    /// </summary>
     public virtual void ReachingPlayer() {
 
     }
@@ -95,14 +105,23 @@ public class Enemy : Damageable {
 
     #region Behaviour with States
 
+    /// <summary>
+    /// How each enemy reacts when finished shooting, every herited class that want to do something special needs to override this
+    /// </summary>
     public virtual void FinishedShooting() {
 
     }
 
+    /// <summary>
+    /// How each enemy reacts when finished guarding, every herited class that want to do something special needs to override this
+    /// </summary>
     public virtual void FinishedGuarding() {
 
     }
 
+    /// <summary>
+    /// How each enemy reacts when the player is out of reach, every herited class that want to do something special needs to override this
+    /// </summary>
     public virtual void PlayerOutOfReach() {
 
     }
@@ -111,6 +130,13 @@ public class Enemy : Damageable {
 
     #region Taking damage and deactivation
 
+    /// <summary>
+    /// basic override for every enemy, it will send a damage feedback from the damageable and reduce health
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="damage"></param>
+    /// <param name="crit"></param>
+    /// <param name="damageType"></param>
     public override void TakeDamage(Vector3 position, float damage, bool crit, string damageType) {
         base.TakeDamage(position, damage, crit, damageType);
 
@@ -118,12 +144,19 @@ public class Enemy : Damageable {
         CheckDeath();
     }
 
+    /// <summary>
+    /// Checks if the enemy us dead
+    /// </summary>
     private void CheckDeath() {
         if (hp < 0) {
             Deactivate();
         }
     }
 
+    /// <summary>
+    /// Deactivates the enemy for future pooling
+    /// little explosion for feedback
+    /// </summary>
     public void Deactivate() {
         Events.OnEnemyDeath?.Invoke(this);
 

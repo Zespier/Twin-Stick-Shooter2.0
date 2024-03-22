@@ -20,6 +20,11 @@ public class PlayerHealth : MonoBehaviour {
         damageBar.sizeDelta = Vector3.Lerp(damageBar.sizeDelta, health.sizeDelta, Time.deltaTime / lerpSpeed);
     }
 
+    /// <summary>
+    /// Reduces the player Helath UI
+    /// </summary>
+    /// <param name="healthLeft"></param>
+    /// <param name="maxHealth"></param>
     public void ReduceHealthBar(float healthLeft, float maxHealth) {
         _localScale = health.sizeDelta;
         _localScale.x = Mathf.Lerp(0, _width, healthLeft / maxHealth);

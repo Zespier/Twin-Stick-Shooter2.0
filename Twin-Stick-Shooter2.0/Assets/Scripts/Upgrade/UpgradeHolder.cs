@@ -10,6 +10,10 @@ public class UpgradeHolder : MonoBehaviour {
 
     public Upgrade TempUpgrade { get; set; }
 
+    /// <summary>
+    /// Adds an upgrade
+    /// </summary>
+    /// <param name="upgrade"></param>
     public void AddUpgrade(Upgrade upgrade) {
 
         bool found = false;
@@ -39,6 +43,10 @@ public class UpgradeHolder : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// removes an upgrade
+    /// </summary>
+    /// <param name="upgrade"></param>
     public void RemoveUpgrade(Upgrade upgrade) {
 
         for (int i = 0; i < upgrades.Count; i++) {
