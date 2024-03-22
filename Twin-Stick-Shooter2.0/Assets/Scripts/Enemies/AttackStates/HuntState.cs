@@ -23,7 +23,7 @@ public class HuntState : AttackBaseState {
         for (int i = 0; i < shootPoints.Count; i++) {
 
             Bullet newBullet = Instantiate(bulletPrefab, shootPoints[i].position, Quaternion.identity, BulletContainer.instance.transform).GetComponent<Bullet>();
-            newBullet.Shoot(shootPoints[i].forward, 5f);
+            newBullet.Shoot(shootPoints[i].forward, 1.1f);
 
         }
         AudioManager.instance.EnemyLaserSound(transform.position);

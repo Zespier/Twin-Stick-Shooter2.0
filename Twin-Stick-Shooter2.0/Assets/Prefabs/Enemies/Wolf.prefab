@@ -245,13 +245,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 5012240210877050051}
   selfieStickSize: 7.2
-  huntTime: 3
+  huntTime: 2
   shootPoints:
   - {fileID: 1448407109209100180}
   - {fileID: 7844271412220558047}
   bulletPrefab: {fileID: 7204759068860087085, guid: d26864505f312ab458e1925b5758263c,
     type: 3}
-  fireRate: 6
+  fireRate: 9
   bulletsToShot: 4
 --- !u!114 &6418259353478918049
 MonoBehaviour:
