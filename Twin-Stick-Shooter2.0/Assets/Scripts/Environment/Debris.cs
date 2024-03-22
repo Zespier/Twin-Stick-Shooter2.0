@@ -46,7 +46,7 @@ public class Debris : MonoBehaviour {
     /// </summary>
     private void Rotation() {
 
-        transform.forward = Quaternion.AngleAxis(rotationSpeed, transform.right) * transform.forward;
+        transform.forward = Quaternion.AngleAxis(rotationSpeed, Vector3.up) * transform.forward;
     }
 
     /// <summary>
@@ -56,7 +56,6 @@ public class Debris : MonoBehaviour {
     private void ChooseDirection(bool toPlayer) {
         if (toPlayer) {
             _direction = PlayerController.instance.transform.position - transform.position;
-
         } else {
 
             _direction = new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1));
