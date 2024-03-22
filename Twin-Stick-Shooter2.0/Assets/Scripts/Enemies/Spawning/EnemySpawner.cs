@@ -70,7 +70,7 @@ public class EnemySpawner : MonoBehaviour {
 
         Transform result = spawnPoints[Random.Range(0, spawnPoints.Count)];
 
-        while (Vector3.Distance(PlayerController.instance.transform.position, result.position) < 2f) {
+        while (Vector3.Distance(PlayerController.instance.transform.position, result.position) < 5f) {
             result = spawnPoints[Random.Range(0, spawnPoints.Count)];
         }
 
