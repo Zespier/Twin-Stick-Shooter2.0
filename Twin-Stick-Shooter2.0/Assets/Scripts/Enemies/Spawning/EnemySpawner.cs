@@ -34,16 +34,26 @@ public class EnemySpawner : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Allows to spawn every enemy
+    /// </summary>
     public void SpawnAllEnemies() {
         for (int i = 0; i < maxEnemies.Count; i++) {
             maxEnemies[i] = 1000;
         }
     }
 
+    /// <summary>
+    /// Removes enemy from the _generated list
+    /// </summary>
+    /// <param name="enemy"></param>
     public void RemoveEnemyFromGenerated(Enemy enemy) {
         _generatedEnemies.Remove(enemy);
     }
 
+    /// <summary>
+    /// Spawn next enemy on the list
+    /// </summary>
     public void SpawnNextEnemy() {
         Transform spawnPoint = SpawnPointRandom();
 
@@ -52,6 +62,10 @@ public class EnemySpawner : MonoBehaviour {
         CurrentEnemy++;
     }
 
+    /// <summary>
+    /// returns a random spawn point that is not near the player
+    /// </summary>
+    /// <returns></returns>
     private Transform SpawnPointRandom() {
 
         Transform result = spawnPoints[Random.Range(0, spawnPoints.Count)];
