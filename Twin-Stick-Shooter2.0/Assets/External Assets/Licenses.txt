@@ -2,10 +2,6 @@ Credits: Kenney Space Ships
 
 Space Weapons: https://shapeforms.itch.io/shapeforms-audio-free-sfx
 
-Black and White UI - Key buttons: https://ansdor.itch.io/button-icons
-Black and White UI - Posible Icons: https://nulltale.itch.io/white-scape
-Black and White UI - More posible Icons: https://chilly-durango.itch.io/tool-ui-icons
-
 Kenney UI => https://www.kenney.nl/assets/fantasy-ui-borders
 
 New ships: "Dieselpunk Sky Train - Voxel Version" (https://skfb.ly/6xxVJ) by Ivanix88 is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
