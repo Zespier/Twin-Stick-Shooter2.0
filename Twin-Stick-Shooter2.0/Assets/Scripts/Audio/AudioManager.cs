@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,20 +35,6 @@ public class AudioManager : MonoBehaviour {
         if (!instance) { instance = this; }
     }
 
-    private void OnEnable() {
-        Events.OnBulletImpact += BulletImpactSound;
-        Events.OnShootBullet += ShootSound;
-    }
-
-    private void Start() {
-        //ambientSource.Play();
-    }
-
-    private void OnDisable() {
-        Events.OnBulletImpact -= BulletImpactSound;
-        Events.OnShootBullet -= ShootSound;
-    }
-
     /// <summary>
     /// Lerps the pitch of the sound of the ship depending on the speed
     /// </summary>
@@ -71,11 +58,30 @@ public class AudioManager : MonoBehaviour {
     /// <param name="position"></param>
     public void BulletImpactSound(Vector3 position) {
         _audioSource = audioPool.GetAvailableSource();
-        _audioSource.audioSource.clip = bulletImpacClips[Random.Range(0, bulletImpacClips.Count)];
-        _audioSource.audioSource.pitch = Random.Range(1 - pitchRange, 1 + pitchRange);
+        _audioSource.audioSource.clip = bulletImpacClips[UnityEngine.Random.Range(0, bulletImpacClips.Count)];
+        _audioSource.audioSource.pitch = UnityEngine.Random.Range(1 - pitchRange, 1 + pitchRange);
         _audioSource.audioSource.volume = bulletImpactVolume;
         _audioSource.Activate(position);
         _audioSource.audioSource.Play();
+
+        StartCoroutine(DebugTime(_audioSource.audioSource.clip));
+    }
+
+    private IEnumerator DebugTime(AudioClip clip) {
+        DateTime before = DateTime.Now;
+        TimeSpan beforeTime = before.TimeOfDay;
+
+        while (clip.loadState != AudioDataLoadState.Loaded) {
+            yield return null;
+        }
+
+        DateTime after = DateTime.Now;
+        TimeSpan afterTime = after.TimeOfDay;
+
+        TimeSpan duration = afterTime - beforeTime;
+
+
+        Debug.Log($"The audio took => {duration.TotalSeconds} to load");
     }
 
     /// <summary>
@@ -85,8 +91,8 @@ public class AudioManager : MonoBehaviour {
     /// <param name="position"></param>
     public void ShootSound() {
         _audioSource = audioPool.GetAvailableSource();
-        _audioSource.audioSource.clip = shootClips[Random.Range(0, shootClips.Count)];
-        _audioSource.audioSource.pitch = Random.Range(1 - pitchRange, 1 + pitchRange);
+        _audioSource.audioSource.clip = shootClips[UnityEngine.Random.Range(0, shootClips.Count)];
+        _audioSource.audioSource.pitch = UnityEngine.Random.Range(1 - pitchRange, 1 + pitchRange);
         _audioSource.audioSource.volume = shootsVolume;
         _audioSource.Activate();
         _audioSource.audioSource.Play();
@@ -99,8 +105,8 @@ public class AudioManager : MonoBehaviour {
     /// <param name="position"></param>
     public void EnemyLaserSound(Vector3 position) {
         _audioSource = audioPool.GetAvailableSource();
-        _audioSource.audioSource.clip = enemyLasersClips[Random.Range(0, enemyLasersClips.Count)];
-        _audioSource.audioSource.pitch = Random.Range(1.1f - pitchRange, 1.1f + pitchRange);
+        _audioSource.audioSource.clip = enemyLasersClips[UnityEngine.Random.Range(0, enemyLasersClips.Count)];
+        _audioSource.audioSource.pitch = UnityEngine.Random.Range(1.1f - pitchRange, 1.1f + pitchRange);
         _audioSource.audioSource.volume = enemyLasersVolume;
         _audioSource.Activate(position);
         _audioSource.audioSource.Play();

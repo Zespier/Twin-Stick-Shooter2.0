@@ -89,7 +89,9 @@ public class Enemy : Damageable {
 
     private void OnTriggerEnter(Collider collision) {
         if (collision.TryGetComponent(out IBullet bullet)) {
-            TakeDamage(transform.position, bullet.Damage * bullet.BaseDamagePercentage, UnityEngine.Random.Range(0, 100) < 10, "energy");
+            FeedbackController.instance.Particles(ParticleType.smallExplosion, collision.transform.position, Vector3.forward);
+
+            TakeDamage(transform.position, bullet.Damage * bullet.BaseDamagePercentage, UnityEngine.Random.Range(0, 100) < 10, DamageType.DefaultWhite);
             bullet.Deactivate();
             Events.OnBulletImpact?.Invoke(transform.position);
         }
@@ -140,7 +142,7 @@ public class Enemy : Damageable {
     /// <param name="damage"></param>
     /// <param name="crit"></param>
     /// <param name="damageType"></param>
-    public override void TakeDamage(Vector3 position, float damage, bool crit, string damageType) {
+    public override void TakeDamage(Vector3 position, float damage, bool crit, DamageType damageType) {
         base.TakeDamage(position, damage, crit, damageType);
 
         Hp -= damage;

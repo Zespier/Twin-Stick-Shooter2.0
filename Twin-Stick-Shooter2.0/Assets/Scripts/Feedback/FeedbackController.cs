@@ -1,46 +1,91 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class FeedbackController : MonoBehaviour {
 
     public GameObject inventoryFullPrefab;
     public GameObject healingFeedBackPrefab;
-    public GameObject damageCanvas;
+    public DamageCanvas damageCanvas;
     public Color damageColor = Color.white;
-    public Color playerDamagedColor = Color.red;
+    public Color playerDamagedColor = Color.HSVToRGB(0, 69, 86);
+    public Color healingColor = Color.green;
+    public Transform mainCamera;
+
+    public List<ParticleFeedback> particleSystemPrefabs = new List<ParticleFeedback>();
+    public ParticleType visualReferenceToAllTypes;
+
+    private List<ParticleFeedback> _particlePool = new();
+    private List<DamageCanvas> _damageCanvasPool = new List<DamageCanvas>(capacity: 64);
 
     public static FeedbackController instance;
     private void Awake() {
         if (!instance) {
             instance = this;
         }
+
+        InitializePools();
     }
 
-    /// <summary>
-    /// Creates a damage canvas with the parameters on the enemy position
-    /// </summary>
-    /// <param name="enemy"></param>
-    /// <param name="damage"></param>
-    /// <param name="crit"></param>
-    /// <param name="damageType"></param>
-    public void DamageFeedBack(Enemy enemy, float damage, bool crit, string damageType) {
-        DamageCanvas damageCanvas = Instantiate(this.damageCanvas, enemy.transform.position, Quaternion.identity, BulletContainer.instance.transform).GetComponent<DamageCanvas>();
-        damageCanvas.Initialize(enemy, damage, crit);
-
-        switch (damageType) {
-            case "energy":
-            case "Energy":
-            default:
-                damageCanvas.damageText.color = damageColor;
-                break;
-
-            case "player":
-            case "Player":
-                damageCanvas.damageText.color = playerDamagedColor;
-                break;
+    private void InitializePools() {
+        for (int i = 0; i < particleSystemPrefabs.Count; i++) {
+            ParticleFeedback newParticle = Instantiate(particleSystemPrefabs[i], transform);
+            GetIntoThePool(newParticle);
         }
+
+        DamageCanvas newDamageCanvas = Instantiate(damageCanvas, transform);
+        GetIntoThePool(newDamageCanvas);
+    }
+
+    public ParticleFeedback GetFromPool(ParticleType particleType) {
+
+        for (int i = 0; i < _particlePool.Count; i++) {
+            if (_particlePool[i].type == particleType && !_particlePool[i].particleSystem.isPlaying) {
+                _particlePool[i].gameObject.SetActive(true);
+                return _particlePool[i];
+            }
+        }
+
+        ParticleFeedback newParticle = Instantiate(particleSystemPrefabs[particleSystemPrefabs.FindIndex(psp => psp.type == particleType)], transform);
+        GetIntoThePool(newParticle);
+        newParticle.gameObject.SetActive(true);
+        return newParticle;
+    }
+
+    public DamageCanvas GetDamageCanvasFromPool() {
+
+        for (int i = 0; i < _damageCanvasPool.Count; i++) {
+            if (!_damageCanvasPool[i].gameObject.activeSelf) {
+                return _damageCanvasPool[i];
+            }
+        }
+
+        DamageCanvas newDamageCanvas = Instantiate(damageCanvas, transform);
+        GetIntoThePool(newDamageCanvas);
+        return newDamageCanvas;
+    }
+
+    public void GetIntoThePool(ParticleFeedback particleFeedback) {
+        if (!_particlePool.Contains(particleFeedback)) {
+            _particlePool.Add(particleFeedback);
+        }
+    }
+
+    public void GetIntoThePool(DamageCanvas damageCanvas) {
+        damageCanvas.ResetCanvas();
+        damageCanvas.gameObject.SetActive(false);
+        _damageCanvasPool.Add(damageCanvas);
+    }
+
+    public ParticleFeedback Particles(ParticleType particleType, Vector3 position, Vector3 direction, Transform newParent = default) {
+        if (newParent == default) { newParent = transform; }
+
+        ParticleFeedback particleFeedback = GetFromPool(particleType);
+        particleFeedback.transform.position = position;
+        particleFeedback.transform.forward = direction;
+        particleFeedback.transform.parent = newParent;
+        particleFeedback.particleSystem.Play();
+        return particleFeedback;
     }
 
     /// <summary>
@@ -50,20 +95,20 @@ public class FeedbackController : MonoBehaviour {
     /// <param name="damage"></param>
     /// <param name="crit"></param>
     /// <param name="damageType"></param>
-    public void DamageFeedBack(Vector3 position, float damage, bool crit, string damageType) {
-        DamageCanvas damageCanvas = Instantiate(this.damageCanvas, position, Quaternion.identity, BulletContainer.instance.transform).GetComponent<DamageCanvas>();
+    public void DamageFeedBack(Vector3 position, float damage, bool crit, DamageType damageType) {
+        DamageCanvas damageCanvas = GetDamageCanvasFromPool();
         damageCanvas.Initialize(position, damage, crit);
 
         switch (damageType) {
-            case "energy":
-            case "Energy":
+            case DamageType.PlayerDamaged:
+                damageCanvas.damageText.color = playerDamagedColor;
+                break;
+            case DamageType.DefaultWhite:
             default:
                 damageCanvas.damageText.color = damageColor;
                 break;
-
-            case "player":
-            case "Player":
-                damageCanvas.damageText.color = playerDamagedColor;
+            case DamageType.Healing:
+                damageCanvas.damageText.color = healingColor;
                 break;
         }
     }
@@ -160,4 +205,9 @@ public class FeedbackController : MonoBehaviour {
     //}
 
     #endregion
+}
+public enum DamageType : byte {
+    DefaultWhite,
+    PlayerDamaged,
+    Healing,
 }

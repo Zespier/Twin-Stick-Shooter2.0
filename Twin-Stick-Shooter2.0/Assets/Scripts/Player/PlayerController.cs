@@ -92,7 +92,7 @@ public class PlayerController : Damageable {
         }
 
         if (collision.GetComponent<Collider>().TryGetComponent(out IBullet bullet)) {
-            TakeDamage(transform.position, bullet.Damage * bullet.BaseDamagePercentage, Random.Range(0, 100) < 10, "player");
+            TakeDamage(transform.position, bullet.Damage * bullet.BaseDamagePercentage, Random.Range(0, 100) < 10, DamageType.PlayerDamaged);
             bullet.Deactivate();
             RemoveHealth(bullet.Damage * bullet.BaseDamagePercentage);
         }

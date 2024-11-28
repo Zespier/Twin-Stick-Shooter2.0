@@ -13,7 +13,7 @@ public abstract class Damageable : MonoBehaviour, IDamageable {
     /// <param name="damage"></param>
     /// <param name="crit"></param>
     /// <param name="damageType"></param>
-    public virtual void TakeDamage(Vector3 position, float damage, bool crit, string damageType) {
+    public virtual void TakeDamage(Vector3 position, float damage, bool crit, DamageType damageType) {
         FeedbackController.instance.DamageFeedBack(position, damage, crit, damageType);
     }
 

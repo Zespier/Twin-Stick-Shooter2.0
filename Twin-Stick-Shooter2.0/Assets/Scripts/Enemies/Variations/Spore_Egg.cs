@@ -68,7 +68,7 @@ public class Spore_Egg : Generator, IDamageable {
     /// <param name="damage"></param>
     /// <param name="crit"></param>
     /// <param name="damageType"></param>
-    public void TakeDamage(Vector3 position, float damage, bool crit, string damageType) {
+    public void TakeDamage(Vector3 position, float damage, bool crit, DamageType damageType) {
         FeedbackController.instance.DamageFeedBack(position, damage, crit, damageType);
         hp -= damage;
         CheckDeath();

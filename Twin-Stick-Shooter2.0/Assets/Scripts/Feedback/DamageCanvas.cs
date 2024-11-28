@@ -10,25 +10,18 @@ public class DamageCanvas : MonoBehaviour {
     public float fadeOutTime = 0.3f;
     public float standByTime = 0.3f;
     public TMP_Text damageText;
+    public float positionRange = 0.7f;
 
     private Vector3 enemyPosition;
     private Vector3 _defaultScale;
     private bool _isCrit;
+    private Transform mainCamera;
 
-    /// <summary>
-    /// Initializes the damage canvas on the enemy position
-    /// </summary>
-    /// <param name="enemy"></param>
-    /// <param name="damage"></param>
-    /// <param name="crit"></param>
-    public void Initialize(Enemy enemy, float damage, bool crit) {
-        damageText.text = damage.ToString("F0");
-        enemyPosition = enemy.transform.position;
-        _defaultScale = transform.localScale;
-        _isCrit = crit;
-        Destroy(gameObject, deinflationTime + standByTime + fadeOutTime + 0.2f);
-        StartCoroutine(DamageAnimation());
+    public void ResetCanvas() {
+        if (_defaultScale != default) { transform.localScale = _defaultScale; }
+        damageText.color = Color.white;
     }
+
     /// <summary>
     /// Iitializes but in a specific position
     /// </summary>
@@ -36,11 +29,12 @@ public class DamageCanvas : MonoBehaviour {
     /// <param name="damage"></param>
     /// <param name="crit"></param>
     public void Initialize(Vector3 position, float damage, bool crit) {
+        gameObject.SetActive(true);
         damageText.text = damage.ToString("F0");
         enemyPosition = position;
         _defaultScale = transform.localScale;
         _isCrit = crit;
-        Destroy(gameObject, deinflationTime + standByTime + fadeOutTime + 0.2f);
+        //Destroy(gameObject, deinflationTime + standByTime + fadeOutTime + 0.2f);
         StartCoroutine(DamageAnimation());
     }
 
@@ -51,7 +45,7 @@ public class DamageCanvas : MonoBehaviour {
     private IEnumerator DamageAnimation() {
 
         //Random position around the player
-        transform.position = new Vector3(enemyPosition.x + Random.Range(-0.7f, 0.7f), 0, enemyPosition.z + Random.Range(0, 1f));
+        transform.position = new Vector3(enemyPosition.x + Random.Range(-positionRange, positionRange), enemyPosition.y + Random.Range(0.1f, positionRange), enemyPosition.z + Random.Range(-positionRange, positionRange));
         //Increase the size based in crit
         transform.localScale = _isCrit ? _defaultScale * (1 + increasedSize * 2.5f) : _defaultScale * (1 + increasedSize);
 
@@ -80,5 +74,8 @@ public class DamageCanvas : MonoBehaviour {
             timer -= Time.deltaTime;
             yield return null;
         }
+
+        ResetCanvas();
+        gameObject.SetActive(false);
     }
 }

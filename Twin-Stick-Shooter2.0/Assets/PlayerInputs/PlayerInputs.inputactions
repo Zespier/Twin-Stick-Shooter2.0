@@ -33,15 +33,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Shotgun",
-                    "type": "Button",
-                    "id": "a80e7e9c-12af-462c-a97b-d266f541ec8b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Pause",
                     "type": "Button",
                     "id": "ba2159b4-9eed-4289-9f21-3e4926e6ef6b",
@@ -236,39 +227,6 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Fire",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "57becce2-5883-4263-9b7b-3581e9c0695d",
-                    "path": "<Gamepad>/leftShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Shotgun",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "783163ac-9b2d-41bb-afd5-cb2a1b1544e2",
-                    "path": "<Gamepad>/leftTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Shotgun",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "7d229535-e3ca-4cd5-9c7c-572c044eb16b",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Shotgun",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
