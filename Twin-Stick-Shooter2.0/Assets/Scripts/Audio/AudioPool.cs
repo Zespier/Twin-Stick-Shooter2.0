@@ -7,6 +7,22 @@ public class AudioPool : MonoBehaviour {
 
     public List<AudioOptimization> sources;
 
+    public int GetNumberOfActiveVoices() {
+        int activeVoices = 0;
+        for (int i = 0; i < sources.Count; i++) {
+            if (sources[i] == null) {
+                sources.RemoveAt(i);
+                i--;
+                continue;
+            }
+            if (sources[i].audioSource.isPlaying) {
+                activeVoices++;
+            }
+        }
+
+        return activeVoices;
+    }
+
     /// <summary>
     /// Gets the nex available audio source
     /// </summary>
@@ -14,6 +30,12 @@ public class AudioPool : MonoBehaviour {
     public AudioOptimization GetAvailableSource() {
 
         for (int i = 0; i < sources.Count; i++) {
+            if (sources[i] == null) {
+                sources.RemoveAt(i);
+                i--;
+                continue;
+            }
+
             if (!sources[i].enabled) {
 
                 return sources[i];
@@ -24,5 +46,4 @@ public class AudioPool : MonoBehaviour {
         sources[^1].Deactivate();
         return sources[^1];
     }
-
 }

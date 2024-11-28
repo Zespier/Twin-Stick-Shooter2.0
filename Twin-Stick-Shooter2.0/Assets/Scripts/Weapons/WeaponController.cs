@@ -65,7 +65,7 @@ public class WeaponController : MonoBehaviour {
             return;
         }
 
-        Events.OnShootBullet?.Invoke();
+        AudioManager.instance.ShootSound();
         for (int i = 0; i < shootPoints.Count; i++) {
 
             if (_generatedBullets != null && _generatedBullets.Count > 0) {

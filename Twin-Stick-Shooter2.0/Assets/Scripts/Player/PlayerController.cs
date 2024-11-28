@@ -92,6 +92,10 @@ public class PlayerController : Damageable {
         }
 
         if (collision.GetComponent<Collider>().TryGetComponent(out IBullet bullet)) {
+
+            AudioManager.instance.PlayShortSound(ShortSound.smallExplosion, collision.transform.position);
+            FeedbackController.instance.Particles(ParticleType.smallExplosion, collision.transform.position, Vector3.forward);
+
             TakeDamage(transform.position, bullet.Damage * bullet.BaseDamagePercentage, Random.Range(0, 100) < 10, DamageType.PlayerDamaged);
             bullet.Deactivate();
             RemoveHealth(bullet.Damage * bullet.BaseDamagePercentage);

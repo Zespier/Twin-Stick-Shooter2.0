@@ -19,5 +19,4 @@ public class Events : MonoBehaviour {
     //---------------Enemies---------------------
     public static Action<Enemy> OnEnemyDeath;
 
-    public static Action OnShootBullet;
 }

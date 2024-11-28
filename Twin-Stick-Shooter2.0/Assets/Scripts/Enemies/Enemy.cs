@@ -90,10 +90,10 @@ public class Enemy : Damageable {
     private void OnTriggerEnter(Collider collision) {
         if (collision.TryGetComponent(out IBullet bullet)) {
             FeedbackController.instance.Particles(ParticleType.smallExplosion, collision.transform.position, Vector3.forward);
+            AudioManager.instance.PlayShortSound(ShortSound.smallExplosion, collision.transform.position);
 
             TakeDamage(transform.position, bullet.Damage * bullet.BaseDamagePercentage, UnityEngine.Random.Range(0, 100) < 10, DamageType.DefaultWhite);
             bullet.Deactivate();
-            Events.OnBulletImpact?.Invoke(transform.position);
         }
     }
 
