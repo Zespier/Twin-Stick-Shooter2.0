@@ -10,5 +10,4 @@ public class AudioListenerSingleton : MonoBehaviour {
     private void Awake() {
         if (!instance) { instance = this; }
     }
-
 }
