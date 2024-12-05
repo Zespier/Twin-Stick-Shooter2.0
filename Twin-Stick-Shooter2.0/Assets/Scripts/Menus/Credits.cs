@@ -34,12 +34,14 @@ public class Credits : MonoBehaviour {
     }
 
     public void OnSelectButton(InputAction.CallbackContext context) {
+        Debug.Log("A");
         if (gameObject.activeSelf) {
             buttons[GetCurrentButtonOutlined()].onClick.Invoke();
         }
     }
 
     public void OnArrowMoveSelectionVertically(InputAction.CallbackContext context) {
+        Debug.Log("A");
 
         if (gameObject.activeSelf) {
 
@@ -57,7 +59,7 @@ public class Credits : MonoBehaviour {
     }
 
     public void MoveOutlineUp() {
-      
+
         int currentIndex = GetCurrentButtonOutlined() - 1;
         if (currentIndex < 0) { currentIndex = buttons.Count - 1; }
 
@@ -65,7 +67,7 @@ public class Credits : MonoBehaviour {
     }
 
     public void MoveOutlineDown() {
-   
+
         int currentIndex = (GetCurrentButtonOutlined() + 1) % buttons.Count;
 
         outline.position = buttons[currentIndex].image.rectTransform.position;
