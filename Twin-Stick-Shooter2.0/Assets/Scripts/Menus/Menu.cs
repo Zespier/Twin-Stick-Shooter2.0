@@ -35,14 +35,14 @@ public class Menu : MonoBehaviour {
     }
 
     public void OnSelectButton(InputAction.CallbackContext context) {
-        if (gameObject.activeSelf) {
+        if (canvasGroup.alpha> 0) {
             buttons[GetCurrentButtonOutlined()].onClick.Invoke();
         }
     }
 
     public void OnArrowMoveSelectionVertically(InputAction.CallbackContext context) {
 
-        if (gameObject.activeSelf) {
+        if (canvasGroup.alpha > 0) {
 
             Vector2 direction = context.ReadValue<Vector2>();
             if (direction.x > 0) {

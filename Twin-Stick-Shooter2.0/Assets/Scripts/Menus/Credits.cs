@@ -35,14 +35,20 @@ public class Credits : MonoBehaviour {
     }
 
     public void OnSelectButton(InputAction.CallbackContext context) {
-        if (canvasGroup.alpha >= 0) {
+        Debug.Log("A");
+
+        if (canvasGroup.alpha > 0) {
+            Debug.Log("B");
+
             buttons[GetCurrentButtonOutlined()].onClick.Invoke();
         }
     }
 
     public void OnArrowMoveSelectionVertically(InputAction.CallbackContext context) {
+        Debug.Log("A");
 
-        if (canvasGroup.alpha >= 0) {
+        if (canvasGroup.alpha > 0) {
+            Debug.Log("B");
 
             Vector2 direction = context.ReadValue<Vector2>();
             if (direction.x > 0) {

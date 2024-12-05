@@ -39,7 +39,7 @@ public class GameOver : MonoBehaviour {
     }
 
     public void OnSelectButton(InputAction.CallbackContext context) {
-        if (canvasGroup.alpha >= 0) {
+        if (canvasGroup.alpha > 0) {
             buttons[GetCurrentButtonOutlined()].onClick.Invoke();
         }
     }
