@@ -6,7 +6,9 @@ public class MenuDeTrucos : MonoBehaviour
 {
     public CanvasGroup canvasGroup;
 
+    public static MenuDeTrucos instance;
     private void Awake() {
+        if(!instance) { instance = this; }
         Canvas_SetActive(false);
     }
 

@@ -169,6 +169,8 @@ public class Enemy : Damageable {
         AudioManager.instance.ExplosionSound(transform.position, "enemy");
 
         EnemySpawner.instance.RemoveEnemyFromGenerated(this);
+
+        MejoritasRecogiblesManager.instance.SpawnMejoritaRecogible(transform.position);
     }
 
     #endregion

@@ -23,6 +23,7 @@ public class Upgrade : MonoBehaviour {
 
 }
 
+[System.Serializable]
 public enum UpgradeType {
     baseDamage,
     damagePercentage,

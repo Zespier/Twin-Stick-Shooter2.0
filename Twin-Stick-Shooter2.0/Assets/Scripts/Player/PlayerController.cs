@@ -51,7 +51,15 @@ public class PlayerController : Damageable {
     /// Reads the player inputs on the left joystick to move
     /// </summary>
     private void Movement() {
-        _moveValue = playerInputs.Player.Move.ReadValue<Vector2>();
+
+        if (UpgradeCardManager.instance != null && UpgradeCardManager.instance.canvas.gameObject.activeSelf) {
+            _moveValue = Vector2.zero;
+            return;
+
+        } else {
+            _moveValue = playerInputs.Player.Move.ReadValue<Vector2>();
+        }
+
 
         _moveDirectionLerped = Vector2.Lerp(_moveDirectionLerped, _moveValue, Time.deltaTime / 0.1f);
         //transform.position += Time.deltaTime * speed * new Vector3(_moveDirectionLerped.x, 0, _moveDirectionLerped.y);
@@ -64,6 +72,10 @@ public class PlayerController : Damageable {
     /// Reads the player inputs on the right joystick to rotate
     /// </summary>
     private void Rotation() {
+        if (UpgradeCardManager.instance != null && UpgradeCardManager.instance.canvas.gameObject.activeSelf) {
+            return;
+        }
+
         Vector2 lookValue = GetLookValue();
         Vector3 lookValue3D = new Vector3(lookValue.x, 0, lookValue.y);
 
@@ -129,6 +141,8 @@ public class PlayerController : Damageable {
         AudioManager.instance.ExplosionSound(transform.position, "player");
         GameOver.instance.ShowGameOverPanel();
 
+        UpgradeCardManager.instance.canvas.SetActive(false);
+        MenuDeTrucos.instance.Canvas_SetActive(false);
     }
 
     /// <summary>
