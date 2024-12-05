@@ -160,6 +160,7 @@ GameObject:
   - component: {fileID: 6418259353478918049}
   - component: {fileID: 4750180052847625429}
   - component: {fileID: 4172049801446692195}
+  - component: {fileID: 6464130507820236239}
   m_Layer: 8
   m_Name: Wolf
   m_TagString: Untagged
@@ -181,6 +182,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8636737501785865922}
+  - {fileID: 646075172520398743}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5012240210877050051
@@ -208,6 +210,7 @@ MonoBehaviour:
   - {fileID: 744810918047140712}
   - {fileID: 6418259353478918049}
   currentState: {fileID: 744810918047140712}
+  stats: {fileID: 6464130507820236239}
   wolfSpeed: 14
   explosion: {fileID: 4096282143991893007}
 --- !u!95 &2957290133340791507
@@ -315,6 +318,78 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &6464130507820236239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4109757639539293933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6836d8fbf85a63c4984d1d2b437872da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradeHolder: {fileID: 6693780061328990238}
+  baseDamages: []
+  damagePercentages: []
+  flatDamages: []
+  baseHps: []
+  hpPercentages: []
+  flatHps: []
+  baseSpeeds: []
+  speedPercentages: []
+  flatSpeeds: []
+  baseAtk: 100
+  baseHP: 4000
+  baseSpeed: 2
+--- !u!1 &4628310870977234166
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 646075172520398743}
+  - component: {fileID: 6693780061328990238}
+  m_Layer: 8
+  m_Name: UpgradeHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &646075172520398743
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4628310870977234166}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.03700018, y: -16.77, z: 5.513}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4584236463679792625}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6693780061328990238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4628310870977234166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2dd0be141dbc6845a160997548b5aee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradePrefab: {fileID: 2375968710000066843, guid: d0bdca0070a4cc84380d85f6da8b8922,
+    type: 3}
+  upgrades: []
 --- !u!1 &5546862412447483103
 GameObject:
   m_ObjectHideFlags: 0

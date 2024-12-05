@@ -113,7 +113,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1521083656562017536
@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 118029265045251842}
   - component: {fileID: 7253072052823382757}
   - component: {fileID: 2122959561477986210}
+  - component: {fileID: 7986679445255635204}
   m_Layer: 10
   m_Name: Spore_Big
   m_TagString: Untagged
@@ -152,6 +153,7 @@ Transform:
   m_Children:
   - {fileID: 7309031965771905489}
   - {fileID: 7377180079048111817}
+  - {fileID: 868249157650666138}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &2617261658983972883
@@ -240,19 +242,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 2617261658983972883}
   speed: 10
-  sprite: {fileID: 1469063712985034879}
   player: {fileID: 0}
+  body: {fileID: 0}
   baseDamage: 1
   attackRate: 1
   distanceToReachPlayer: 2
+  rotationLerpSpeed: 0.1
   hp: 2500
   states:
   - {fileID: 2122959561477986210}
   currentState: {fileID: 0}
+  stats: {fileID: 7986679445255635204}
   speed_Spore_Big: 2.3
   explosion: {fileID: 3127639251767124860}
   boxCollider: {fileID: 2522282290664082217}
-  spore_EggPrefab: {fileID: 5430539919555556940, guid: a4020cfcfb3029b4987b5acbd6d581ee, type: 3}
+  spore_EggPrefab: {fileID: 5430539919555556940, guid: a4020cfcfb3029b4987b5acbd6d581ee,
+    type: 3}
   spawnEggTime: 18
 --- !u!95 &7253072052823382757
 Animator:
@@ -288,6 +293,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 118029265045251842}
+--- !u!114 &7986679445255635204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521083656562017536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6836d8fbf85a63c4984d1d2b437872da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradeHolder: {fileID: 3920852642358021245}
+  baseDamages: []
+  damagePercentages: []
+  flatDamages: []
+  baseHps: []
+  hpPercentages: []
+  flatHps: []
+  baseSpeeds: []
+  speedPercentages: []
+  flatSpeeds: []
+  baseAtk: 10
+  baseHP: 100
+  baseSpeed: 2
 --- !u!1 &1563647989824770194
 GameObject:
   m_ObjectHideFlags: 0
@@ -5208,3 +5238,50 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!1 &7952335157773526441
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 868249157650666138}
+  - component: {fileID: 3920852642358021245}
+  m_Layer: 8
+  m_Name: UpgradeHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &868249157650666138
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7952335157773526441}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 7.063, y: -9.3, z: 5.513}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1234877861954810378}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3920852642358021245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7952335157773526441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2dd0be141dbc6845a160997548b5aee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradePrefab: {fileID: 2375968710000066843, guid: d0bdca0070a4cc84380d85f6da8b8922,
+    type: 3}
+  upgrades: []

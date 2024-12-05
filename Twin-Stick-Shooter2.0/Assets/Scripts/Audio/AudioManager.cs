@@ -91,7 +91,7 @@ public class AudioManager : MonoBehaviour {
     }
 
     public void ShootSound() {
-        audioCalls.PlaySound(AudioCategory.GenericPoolSoundLowPriority, shootClips[UnityEngine.Random.Range(0, shootClips.Count)], pitch: UnityEngine.Random.Range(1 - pitchRange, 1 + pitchRange), position: PlayerStats.instance.transform.position, spatialBlendSettings: defaultSettings, volume: shootsVolume);
+        audioCalls.PlaySound(AudioCategory.GenericPoolSoundLowPriority, shootClips[UnityEngine.Random.Range(0, shootClips.Count)], pitch: UnityEngine.Random.Range(1 - pitchRange, 1 + pitchRange), position: PlayerController.instance.transform.position, spatialBlendSettings: defaultSettings, volume: shootsVolume);
     }
 
     public void PlayShortSound(ShortSound type, Vector3 position) {

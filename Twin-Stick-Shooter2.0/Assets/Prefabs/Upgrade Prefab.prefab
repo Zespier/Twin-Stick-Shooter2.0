@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1848066419115674370}
   - component: {fileID: 2375968710000066843}
   m_Layer: 0
-  m_Name: Upgrade
+  m_Name: Upgrade Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39,10 +39,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8148739177614390573}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8866aa573971184f8f5a5b41c1dedb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetStats: {fileID: 0}
   upgradeType: 0
   amount: 1

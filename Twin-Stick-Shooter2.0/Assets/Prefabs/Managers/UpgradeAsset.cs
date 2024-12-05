@@ -8,6 +8,6 @@ public class UpgradeAsset : ScriptableObject {
     public Sprite icon;
     public string description;
 
-    public List<UpgradeType> upgradeTypes = new List<UpgradeType>();
+    public List<Buff> upgradeTypes = new List<Buff>();
     public List<int> upgradeAmounts = new List<int>();
 }

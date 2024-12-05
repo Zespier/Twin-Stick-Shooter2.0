@@ -35,6 +35,53 @@ Transform:
   - {fileID: 4683658568408342419}
   m_Father: {fileID: 4798652945367271929}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1491116951858564913
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6459770567712032959}
+  - component: {fileID: 4233753281840246275}
+  m_Layer: 8
+  m_Name: UpgradeHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6459770567712032959
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491116951858564913}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 7.063, y: -9.3, z: 5.513}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4798652945367271929}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4233753281840246275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491116951858564913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2dd0be141dbc6845a160997548b5aee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradePrefab: {fileID: 2375968710000066843, guid: d0bdca0070a4cc84380d85f6da8b8922,
+    type: 3}
+  upgrades: []
 --- !u!1 &5743768706331910111
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,6 +241,7 @@ GameObject:
   - component: {fileID: 3436487638459248250}
   - component: {fileID: 3309871037971691416}
   - component: {fileID: 568618742530149507}
+  - component: {fileID: 8256937135218615289}
   m_Layer: 8
   m_Name: Spore_Small
   m_TagString: Untagged
@@ -215,6 +263,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3746152818658498379}
+  - {fileID: 6459770567712032959}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1677940680394099865
@@ -289,6 +338,7 @@ MonoBehaviour:
   states:
   - {fileID: 568618742530149507}
   currentState: {fileID: 568618742530149507}
+  stats: {fileID: 8256937135218615289}
   speed_Spore_Small: 10
   distanceToReachPlayer_Boss_Small: 0.1
   explosion: {fileID: 4770038662735427949}
@@ -327,6 +377,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 3436487638459248250}
+--- !u!114 &8256937135218615289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6033318669788209936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6836d8fbf85a63c4984d1d2b437872da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradeHolder: {fileID: 4233753281840246275}
+  baseDamages: []
+  damagePercentages: []
+  flatDamages: []
+  baseHps: []
+  hpPercentages: []
+  flatHps: []
+  baseSpeeds: []
+  speedPercentages: []
+  flatSpeeds: []
+  baseAtk: 500
+  baseHP: 400
+  baseSpeed: 2
 --- !u!1 &6343469572335038439
 GameObject:
   m_ObjectHideFlags: 0

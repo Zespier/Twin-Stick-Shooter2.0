@@ -15,6 +15,7 @@ public class UpgradeCardManager : MonoBehaviour {
         if (!instance) { instance = this; }
 
         canvas.gameObject.SetActive(false);
+        Time.timeScale = 1;
     }
 
     public void Open() {
@@ -29,12 +30,14 @@ public class UpgradeCardManager : MonoBehaviour {
             upgradeCards[i].SetUpUpgradeCard(randomUpgrades[i]);
         }
         canvas.SetActive(true);
+        Time.timeScale = 0;
     }
 
     public void ChooseMode(InputAction.CallbackContext context) {
         if (canvas.activeSelf) {
             ChooseMode();
             canvas.gameObject.SetActive(false);
+            Time.timeScale = 1;
         }
     }
 
@@ -42,7 +45,7 @@ public class UpgradeCardManager : MonoBehaviour {
         int currentImage = GetCurrentImageOutlined();
 
         for (int i = 0; i < upgradeCards[currentImage].upgradeAsset.upgradeTypes.Count; i++) {
-            PlayerStats.instance.AddBuff(upgradeCards[currentImage].upgradeAsset.upgradeTypes[i], upgradeCards[currentImage].upgradeAsset.upgradeAmounts[i]);
+            PlayerController.instance.Stats.AddBuff(upgradeCards[currentImage].upgradeAsset.upgradeTypes[i], upgradeCards[currentImage].upgradeAsset.upgradeAmounts[i]);
         }
     }
 

@@ -1,5 +1,52 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1026219534681012222
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6699294279145084768}
+  - component: {fileID: 7313281789901751946}
+  m_Layer: 8
+  m_Name: UpgradeHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6699294279145084768
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1026219534681012222}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5429958372216672284}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7313281789901751946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1026219534681012222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2dd0be141dbc6845a160997548b5aee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradePrefab: {fileID: 2375968710000066843, guid: d0bdca0070a4cc84380d85f6da8b8922,
+    type: 3}
+  upgrades: []
 --- !u!1 &6008832458426168039
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,6 +419,7 @@ GameObject:
   - component: {fileID: 7332487968548394239}
   - component: {fileID: 5248904484379842114}
   - component: {fileID: 7461271921984709546}
+  - component: {fileID: 7676667555637059995}
   m_Layer: 8
   m_Name: Minion
   m_TagString: Untagged
@@ -393,6 +441,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2069516773735851332}
+  - {fileID: 6699294279145084768}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &2004570266447534326
@@ -489,6 +538,7 @@ MonoBehaviour:
   - {fileID: 5248904484379842114}
   - {fileID: 7461271921984709546}
   currentState: {fileID: 0}
+  stats: {fileID: 7676667555637059995}
   speed_Spore_Small: 3.3
   distanceToReachPlayer_Boss_Small: 5.5
   rotationLerpSpeed_Minion: 0.3
@@ -531,6 +581,31 @@ MonoBehaviour:
   fireRate: 1.8
   shootingDuration: -1
   changeStateWhenPlayerOutOfReach: 1
+--- !u!114 &7676667555637059995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7851139368698446646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6836d8fbf85a63c4984d1d2b437872da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradeHolder: {fileID: 7313281789901751946}
+  baseDamages: []
+  damagePercentages: []
+  flatDamages: []
+  baseHps: []
+  hpPercentages: []
+  flatHps: []
+  baseSpeeds: []
+  speedPercentages: []
+  flatSpeeds: []
+  baseAtk: 100
+  baseHP: 600
+  baseSpeed: 2
 --- !u!1001 &6348792475923691369
 PrefabInstance:
   m_ObjectHideFlags: 0

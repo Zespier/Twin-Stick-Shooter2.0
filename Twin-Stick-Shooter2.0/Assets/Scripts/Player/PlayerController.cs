@@ -14,6 +14,7 @@ public class PlayerController : Damageable {
     public GameObject mesh;
     public PlayerHealth playerHealth;
     public TrailRenderer trailRenderer;
+    public Stats Stats;
 
     [HideInInspector] public bool _dead;
     [HideInInspector] public Vector2 _moveValue;
@@ -108,9 +109,9 @@ public class PlayerController : Damageable {
             AudioManager.instance.PlayShortSound(ShortSound.smallExplosion, collision.transform.position);
             FeedbackController.instance.Particles(ParticleType.smallExplosion, collision.transform.position, Vector3.forward);
 
-            TakeDamage(transform.position, bullet.Damage * bullet.BaseDamagePercentage, Random.Range(0, 100) < 10, DamageType.PlayerDamaged);
+            TakeDamage(transform.position, bullet.Damage, Random.Range(0, 100) < 10, DamageType.PlayerDamaged);
             bullet.Deactivate();
-            RemoveHealth(bullet.Damage * bullet.BaseDamagePercentage);
+            RemoveHealth(bullet.Damage);
         }
     }
 
@@ -142,6 +143,7 @@ public class PlayerController : Damageable {
         GameOver.instance.ShowGameOverPanel();
 
         UpgradeCardManager.instance.canvas.SetActive(false);
+        Time.timeScale = 1;
         MenuDeTrucos.instance.Canvas_SetActive(false);
     }
 

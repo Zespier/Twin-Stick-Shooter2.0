@@ -144,7 +144,7 @@ SpriteRenderer:
   m_Size: {x: 0.32, y: 0.32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &8681960467660665614
@@ -193,7 +193,6 @@ GameObject:
   - component: {fileID: 7589440467389274140}
   - component: {fileID: 7326313761003836617}
   - component: {fileID: 7227487543090471821}
-  - component: {fileID: 3422785352640230081}
   m_Layer: 10
   m_Name: Spore_Normal
   m_TagString: Untagged
@@ -304,16 +303,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 7291281391249147855}
   speed: 10
-  sprite: {fileID: 8171133688161781343}
   player: {fileID: 0}
+  body: {fileID: 0}
   baseDamage: 1
   attackRate: 1
   distanceToReachPlayer: 0.6
+  rotationLerpSpeed: 0.1
   hp: 600
   states:
   - {fileID: 7227487543090471821}
-  - {fileID: 3422785352640230081}
+  - {fileID: 0}
   currentState: {fileID: 7227487543090471821}
+  stats: {fileID: 0}
   speed_Spore_Normal: 3.5
   distanceToReachPlayer_Spore_Normal: 6
 --- !u!95 &7326313761003836617
@@ -350,26 +351,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 7589440467389274140}
---- !u!114 &3422785352640230081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8866940117357535398}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41c5a4105cf62f3428351315f4d31fe5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 7589440467389274140}
-  shootPoint: {fileID: 2679401004348931027}
-  rotationPoint: {fileID: 57123696899875147}
-  rotationLerpDivider: 0.1
-  shootingPointRotationType: 0
-  shooterType: 0
-  bulletPrefab: {fileID: 7204759068860087085, guid: 1e390b999b789604abb93f8dc0e1ec43, type: 3}
-  fireRate: 8
-  shootingDuration: 2
-  angle: 90
-  amountOfBullets: 5

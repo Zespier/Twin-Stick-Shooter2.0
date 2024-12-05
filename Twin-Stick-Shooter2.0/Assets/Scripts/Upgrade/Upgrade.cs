@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class Upgrade : MonoBehaviour {
 
-    //In the end I'm not using upgrades
-
-    public UpgradeType upgradeType;
+    public Stats targetStats;
+    public Buff upgradeType;
     public float amount = 1f;
 
     private UpgradeHolder upgradeHolder;
@@ -14,18 +13,25 @@ public class Upgrade : MonoBehaviour {
     public UpgradeHolder UpgradeHolder { get => upgradeHolder; set => upgradeHolder = value; }
 
     private void OnEnable() {
-        PlayerStats.instance.AddBuff(upgradeType, amount);
+
+        if (targetStats != null) {
+
+            targetStats.AddBuff(upgradeType, amount);
+
+        } else {
+            Debug.LogWarning("No stats to upgrade");
+        }
     }
 
     private void OnDisable() {
-        PlayerStats.instance.RemoveBuff(upgradeType, amount);
+
+        if (targetStats != null) {
+
+            targetStats.RemoveBuff(upgradeType, amount);
+
+        } else {
+            Debug.LogWarning("No stats to upgrade");
+        }
     }
 
-}
-
-[System.Serializable]
-public enum UpgradeType {
-    baseDamage,
-    damagePercentage,
-    flatDamage,
 }

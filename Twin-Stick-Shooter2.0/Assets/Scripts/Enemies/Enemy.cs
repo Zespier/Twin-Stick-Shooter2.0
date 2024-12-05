@@ -19,7 +19,6 @@ public class Enemy : Damageable {
     public virtual float Speed => speed;
     public virtual float DistanceToReachPlayer => distanceToReachPlayer;
     public virtual float RotationLerpSpeed => rotationLerpSpeed;
-    public float Hp { get; set; }
 
     [Header("Damageable")]
     public float hp = 1000f;
@@ -28,6 +27,8 @@ public class Enemy : Damageable {
     public List<AttackBaseState> states;
     [HideInInspector] public AttackBaseState currentState;
 
+    public Stats stats;
+
     protected virtual void Awake() {
         if (states != null && states.Count > 0) {
             currentState = states[0];
@@ -35,7 +36,7 @@ public class Enemy : Damageable {
             Debug.LogError("You forgot to put states in this enemy: " + this.GetType().ToString());
         }
 
-        Hp = hp * EnemiesHealthMultiplier.instance.HealthMultiplier;
+        hp = stats.HP;
     }
 
     private void Start() {
@@ -92,7 +93,7 @@ public class Enemy : Damageable {
             FeedbackController.instance.Particles(ParticleType.smallExplosion, collision.transform.position, Vector3.forward);
             AudioManager.instance.PlayShortSound(ShortSound.smallExplosion, collision.transform.position);
 
-            TakeDamage(transform.position, bullet.Damage * bullet.BaseDamagePercentage, UnityEngine.Random.Range(0, 100) < 10, DamageType.DefaultWhite);
+            TakeDamage(transform.position, bullet.Damage, UnityEngine.Random.Range(0, 100) < 10, DamageType.DefaultWhite);
             bullet.Deactivate();
         }
     }
@@ -145,7 +146,7 @@ public class Enemy : Damageable {
     public override void TakeDamage(Vector3 position, float damage, bool crit, DamageType damageType) {
         base.TakeDamage(position, damage, crit, damageType);
 
-        Hp -= damage;
+        hp -= damage;
         CheckDeath();
     }
 
@@ -153,7 +154,7 @@ public class Enemy : Damageable {
     /// Checks if the enemy us dead
     /// </summary>
     protected virtual void CheckDeath() {
-        if (Hp < 0) {
+        if (hp < 0) {
             Deactivate();
         }
     }

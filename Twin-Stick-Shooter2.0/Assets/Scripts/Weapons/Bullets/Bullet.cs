@@ -6,16 +6,14 @@ public class Bullet : MonoBehaviour, IBullet {
 
     public Rigidbody rb;
     public float speed = 20f;
-    public float damage = 1f;
-    public float baseDamagePercentage = 100f;
     public bool destroyOutOfCamera = false;
 
-    [HideInInspector] public WeaponController weaponController;
+    public WeaponController weaponController;
+    protected Stats ownerStats;
     protected float _deathTimer;
     protected float _timeToDie = 3f;
 
-    public float Damage { get => damage; set => damage = value; }
-    public float BaseDamagePercentage { get => (baseDamagePercentage/* + PlayerStats.instance.*/) / 100f; set => baseDamagePercentage = value; }
+    public float Damage => ownerStats.Atk;
 
     protected virtual void Update() {
         _deathTimer += Time.deltaTime;
@@ -35,10 +33,11 @@ public class Bullet : MonoBehaviour, IBullet {
     /// </summary>
     /// <param name="direction"></param>
     /// <param name="desviationAngle"></param>
-    public void Shoot(Vector3 direction, float desviationAngle) {
+    public void Shoot(Vector3 direction, float desviationAngle, Stats ownerStats) {
         Rotate(direction);
         transform.forward = BulletFireDesviation.RandomBulletFireDesviation(transform, desviationAngle);
         rb.velocity = speed * transform.forward;
+        this.ownerStats = ownerStats;
     }
 
     /// <summary>

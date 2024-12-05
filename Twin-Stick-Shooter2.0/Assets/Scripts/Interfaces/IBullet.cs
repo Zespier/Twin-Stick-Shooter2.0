@@ -1,5 +1,4 @@
 public interface IBullet {
-    public float Damage { get; set; }
-    public float BaseDamagePercentage { get; set; }
+    public float Damage { get;  }
     public void Deactivate();
 }

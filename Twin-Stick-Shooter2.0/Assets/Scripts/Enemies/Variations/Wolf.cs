@@ -18,7 +18,7 @@ public class Wolf : Enemy {
     /// Also explodes
     /// </summary>
     protected override void CheckDeath() {
-        if (Hp < 0) {
+        if (hp < 0) {
             Explode();
         }
         base.CheckDeath();
