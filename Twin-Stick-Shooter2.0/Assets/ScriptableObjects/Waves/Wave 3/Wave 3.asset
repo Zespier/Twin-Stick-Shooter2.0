@@ -10,18 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8ebb6cefafc2b6245bb6ee676e4dc869, type: 3}
-  m_Name: Wave 1
+  m_Name: Wave 3
   m_EditorClassIdentifier: 
   hpIncreasePercentage: 0
   atkIncreasePercentage: 0
   initialEnemies:
-  - {fileID: 11400000, guid: df645ad2a1f43a04d83a45df508f6a89, type: 2}
-  - {fileID: 11400000, guid: 6bbbb74ccdc92e44bafaf44253ddb8d2, type: 2}
-  - {fileID: 11400000, guid: c068682c7a8335f4692df8b5c7e6c510, type: 2}
-  - {fileID: 11400000, guid: f863c258d09eea94a8569ca2555e3432, type: 2}
-  - {fileID: 11400000, guid: cb056bd471d47ad4d86f9f7fe1ae7ab6, type: 2}
+  - {fileID: 11400000, guid: a9ee7e9640c66914db75f11dcc9b4019, type: 2}
+  - {fileID: 11400000, guid: 462041bedd9978f468eb6482de182c7b, type: 2}
+  - {fileID: 11400000, guid: fa582ac1e0172ea4db8a96734d95b964, type: 2}
+  - {fileID: 11400000, guid: 4e012c92d4fa8dc498b9841f4a768833, type: 2}
+  - {fileID: 11400000, guid: 33e4a7221caaf8344a0d81bda5a283df, type: 2}
+  - {fileID: 11400000, guid: 1e7552631fe4cd04694115ec90ed129e, type: 2}
   enemiesAdditional: []
   conditionsToSpawn: []
-  initialSpawnPointList: 0000000000000000000000000000000000000000
+  initialSpawnPointList: 000000000000000000000000000000000000000000000000
   additionalSpawnPointList: 
   dialogueTriggerName: 
