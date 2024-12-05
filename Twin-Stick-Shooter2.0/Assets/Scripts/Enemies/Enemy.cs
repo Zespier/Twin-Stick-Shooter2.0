@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Enemy : Damageable {
 
+    public EnemyType type;
     [Header("Enemy Base Attributes")]
     public Rigidbody rb;
     [SerializeField] private float speed = 10f;
@@ -19,6 +20,7 @@ public class Enemy : Damageable {
     public virtual float Speed => speed;
     public virtual float DistanceToReachPlayer => distanceToReachPlayer;
     public virtual float RotationLerpSpeed => rotationLerpSpeed;
+    public WaveEnemy AssetReference { get; set; }
 
     [Header("Damageable")]
     public float hp = 1000f;
@@ -60,6 +62,10 @@ public class Enemy : Damageable {
             return;
         }
         currentState.StateLateUpdate();
+    }
+
+    public void InitializeHP() {
+        hp = stats.HP;
     }
 
     /// <summary>
@@ -147,6 +153,7 @@ public class Enemy : Damageable {
         base.TakeDamage(position, damage, crit, damageType);
 
         hp -= damage;
+        EnemySpawner.instance.EnemyTookDamage(AssetReference, (hp / stats.HP) * 100f);
         CheckDeath();
     }
 
@@ -156,6 +163,7 @@ public class Enemy : Damageable {
     protected virtual void CheckDeath() {
         if (hp < 0) {
             Deactivate();
+            GameEvents.OnEnemyDeath?.Invoke(this);
         }
     }
 
@@ -169,9 +177,11 @@ public class Enemy : Damageable {
         gameObject.SetActive(false);
         AudioManager.instance.ExplosionSound(transform.position, "enemy");
 
-        EnemySpawner.instance.RemoveEnemyFromGenerated(this);
-
         MejoritasRecogiblesManager.instance.SpawnMejoritaRecogible(transform.position);
+    }
+
+    public void ResetSpecificVariables() {
+        InitializeHP();
     }
 
     #endregion
