@@ -6,13 +6,14 @@ using UnityEngine.UI;
 
 public class Credits : MonoBehaviour {
 
+    public CanvasGroup canvasGroup;
     public List<Button> buttons;
     public RectTransform outline;
 
     private bool _canMove = true;
 
     private void Awake() {
-        gameObject.SetActive(false);
+        Canvas_SetActive(false);
     }
 
     private IEnumerator C_DontMoveMoreThanOneTime() {
@@ -34,16 +35,14 @@ public class Credits : MonoBehaviour {
     }
 
     public void OnSelectButton(InputAction.CallbackContext context) {
-        Debug.Log("A");
-        if (gameObject.activeSelf) {
+        if (canvasGroup.alpha >= 0) {
             buttons[GetCurrentButtonOutlined()].onClick.Invoke();
         }
     }
 
     public void OnArrowMoveSelectionVertically(InputAction.CallbackContext context) {
-        Debug.Log("A");
 
-        if (gameObject.activeSelf) {
+        if (canvasGroup.alpha >= 0) {
 
             Vector2 direction = context.ReadValue<Vector2>();
             if (direction.x > 0) {
@@ -59,7 +58,9 @@ public class Credits : MonoBehaviour {
     }
 
     public void MoveOutlineUp() {
+        if (!_canMove) { return; }
 
+        StartCoroutine(C_DontMoveMoreThanOneTime());
         int currentIndex = GetCurrentButtonOutlined() - 1;
         if (currentIndex < 0) { currentIndex = buttons.Count - 1; }
 
@@ -67,9 +68,31 @@ public class Credits : MonoBehaviour {
     }
 
     public void MoveOutlineDown() {
+        if (!_canMove) { return; }
 
+        StartCoroutine(C_DontMoveMoreThanOneTime());
         int currentIndex = (GetCurrentButtonOutlined() + 1) % buttons.Count;
 
         outline.position = buttons[currentIndex].image.rectTransform.position;
     }
+    /// <summary>
+    /// Canvas group set up
+    /// </summary>
+    /// <param name="active"></param>
+    public void Canvas_SetActive(bool active) {
+
+        canvasGroup.alpha = active ? 1 : 0;
+        canvasGroup.interactable = active;
+        canvasGroup.blocksRaycasts = active;
+    }
+
+    public void Active() {
+        Canvas_SetActive(true);
+    }
+
+    public void Activent() {
+        Canvas_SetActive(false);
+
+    }
+
 }

@@ -6,13 +6,14 @@ using UnityEngine.UI;
 
 public class Menu : MonoBehaviour {
 
+    public CanvasGroup canvasGroup;
     public List<Button> buttons;
     public RectTransform outline;
 
     private bool _canMove = true;
 
     private void Awake() {
-        gameObject.SetActive(true);
+        Canvas_SetActive(true);
     }
 
     private IEnumerator C_DontMoveMoreThanOneTime() {
@@ -34,14 +35,12 @@ public class Menu : MonoBehaviour {
     }
 
     public void OnSelectButton(InputAction.CallbackContext context) {
-        Debug.Log("A");
         if (gameObject.activeSelf) {
             buttons[GetCurrentButtonOutlined()].onClick.Invoke();
         }
     }
 
     public void OnArrowMoveSelectionVertically(InputAction.CallbackContext context) {
-        Debug.Log("A");
 
         if (gameObject.activeSelf) {
 
@@ -59,7 +58,9 @@ public class Menu : MonoBehaviour {
     }
 
     public void MoveOutlineUp() {
-        
+        if (!_canMove) { return; }
+
+        StartCoroutine(C_DontMoveMoreThanOneTime());
         int currentIndex = GetCurrentButtonOutlined() - 1;
         if (currentIndex < 0) { currentIndex = buttons.Count - 1; }
 
@@ -67,7 +68,9 @@ public class Menu : MonoBehaviour {
     }
 
     public void MoveOutlineDown() {
-       
+        if (!_canMove) { return; }
+
+        StartCoroutine(C_DontMoveMoreThanOneTime());
 
         int currentIndex = (GetCurrentButtonOutlined() + 1) % buttons.Count;
 
@@ -79,5 +82,25 @@ public class Menu : MonoBehaviour {
     /// </summary>
     public void ExitGame() {
         Application.Quit();
+    }
+
+    /// <summary>
+    /// Canvas group set up
+    /// </summary>
+    /// <param name="active"></param>
+    public void Canvas_SetActive(bool active) {
+
+        canvasGroup.alpha = active ? 1 : 0;
+        canvasGroup.interactable = active;
+        canvasGroup.blocksRaycasts = active;
+    }
+
+    public void Active() {
+        Canvas_SetActive(true);
+    }
+
+    public void Activent() {
+        Canvas_SetActive(false);
+
     }
 }
