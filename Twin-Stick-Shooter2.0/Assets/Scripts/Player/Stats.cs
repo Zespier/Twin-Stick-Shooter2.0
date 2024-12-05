@@ -173,14 +173,32 @@ public class Stats : MonoBehaviour {
 
             case Buff.BaseHp:
                 baseHps.Add(amount);
+                if (this.TryGetComponent(out Enemy enemy)) {
+                    enemy.hp = enemy.stats.HP;
+                } else {
+                    PlayerController.instance.hp = PlayerController.instance.Stats.HP;
+                    PlayerController.instance.playerHealth.ReduceHealthBar(1, 1);
+                }
                 break;
 
             case Buff.HpPercentage:
                 hpPercentages.Add(amount);
+                if (this.TryGetComponent(out enemy)) {
+                    enemy.hp = enemy.stats.HP;
+                } else {
+                    PlayerController.instance.hp = PlayerController.instance.Stats.HP;
+                    PlayerController.instance.playerHealth.ReduceHealthBar(1, 1);
+                }
                 break;
 
             case Buff.FlatHp:
                 flatHps.Add(amount);
+                if (this.TryGetComponent(out enemy)) {
+                    enemy.hp = enemy.stats.HP;
+                } else {
+                    PlayerController.instance.hp = PlayerController.instance.Stats.HP;
+                    PlayerController.instance.playerHealth.ReduceHealthBar(1, 1);
+                }
                 break;
 
             case Buff.BaseSpeed:

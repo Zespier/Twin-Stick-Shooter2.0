@@ -7443,7 +7443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d600249170012e40bae96624032cc86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemiesPerUpgrade: 6
+  enemiesPerUpgrade: 12
   prefab: {fileID: 3779261709827133632, guid: 3031f2eca83986e4488c49678e4265de, type: 3}
 --- !u!4 &999156589
 Transform:
@@ -15306,6 +15306,9 @@ MonoBehaviour:
   - {fileID: 1975744921}
   allUpgradeAssets:
   - {fileID: 11400000, guid: b67233d717f4ee9499dec5637ca5fdd0, type: 2}
+  - {fileID: 11400000, guid: 791e165f8020e5f4893c1df493db6e74, type: 2}
+  - {fileID: 11400000, guid: dc8fe528c9e478d49a5a3e3fcc3c71c4, type: 2}
+  - {fileID: 11400000, guid: 69ce4396e5bf921409c334da2d7d764a, type: 2}
   outline: {fileID: 1027430734596657163}
 --- !u!114 &2591673327334665227
 MonoBehaviour:
