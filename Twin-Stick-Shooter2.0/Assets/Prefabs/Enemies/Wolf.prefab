@@ -290,7 +290,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.590903, y: 1, z: 2.1325636}
+  m_Size: {x: 1.590903, y: 2, z: 2.1325636}
   m_Center: {x: 0.00000011920929, y: 0, z: -0.018465757}
 --- !u!54 &4172049801446692195
 Rigidbody:
@@ -341,9 +341,14 @@ MonoBehaviour:
   baseSpeeds: []
   speedPercentages: []
   flatSpeeds: []
+  baseDesviationAngles: []
+  baseFireRates: []
+  fireRatePercentages: []
   baseAtk: 100
   baseHP: 4000
   baseSpeed: 2
+  baseDesviationAngle: 1
+  baseFireRate: 10
 --- !u!1 &4628310870977234166
 GameObject:
   m_ObjectHideFlags: 0

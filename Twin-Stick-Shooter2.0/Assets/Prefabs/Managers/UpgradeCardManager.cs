@@ -20,7 +20,7 @@ public class UpgradeCardManager : MonoBehaviour {
 
     public void Open() {
 
-        MenuDeTrucos.instance.Canvas_SetActive(false);
+        //MenuDeTrucos.instance.Canvas_SetActive(false);
 
         List<UpgradeAsset> randomUpgrades = new List<UpgradeAsset>(capacity: 3);
 
