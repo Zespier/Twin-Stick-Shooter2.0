@@ -24,7 +24,9 @@ public class Spore_Small : Enemy {
         if (_exploded) { return; }
         PlayerController.instance.RemoveHealth(500);
 
-        Explode();
+        hp -= 500;
+        EnemySpawner.instance.EnemyTookDamage(AssetReference, (hp / stats.HP) * 100f);
+        CheckDeath();
     }
 
     /// <summary>

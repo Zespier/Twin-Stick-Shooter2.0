@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour {
 
-    public float timeBetweenWaves = 15f;
+    public float timeBetweenWaves = 1;
     public List<Wave> waves = new List<Wave>();
     public float circunferenceRadius = 15f;
     public List<Transform> spawnPoints = new List<Transform>();
