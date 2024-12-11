@@ -10,9 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 405c1fa4c2bcec0439a4e7d258afba84, type: 3}
-  m_Name: base Damage
+  m_Name: 50% damage + 50% Fire rate + 4 Desviation
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 8fc470227605b614ab5a159ae3ad4fec, type: 3}
-  description: +30 base damage
-  upgradeTypes: 00000000
-  upgradeAmounts: 1e000000
+  icon: {fileID: 21300000, guid: 5b8ce32d391f01442a1c3f4061b67840, type: 3}
+  description: +50% Damage + 50% Fire rate + 400% desviation
+  upgradeTypes: 010000000b00000009000000
+  upgradeAmounts:
+  - 50
+  - 50
+  - 4

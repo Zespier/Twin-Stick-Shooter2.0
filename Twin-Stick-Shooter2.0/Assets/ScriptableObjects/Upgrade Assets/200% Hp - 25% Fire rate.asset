@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 405c1fa4c2bcec0439a4e7d258afba84, type: 3}
-  m_Name: base HP
+  m_Name: 200% Hp - 25% Fire rate
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 5b8ce32d391f01442a1c3f4061b67840, type: 3}
-  description: Full healing + 100 base HP
-  upgradeTypes: 03000000
-  upgradeAmounts: 64000000
+  description: +200% HP, but -25% fire rate
+  upgradeTypes: 040000000a000000
+  upgradeAmounts:
+  - 200
+  - -2.5

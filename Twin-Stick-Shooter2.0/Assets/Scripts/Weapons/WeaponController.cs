@@ -9,8 +9,6 @@ public class WeaponController : MonoBehaviour {
     public GameObject shotgunBullet;
     public Transform bulletParent;
     public List<Transform> shootPoints = new List<Transform>();
-    public float fireRate = 7f;
-    public float fireDesviationAngle = 10f;
     public Queue<Bullet> _generatedBullets = new Queue<Bullet>();
     public Queue<ShotgunBullet> _generatedShotgunBullets = new Queue<ShotgunBullet>();
     public int _debugSize;
@@ -50,7 +48,7 @@ public class WeaponController : MonoBehaviour {
     /// Checks if the player can shoot taking fireRate in consideration
     /// </summary>
     private void TryToShoot() {
-        if (_shooting && _lastShoot + 1f / fireRate < Time.time) {
+        if (_shooting && _lastShoot + 1f / _playerController.Stats.FireRate < Time.time) {
             _lastShoot = Time.time;
             Shoot();
         }
@@ -76,7 +74,7 @@ public class WeaponController : MonoBehaviour {
 
                 _auxBullet.gameObject.SetActive(true);
                 _auxBullet.transform.position = shootPoints[i].position;
-                _auxBullet.Shoot(_playerController.body.forward, fireDesviationAngle, _playerController.Stats);
+                _auxBullet.Shoot(_playerController.body.forward, _playerController.Stats.DesviationAngle, _playerController.Stats);
                 _generatedBullets.Enqueue(_auxBullet);
 
             } else {
@@ -84,7 +82,7 @@ public class WeaponController : MonoBehaviour {
                     _generatedBullets.Enqueue(_auxBullet);
                 }
                 Bullet newBullet = Instantiate(bullet, shootPoints[i].position, Quaternion.identity, bulletParent).GetComponent<Bullet>();
-                newBullet.Shoot(_playerController.body.forward, fireDesviationAngle, _playerController.Stats);
+                newBullet.Shoot(_playerController.body.forward, _playerController.Stats.DesviationAngle, _playerController.Stats);
                 newBullet.weaponController = this;
                 _generatedBullets.Enqueue(newBullet);
             }

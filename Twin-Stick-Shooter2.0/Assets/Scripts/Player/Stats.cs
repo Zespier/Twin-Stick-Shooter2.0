@@ -19,6 +19,11 @@ public class Stats : MonoBehaviour {
     public List<float> speedPercentages;
     public List<float> flatSpeeds;
 
+    public List<float> baseDesviationAngles;
+
+    public List<float> baseFireRates;
+    public List<float> fireRatePercentages;
+
     public float baseAtk = 10;
     public virtual float Atk => (baseAtk + BaseDamages) * (DamagePercentages / 100f) + FlatDamages;
     public virtual float BaseDamages => GetAllBuffs(Buff.BaseDamage);
@@ -38,6 +43,15 @@ public class Stats : MonoBehaviour {
     public virtual float BaseSpeeds => GetAllBuffs(Buff.BaseSpeed);
     public virtual float SpeedPercentages => GetAllBuffs(Buff.SpeedPercentage);
     public virtual float FlatSpeeds => GetAllBuffs(Buff.FlatSpeed);
+
+    public float baseDesviationAngle = 1;
+    public virtual float DesviationAngle => (baseDesviationAngle + BaseDesviationAngles);
+    public virtual float BaseDesviationAngles => GetAllBuffs(Buff.BaseDesviationAngle);
+
+    public float baseFireRate = 10;
+    public virtual float FireRate => (baseFireRate + BaseFireRates);
+    public virtual float BaseFireRates => GetAllBuffs(Buff.BaseFireRate);
+    public virtual float FireRatePercentages => GetAllBuffs(Buff.FireRatePercentage);
 
     private List<(Buff buff, float amount, Coroutine coroutine)> buffCoroutines = new List<(Buff buff, float amount, Coroutine coroutine)>();
 
@@ -142,6 +156,24 @@ public class Stats : MonoBehaviour {
                 }
                 return flatSpeeds.Sum();
 
+            case Buff.BaseDesviationAngle:
+                if (baseDesviationAngles == null || baseDesviationAngles.Count <= 0) {
+                    return 0;
+                }
+                return baseDesviationAngles.Sum();
+
+            case Buff.BaseFireRate:
+                if (baseFireRates == null || baseFireRates.Count <= 0) {
+                    return 0;
+                }
+                return baseFireRates.Sum();
+
+            case Buff.FireRatePercentage:
+                if (fireRatePercentages == null || fireRatePercentages.Count <= 0) {
+                    return 100f; //Is in percentage
+                }
+                return fireRatePercentages.Sum() + 100f;
+
             default:
                 Debug.LogError("Buff not defined");
                 return 0;
@@ -213,6 +245,18 @@ public class Stats : MonoBehaviour {
                 flatSpeeds.Add(amount);
                 break;
 
+            case Buff.BaseDesviationAngle:
+                baseDesviationAngles.Add(amount);
+                break;
+
+            case Buff.BaseFireRate:
+                baseFireRates.Add(amount);
+                break;
+
+            case Buff.FireRatePercentage:
+                fireRatePercentages.Add(amount);
+                break;
+
             default:
                 Debug.LogError("Buff not defined");
                 break;
@@ -262,6 +306,18 @@ public class Stats : MonoBehaviour {
 
             case Buff.FlatSpeed:
                 flatSpeeds.Remove(amount);
+                break; 
+                
+                case Buff.BaseDesviationAngle:
+                baseDesviationAngles.Remove(amount);
+                break; 
+                
+                case Buff.BaseFireRate:
+                baseFireRates.Remove(amount);
+                break; 
+                
+                case Buff.FireRatePercentage:
+                fireRatePercentages.Remove(amount);
                 break;
 
             default:
@@ -314,4 +370,9 @@ public enum Buff {
     BaseSpeed,
     SpeedPercentage,
     FlatSpeed,
+
+    BaseDesviationAngle,
+
+    BaseFireRate,
+    FireRatePercentage,
 }

@@ -49,7 +49,7 @@ public class AudioManager : MonoBehaviour {
 
     public void ShipSound(Vector3 speed) {
         float max = Mathf.Abs(speed.x) > Mathf.Abs(speed.y) ? Mathf.Abs(speed.x) : Mathf.Abs(speed.y);
-        float targetValue = Mathf.Lerp(shipSoundMinPitch, shipSoundMaxPitch, (PlayerController.instance.speed * max) / PlayerController.instance.speed);
+        float targetValue = Mathf.Lerp(shipSoundMinPitch, shipSoundMaxPitch, (PlayerController.instance.Stats.Speed * max) / PlayerController.instance.Stats.Speed);
 
         float pitchLerpSpeed = 0.1f;
         if (shipSoundSource.pitch > targetValue) {

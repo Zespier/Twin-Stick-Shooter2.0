@@ -9,5 +9,5 @@ public class UpgradeAsset : ScriptableObject {
     public string description;
 
     public List<Buff> upgradeTypes = new List<Buff>();
-    public List<int> upgradeAmounts = new List<int>();
+    public List<float> upgradeAmounts = new List<float>();
 }

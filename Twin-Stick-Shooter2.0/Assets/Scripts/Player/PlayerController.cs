@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 public class PlayerController : Damageable {
 
     public Rigidbody rb;
-    public float speed = 9f;
     public Transform body;
     public PlayerInputs playerInputs;
     public float hp = 2000f;
@@ -64,9 +63,9 @@ public class PlayerController : Damageable {
 
         _moveDirectionLerped = Vector2.Lerp(_moveDirectionLerped, _moveValue, Time.deltaTime / 0.1f);
         //transform.position += Time.deltaTime * speed * new Vector3(_moveDirectionLerped.x, 0, _moveDirectionLerped.y);
-        rb.velocity = speed * new Vector3(_moveDirectionLerped.x, 0, _moveDirectionLerped.y);
+        rb.velocity = Stats.Speed * new Vector3(_moveDirectionLerped.x, 0, _moveDirectionLerped.y);
 
-        AudioManager.instance.ShipSound(_moveValue * speed);
+        AudioManager.instance.ShipSound(_moveValue * Stats.Speed);
     }
 
     /// <summary>
