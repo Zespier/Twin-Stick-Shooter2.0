@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShootMovingState : AttackBaseState {
 
     public float shootingMovementSpeed = 4f;
-    public Transform shootPoint;
+    public List<Transform> shootPoints;
     public GameObject bulletPrefab;
     public float fireRate = 8f;
     public float shootingDuration = -1f;
@@ -18,8 +18,12 @@ public class ShootMovingState : AttackBaseState {
     /// Shots a bullet
     /// </summary>
     public void Shoot() {
-        Bullet newBullet = Instantiate(bulletPrefab, shootPoint.position, Quaternion.identity, BulletContainer.instance.transform).GetComponent<Bullet>();
-        newBullet.Shoot(shootPoint.forward, 2f, controller.stats);
+
+        for (int i = 0; i < shootPoints.Count; i++) {
+
+            Bullet newBullet = Instantiate(bulletPrefab, shootPoints[i].position, Quaternion.identity, BulletContainer.instance.transform).GetComponent<Bullet>();
+            newBullet.Shoot(shootPoints[i].forward, 2f, controller.stats);
+        }
 
         AudioManager.instance.EnemyLaserSound(transform.position);
     }

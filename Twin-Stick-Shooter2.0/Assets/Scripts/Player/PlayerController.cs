@@ -66,6 +66,8 @@ public class PlayerController : Damageable {
         rb.velocity = Stats.Speed * new Vector3(_moveDirectionLerped.x, 0, _moveDirectionLerped.y);
 
         AudioManager.instance.ShipSound(_moveValue * Stats.Speed);
+
+        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
     }
 
     /// <summary>
@@ -120,7 +122,7 @@ public class PlayerController : Damageable {
     /// <param name="amount"></param>
     public void RemoveHealth(float amount) {
         hp -= amount;
-        playerHealth.ReduceHealthBar(hp, _maxHp);
+        playerHealth.ReduceHealthBar(hp, Stats.HP);
         if (hp < 0) {
             Death();
         }
@@ -152,7 +154,7 @@ public class PlayerController : Damageable {
     public void Heal() {
         hp = _maxHp;
 
-        playerHealth.ReduceHealthBar(hp, _maxHp);
+        playerHealth.ReduceHealthBar(hp, Stats.HP);
 
     }
 }

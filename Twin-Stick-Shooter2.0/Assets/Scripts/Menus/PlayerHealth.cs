@@ -30,5 +30,4 @@ public class PlayerHealth : MonoBehaviour {
         _localScale.x = Mathf.Lerp(0, _width, healthLeft / maxHealth);
         health.sizeDelta = _localScale;
     }
-
 }

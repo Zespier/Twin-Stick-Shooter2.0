@@ -525,6 +525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab8798cbfd0faff47819602a23becf9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   rb: {fileID: 2004570266447534326}
   speed: 10
   player: {fileID: 0}
@@ -557,7 +558,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 7332487968548394239}
   shootingMovementSpeed: 4
-  shootPoint: {fileID: 3379188402666720695}
+  shootPoints:
+  - {fileID: 3379188402666720695}
   bulletPrefab: {fileID: 7204759068860087085, guid: bd1fac6077551c2408b6273cb69422b2,
     type: 3}
   fireRate: 0.8
@@ -575,7 +577,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 7332487968548394239}
-  shootPoint: {fileID: 3379188402666720695}
+  shootPoints:
+  - {fileID: 3379188402666720695}
   bulletPrefab: {fileID: 7204759068860087085, guid: bd1fac6077551c2408b6273cb69422b2,
     type: 3}
   fireRate: 1.8
@@ -603,9 +606,14 @@ MonoBehaviour:
   baseSpeeds: []
   speedPercentages: []
   flatSpeeds: []
+  baseDesviationAngles: []
+  baseFireRates: []
+  fireRatePercentages: []
   baseAtk: 100
   baseHP: 600
   baseSpeed: 2
+  baseDesviationAngle: 1
+  baseFireRate: 10
 --- !u!1001 &6348792475923691369
 PrefabInstance:
   m_ObjectHideFlags: 0

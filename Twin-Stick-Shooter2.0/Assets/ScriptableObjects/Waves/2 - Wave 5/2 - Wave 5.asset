@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ebb6cefafc2b6245bb6ee676e4dc869, type: 3}
+  m_Name: 2 - Wave 5
+  m_EditorClassIdentifier: 
+  hpIncreasePercentage: 100
+  atkIncreasePercentage: 0
+  initialEnemies:
+  - {fileID: 11400000, guid: 6a97fa0793ef82a48a98552700fabfc7, type: 2}
+  - {fileID: 11400000, guid: 6279351aae9f0c24fa6e1ebc99d74b9c, type: 2}
+  - {fileID: 11400000, guid: e69fde8b250744b488e4859daeabfa0b, type: 2}
+  - {fileID: 11400000, guid: 9c45b0c65ca4cb045bd5fc40e36242df, type: 2}
+  - {fileID: 11400000, guid: 47bddba1ee9c30c4f9033cdbbae6cbdc, type: 2}
+  - {fileID: 11400000, guid: 4e87d052eb496f7489beda7fc7d1c0db, type: 2}
+  - {fileID: 11400000, guid: b40916db027698949bb99453e15a124a, type: 2}
+  - {fileID: 11400000, guid: 678d868974acbca40ad04da478894a2a, type: 2}
+  - {fileID: 11400000, guid: a8a849abc49065849b2d04a2504b8df8, type: 2}
+  - {fileID: 11400000, guid: a49cf2d668379d1458e3aa6c741e630b, type: 2}
+  - {fileID: 11400000, guid: 1dc5435e9659cf04b83446c5f38a533a, type: 2}
+  - {fileID: 11400000, guid: 8c43151a3afe03742ba53a1326688dec, type: 2}
+  - {fileID: 11400000, guid: 62c991eb971abb349ac224a6552aa96f, type: 2}
+  - {fileID: 11400000, guid: e684515763d7c5b48bc9a4a57a5dcba1, type: 2}
+  - {fileID: 11400000, guid: 1afdbbe5d76a32a4b91bec8db75b65b3, type: 2}
+  - {fileID: 11400000, guid: c3e77c9f3db65174b9cf1640beec7402, type: 2}
+  - {fileID: 11400000, guid: 9ea688ba806371f42aa36a35c22c1f6e, type: 2}
+  - {fileID: 11400000, guid: b8daabefaae683045b7b5247457c9338, type: 2}
+  enemiesAdditional: []
+  conditionsToSpawn: []
+  initialSpawnPointList: 010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  additionalSpawnPointList: 
+  dialogueTriggerName: 

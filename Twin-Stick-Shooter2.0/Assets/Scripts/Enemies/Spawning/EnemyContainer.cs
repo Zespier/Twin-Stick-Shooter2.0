@@ -98,6 +98,8 @@ public class EnemyContainer : MonoBehaviour {
 public enum EnemyType : byte {
     Minion = 0,
     MinionElite = 1,
+    MinionEliteElite = 5,
     SporeSmall = 2,
     Wolf = 3,
+    WolfElite = 4,
 }

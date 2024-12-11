@@ -8,14 +8,19 @@ public class EnemySpawner : MonoBehaviour {
     public float timeBetweenWaves = 1;
     public List<Wave> waves1 = new List<Wave>();
     public List<Wave> waves2 = new List<Wave>();
+    public List<Wave> waves3 = new List<Wave>();
     public float circunferenceRadius = 15f;
     public List<Transform> spawnPoints = new List<Transform>();
+    public GameObject firstLevelArrows;
+    public GameObject secondLevelArrows;
+    public GameObject firstLevelRock;
+    public GameObject secondLevelRock;
 
     [SerializeField] public Wave _currentWave;
     private Transform _playerBase;
     private bool _startingWave = false;
     private float _nextWaveSaveCounter; //To avoid going trhought 2 waves instantly
-    private List<Wave> _currentWaveList;
+    public List<Wave> _currentWaveList;
 
     public static EnemySpawner instance;
     private void Awake() {
@@ -30,6 +35,7 @@ public class EnemySpawner : MonoBehaviour {
 
         ResetWaves(waves1);
         ResetWaves(waves2);
+        ResetWaves(waves3);
     }
 
     private void Update() {
@@ -53,14 +59,23 @@ public class EnemySpawner : MonoBehaviour {
         switch (index) {
             case 0:
                 _currentWaveList = waves1;
+                firstLevelArrows.SetActive(false);
+                firstLevelRock.SetActive(true);
+                secondLevelRock.SetActive(true);
                 StartWave();
                 break;
 
             case 1:
                 _currentWaveList = waves2;
+                _currentWave = _currentWaveList[0];
                 StartWave();
                 break;
 
+            case 2:
+                _currentWaveList = waves3;
+                _currentWave = _currentWaveList[0];
+                StartWave();
+                break;
             default:
                 break;
         }
@@ -270,7 +285,7 @@ public class EnemySpawner : MonoBehaviour {
         }
     }
 
-    private bool FinishedWave() {
+    public bool FinishedWave() {
 
         bool finished = true;
 
@@ -301,7 +316,16 @@ public class EnemySpawner : MonoBehaviour {
         if (newWaveIndex < waveList.Count) {
             _currentWave = waveList[newWaveIndex];
         } else {
-            YouWin.instance.ShowYouWinPanel();
+            if (_currentWaveList == waves3) {
+                YouWin.instance.ShowYouWinPanel();
+
+            } else if (_currentWaveList == waves1) {
+                firstLevelArrows.SetActive(true);
+                firstLevelRock.SetActive(false);
+            } else if (_currentWaveList == waves2) {
+                secondLevelArrows.SetActive(true);
+                secondLevelRock.SetActive(false);
+            }
             Debug.Log("FINISHED GAME");
         }
     }
