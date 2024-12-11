@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: 100% Fire rate + 4 Desviation
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 5b8ce32d391f01442a1c3f4061b67840, type: 3}
-  description: +100% fire rate, but +400% bullet desviation
+  description: +100% fire rate, but +600% bullet desviation
   upgradeTypes: 0b00000009000000
   upgradeAmounts:
   - 100
-  - 4
+  - 6

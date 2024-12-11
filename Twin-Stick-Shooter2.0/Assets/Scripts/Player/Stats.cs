@@ -49,7 +49,7 @@ public class Stats : MonoBehaviour {
     public virtual float BaseDesviationAngles => GetAllBuffs(Buff.BaseDesviationAngle);
 
     public float baseFireRate = 10;
-    public virtual float FireRate => (baseFireRate + BaseFireRates);
+    public virtual float FireRate => (baseFireRate + BaseFireRates) * (FireRatePercentages / 100f);
     public virtual float BaseFireRates => GetAllBuffs(Buff.BaseFireRate);
     public virtual float FireRatePercentages => GetAllBuffs(Buff.FireRatePercentage);
 

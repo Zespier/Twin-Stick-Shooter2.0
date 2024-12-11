@@ -9907,6 +9907,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16cca4e6a0cd7c14fbee88effd61227d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeEnemies: []
+  enemyTypesAvailableInOrder: 0
+  enemyPrefabs:
+  - {fileID: 7332487968548394239, guid: d17d933b6103f3743b5947989df570b6, type: 3}
+  - {fileID: 5209441185751407904, guid: c497589408574bf41a4afc4d30892d5e, type: 3}
+  - {fileID: 3436487638459248250, guid: a9083faf7fbd28249864b4727a78619b, type: 3}
+  - {fileID: 5012240210877050051, guid: 322b833815a9e3943aa926a28c75f3f0, type: 3}
+  initialPoolAmount: 05000000050000000500000005000000
+  _enemyPool: []
 --- !u!1001 &1233379376
 PrefabInstance:
   m_ObjectHideFlags: 0
