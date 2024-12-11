@@ -6,7 +6,8 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour {
 
     public float timeBetweenWaves = 1;
-    public List<Wave> waves = new List<Wave>();
+    public List<Wave> waves1 = new List<Wave>();
+    public List<Wave> waves2 = new List<Wave>();
     public float circunferenceRadius = 15f;
     public List<Transform> spawnPoints = new List<Transform>();
 
@@ -14,8 +15,7 @@ public class EnemySpawner : MonoBehaviour {
     private Transform _playerBase;
     private bool _startingWave = false;
     private float _nextWaveSaveCounter; //To avoid going trhought 2 waves instantly
-
-    public int CurrentWaveIndex => GetCurrentWaveIndex();
+    private List<Wave> _currentWaveList;
 
     public static EnemySpawner instance;
     private void Awake() {
@@ -28,7 +28,8 @@ public class EnemySpawner : MonoBehaviour {
     private void OnDisable() {
         GameEvents.OnEnemyDeath -= NextWaveIfFinished;
 
-        ResetWaves();
+        ResetWaves(waves1);
+        ResetWaves(waves2);
     }
 
     private void Update() {
@@ -37,9 +38,9 @@ public class EnemySpawner : MonoBehaviour {
 
     private async void Start() {
 
-        InitializeWaves();
+        InitializeWaves(waves1);
         await Task.Delay(1000);
-        StartWave();
+        SetNewWaveList(0);
     }
 
     private void OnDrawGizmos() {
@@ -48,16 +49,33 @@ public class EnemySpawner : MonoBehaviour {
         }
     }
 
+    public void SetNewWaveList(int index) {
+        switch (index) {
+            case 0:
+                _currentWaveList = waves1;
+                StartWave();
+                break;
+
+            case 1:
+                _currentWaveList = waves2;
+                StartWave();
+                break;
+
+            default:
+                break;
+        }
+    }
+
     /// <summary>
     /// Reset all Scriptable Object variables 
     /// </summary>
-    private void ResetWaves() {
-        for (int i = 0; i < waves.Count; i++) {
-            for (int j = 0; j < waves[i].initialEnemies.Count; j++) {
-                waves[i].initialEnemies[j].ResetVariables();
+    private void ResetWaves(List<Wave> waveList) {
+        for (int i = 0; i < waveList.Count; i++) {
+            for (int j = 0; j < waveList[i].initialEnemies.Count; j++) {
+                waveList[i].initialEnemies[j].ResetVariables();
             }
-            for (int j = 0; j < waves[i].enemiesAdditional.Count; j++) {
-                waves[i].enemiesAdditional[j].ResetVariables();
+            for (int j = 0; j < waveList[i].enemiesAdditional.Count; j++) {
+                waveList[i].enemiesAdditional[j].ResetVariables();
             }
         }
     }
@@ -65,9 +83,9 @@ public class EnemySpawner : MonoBehaviour {
     /// <summary>
     /// Initializes all waves
     /// </summary>
-    private void InitializeWaves() {
+    private void InitializeWaves(List<Wave> waveList) {
 
-        _currentWave = waves[0];
+        _currentWave = waveList[0];
     }
 
     public void StartWave() {
@@ -247,7 +265,7 @@ public class EnemySpawner : MonoBehaviour {
         yield return null;
         if (_nextWaveSaveCounter < 0 && FinishedWave()) {
 
-            NextWave();
+            NextWave(_currentWaveList);
             StartWave();
         }
     }
@@ -271,14 +289,17 @@ public class EnemySpawner : MonoBehaviour {
         return finished;
     }
 
-    public void NextWave() {
+    public void NextWave(List<Wave> waveList) {
 
         _nextWaveSaveCounter = 0.1f;
 
-        int newWaveIndex = waves.FindIndex(w => w == _currentWave) + 1;
+        Debug.Log("La lista existe" + waveList != null);
+        Debug.Log("_currentWave existe" + _currentWave != null);
 
-        if (newWaveIndex < waves.Count) {
-            _currentWave = waves[newWaveIndex];
+        int newWaveIndex = waveList.FindIndex(w => w == _currentWave) + 1;
+
+        if (newWaveIndex < waveList.Count) {
+            _currentWave = waveList[newWaveIndex];
         } else {
             YouWin.instance.ShowYouWinPanel();
             Debug.Log("FINISHED GAME");
@@ -290,7 +311,7 @@ public class EnemySpawner : MonoBehaviour {
     private bool _calculatedCurrentWaveIndex;
     private int _lastCurrentWaveIndex;
 
-    public int GetCurrentWaveIndex() {
+    public int GetCurrentWaveIndex(List<Wave> waveList) {
         if (_currentWave == null) { return 0; }
         if (_calculatedCurrentWaveIndex) { return _lastCurrentWaveIndex; }
 
@@ -307,7 +328,7 @@ public class EnemySpawner : MonoBehaviour {
             waveIndex = waveDecena * 10 + waveNumber;
 
         } else {
-            waveIndex = waves.FindIndex(w => w == _currentWave);
+            waveIndex = waveList.FindIndex(w => w == _currentWave);
         }
 
         _lastCurrentWaveIndex = waveIndex;

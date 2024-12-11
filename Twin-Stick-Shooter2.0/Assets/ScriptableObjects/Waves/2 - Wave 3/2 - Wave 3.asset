@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ebb6cefafc2b6245bb6ee676e4dc869, type: 3}
+  m_Name: 2 - Wave 3
+  m_EditorClassIdentifier: 
+  hpIncreasePercentage: 100
+  atkIncreasePercentage: 0
+  initialEnemies:
+  - {fileID: 11400000, guid: 43d054c9c91c88a4f86e101838a58c7a, type: 2}
+  - {fileID: 11400000, guid: 2bb6de35dd266224693233f8b2608634, type: 2}
+  - {fileID: 11400000, guid: d43c5bf16c31a324c99c76c502c897a4, type: 2}
+  enemiesAdditional: []
+  conditionsToSpawn: []
+  initialSpawnPointList: 010000000100000001000000
+  additionalSpawnPointList: 
+  dialogueTriggerName: 

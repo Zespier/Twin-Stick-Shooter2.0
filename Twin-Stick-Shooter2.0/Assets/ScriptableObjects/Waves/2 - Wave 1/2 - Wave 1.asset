@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ebb6cefafc2b6245bb6ee676e4dc869, type: 3}
+  m_Name: 2 - Wave 1
+  m_EditorClassIdentifier: 
+  hpIncreasePercentage: 100
+  atkIncreasePercentage: 0
+  initialEnemies:
+  - {fileID: 11400000, guid: 6289829b2cc758046ae86ec08b34d82a, type: 2}
+  - {fileID: 11400000, guid: a2e05de3605af694291959458e51096c, type: 2}
+  - {fileID: 11400000, guid: 891c4d3b81f4a9d46a443311f07e5eac, type: 2}
+  - {fileID: 11400000, guid: d9238f84c9b7c864b8b55104f32e9b3b, type: 2}
+  - {fileID: 11400000, guid: 927c733eeab4c3042b8951d2d02c559c, type: 2}
+  - {fileID: 11400000, guid: bbbaac3d4ef6f2d4292a0331b95d2e16, type: 2}
+  - {fileID: 11400000, guid: c64dd449464f8124f9e42c4b2111adb7, type: 2}
+  - {fileID: 11400000, guid: e697b538d5b53fb41adfe887f1ab95d8, type: 2}
+  - {fileID: 11400000, guid: 122826fdc48eca24580421b530252052, type: 2}
+  - {fileID: 11400000, guid: 9129f6d08dff1114293f6127171c25b8, type: 2}
+  enemiesAdditional: []
+  conditionsToSpawn: []
+  initialSpawnPointList: 01000000010000000100000001000000010000000100000001000000010000000100000001000000
+  additionalSpawnPointList: 
+  dialogueTriggerName: 
