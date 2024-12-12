@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 200% Hp - 25% Fire rate
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 5b8ce32d391f01442a1c3f4061b67840, type: 3}
-  description: +200% HP, but -25% fire rate
+  description: Full healing +200% HP, but -25% fire rate
   upgradeTypes: 040000000a000000
   upgradeAmounts:
   - 200

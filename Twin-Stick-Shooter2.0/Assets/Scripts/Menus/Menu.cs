@@ -9,6 +9,7 @@ public class Menu : MonoBehaviour {
     public CanvasGroup canvasGroup;
     public List<Button> buttons;
     public RectTransform outline;
+    public Credits credits;
 
     private bool _canMove = true;
 
@@ -35,8 +36,11 @@ public class Menu : MonoBehaviour {
     }
 
     public void OnSelectButton(InputAction.CallbackContext context) {
-        if (canvasGroup.alpha> 0) {
+        if (canvasGroup.alpha > 0) {
             buttons[GetCurrentButtonOutlined()].onClick.Invoke();
+
+        } else {
+            credits.OnSelectButton(context);
         }
     }
 
@@ -54,6 +58,9 @@ public class Menu : MonoBehaviour {
             } else if (direction.y < 0) {
                 MoveOutlineDown();
             }
+
+        } else {
+            credits.OnArrowMoveSelectionVertically(context);
         }
     }
 

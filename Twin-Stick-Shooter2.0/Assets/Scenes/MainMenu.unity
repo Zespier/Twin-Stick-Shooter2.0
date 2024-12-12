@@ -3390,6 +3390,7 @@ MonoBehaviour:
   - {fileID: 933533856}
   - {fileID: 1879575325}
   outline: {fileID: 1825136936}
+  credits: {fileID: 1817264025}
 --- !u!225 &1944016620
 CanvasGroup:
   m_ObjectHideFlags: 0
