@@ -58,7 +58,7 @@ public class ShootMovingState : AttackBaseState {
     /// </summary>
     public override void StateUpdate() {
 
-        controller.rb.velocity = (controller.player.position - transform.position).normalized * shootingMovementSpeed;
+        controller.rb.linearVelocity = (controller.player.position - transform.position).normalized * shootingMovementSpeed;
 
         if (_shootTimer + 1f / fireRate < Time.time) {
             _shootTimer = Time.time;

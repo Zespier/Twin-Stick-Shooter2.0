@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class Bullet : MonoBehaviour, IBullet {
+public class Bullet : NetworkBehaviour, IBullet {
 
     public Rigidbody rb;
     public float speed = 20f;
@@ -28,29 +29,17 @@ public class Bullet : MonoBehaviour, IBullet {
         }
     }
 
-    /// <summary>
-    /// Shoots this bullet in the direction specified with a random angle desviation
-    /// </summary>
-    /// <param name="direction"></param>
-    /// <param name="desviationAngle"></param>
     public void Shoot(Vector3 direction, float desviationAngle, Stats ownerStats) {
         Rotate(direction);
         transform.forward = BulletFireDesviation.RandomBulletFireDesviation(transform, desviationAngle);
-        rb.velocity = speed * transform.forward;
+        rb.linearVelocity = speed * transform.forward;
         this.ownerStats = ownerStats;
     }
 
-    /// <summary>
-    /// Rotates towards the specified direction
-    /// </summary>
-    /// <param name="direction"></param>
     private void Rotate(Vector3 direction) {
         transform.forward = direction;
     }
 
-    /// <summary>
-    /// Deactivates and resets the bullet, ready for pooling
-    /// </summary>
     public virtual void Deactivate() {
         gameObject.SetActive(false);
         _deathTimer = 0;

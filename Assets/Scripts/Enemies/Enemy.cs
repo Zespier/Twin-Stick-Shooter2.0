@@ -48,7 +48,7 @@ public class Enemy : Damageable {
 
     protected virtual void Update() {
         if (PlayerController.instance._dead) {
-            rb.velocity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
             return;
         }
 
@@ -58,7 +58,7 @@ public class Enemy : Damageable {
 
     private void LateUpdate() {
         if (PlayerController.instance._dead) {
-            rb.velocity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
             return;
         }
         currentState.StateLateUpdate();

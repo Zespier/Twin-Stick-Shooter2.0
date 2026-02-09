@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class AudioCalls {
 
-    public AudioCalls(AudioManager manager, AudioPool audioPool) {
+    public AudioCalls(AudioManager manager, VoicePool audioPool) {
         this.manager = manager;
         this.audioPool = audioPool;
     }
 
     public AudioManager manager;
-    public AudioPool audioPool;
+    public VoicePool audioPool;
 
     public bool TooMuchVoices(AudioCategory audioCategory) {
         return manager.CurrentActiveVoices >= manager.maxRealVoices - manager.VoiceSpaceMargin(audioCategory);
@@ -20,11 +20,11 @@ public class AudioCalls {
     /// Plays a clip on an available audioSource inside the pool
     /// </summary>
     /// <param name="position"></param>
-    public AudioOptimization PlaySound(AudioCategory audioCategory, AudioClip clip, Transform newParent = default, Vector3 position = default, float pitch = 1, float volume = 1, AudioSource spatialBlendSettings = default) {
+    public Voice PlaySound(AudioCategory audioCategory, AudioClip clip, Transform newParent = default, Vector3 position = default, float pitch = 1, float volume = 1, AudioSource spatialBlendSettings = default) {
 
         if (TooMuchVoices(audioCategory)) { return null; }
 
-        AudioOptimization audioOptimization = audioPool.GetAvailableSource();
+        Voice audioOptimization = audioPool.GetAvailableSource();
         audioOptimization.audioCategory = audioCategory;
         audioOptimization.audioSource.clip = clip;
         audioOptimization.audioSource.pitch = pitch;

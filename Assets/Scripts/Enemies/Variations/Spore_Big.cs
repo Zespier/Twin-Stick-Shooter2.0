@@ -83,7 +83,7 @@ public class Spore_Big : Enemy {
         _exploded = true;
 
         explosion.Play();
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
         rb.isKinematic = false;
         boxCollider.enabled = false;
         enabled = false;

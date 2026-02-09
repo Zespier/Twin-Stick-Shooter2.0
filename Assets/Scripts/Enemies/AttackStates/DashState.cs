@@ -13,7 +13,7 @@ public class DashState : AttackBaseState {
     public override void OnStateEnter() {
         _distanceTraveled = 0;
         _dashDirection = controller .body.forward;
-        controller.rb.velocity = controller.Speed * 1.5f * _dashDirection;
+        controller.rb.linearVelocity = controller.Speed * 1.5f * _dashDirection;
     }
 
     public override void OnStateExit() {

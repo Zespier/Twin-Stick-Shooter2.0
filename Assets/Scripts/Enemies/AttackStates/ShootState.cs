@@ -31,7 +31,7 @@ public class ShootState : AttackBaseState {
         _shootDurationTime = 0;
         _shootTimer = Time.time;
 
-        controller.rb.velocity = Vector3.zero;
+        controller.rb.linearVelocity = Vector3.zero;
     }
 
     public override void OnStateExit() {

@@ -59,7 +59,7 @@ public class HuntState : AttackBaseState {
         controller.body.forward = newForward;
 
         Vector3 direction = controller.body.right;
-        controller.rb.velocity = controller.Speed * direction;
+        controller.rb.linearVelocity = controller.Speed * direction;
 
         Vector3 clampedPosition = controller.player.position;
         clampedPosition -= controller.body.forward * selfieStickSize;
