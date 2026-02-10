@@ -35,8 +35,6 @@ public class AudioManager : MonoBehaviour {
             Destroy(gameObject);
         }
 
-        audioCalls = new AudioCalls(this, audioPool);
-
         Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow);
     }
 
@@ -53,13 +51,14 @@ public class AudioManager : MonoBehaviour {
     }
 
     public void EnemyLaserSound(Vector3 position) {
-        Voice _audioSource = audioPool.PlayVoice(enemyLasersClips[Random.Range(0, enemyLasersClips.Count)], enemyLasersVolume, position, defaultSettings);
+        Voice _audioSource = audioPool.PlayVoice(enemyLasersClips[Random.Range(0, enemyLasersClips.Count)], enemyLasersVolume, VoicePriority.EnemyShoot, position, defaultSettings);
         _audioSource.audioSource.pitch = Random.Range(1.1f - pitchRange, 1.1f + pitchRange);
     }
 
     public void ExplosionSound(Vector3 position, string whoGotExploded) {
         AudioClip audioClip = null;
         float volume = 0;
+        VoicePriority voicePriority = VoicePriority.EnemyExploded;
         switch (whoGotExploded) {
             case "enemy":
             case "Enemy":
@@ -71,23 +70,24 @@ public class AudioManager : MonoBehaviour {
             case "Player":
                 audioClip = playerExplosionClip;
                 volume = explosionVolume;
+                voicePriority = VoicePriority.PlayerExploded;
                 break;
 
             default:
                 break;
         }
 
-        Voice _audioSource = audioPool.PlayVoice(audioClip, volume, position, defaultSettings);
+        Voice _audioSource = audioPool.PlayVoice(audioClip, volume, voicePriority, position, defaultSettings);
         _audioSource.audioSource.pitch = Random.Range(1.1f - pitchRange, 1.1f + pitchRange);
     }
 
     public void ShootSound() {
-        Voice _audioSource = audioPool.PlayVoice(shootClips[Random.Range(0, shootClips.Count)], shootsVolume, PlayerController.instance.transform.position, defaultSettings);
+        Voice _audioSource = audioPool.PlayVoice(shootClips[Random.Range(0, shootClips.Count)], shootsVolume, VoicePriority.BulletShoot, PlayerController.instance.transform.position, defaultSettings);
         _audioSource.audioSource.pitch = Random.Range(1 - pitchRange, 1 + pitchRange);
     }
 
-    public void PlayShortSound(Vector3 position) {
-        Voice _audioSource = audioPool.PlayVoice(explosionClip, explosionVolume / 2f, position, bulletImpactSettings);
+    public void PlayBulletExplosionAgainstTheWall(Vector3 position) {
+        Voice _audioSource = audioPool.PlayVoice(explosionClip, explosionVolume / 2f, VoicePriority.BulletExplosion, position, bulletImpactSettings);
         _audioSource.audioSource.pitch = Random.Range(1.1f - pitchRange, 1.1f + pitchRange);
     }
 

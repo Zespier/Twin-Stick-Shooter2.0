@@ -34610,8 +34610,73 @@ PrefabInstance:
     - {fileID: 420779859019082215, guid: ddd47c50f91fa8845a6d2eb8508d6912, type: 3}
     - {fileID: 4187477950996072682, guid: ddd47c50f91fa8845a6d2eb8508d6912, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4769435285368607807, guid: ddd47c50f91fa8845a6d2eb8508d6912,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 33862367462483930}
+    - targetCorrespondingSourceObject: {fileID: 1740294004910813409, guid: ddd47c50f91fa8845a6d2eb8508d6912,
+        type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 33862367462483929}
   m_SourcePrefab: {fileID: 100100000, guid: ddd47c50f91fa8845a6d2eb8508d6912, type: 3}
+--- !u!1 &33862367462483927 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1740294004910813409, guid: ddd47c50f91fa8845a6d2eb8508d6912,
+    type: 3}
+  m_PrefabInstance: {fileID: 33862367462483926}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &33862367462483928 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4769435285368607807, guid: ddd47c50f91fa8845a6d2eb8508d6912,
+    type: 3}
+  m_PrefabInstance: {fileID: 33862367462483926}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &33862367462483929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33862367462483927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e2e83848657a634296d935db2977317, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Voice
+  pool: {fileID: 33862367462483930}
+  audioSource: {fileID: 33862367462483931}
+  voicePriority: 0
+  startTime: 0
+  position: {x: 0, y: 0, z: 0}
+  timeOfFade: 0
+  volume: 0
+--- !u!114 &33862367462483930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33862367462483928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e14f47cb891054e985aecc55218bd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VoicePool
+  maxVoices: 64
+  timeToFadeAVoice: 0.1
+  _fadingVoices: []
+  prefab: {fileID: 0}
+  voices: []
+  head: 0
+  tail: 0
+  count: 0
+--- !u!82 &33862367462483931 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 7828235670002072528, guid: ddd47c50f91fa8845a6d2eb8508d6912,
+    type: 3}
+  m_PrefabInstance: {fileID: 33862367462483926}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &402849043865703629
 Transform:
   m_ObjectHideFlags: 0

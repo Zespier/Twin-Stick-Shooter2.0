@@ -107,7 +107,7 @@ public class PlayerController : Damageable {
 
         if (collision.GetComponent<Collider>().TryGetComponent(out IBullet bullet)) {
 
-            AudioManager.instance.PlayShortSound(ShortSound.smallExplosion, collision.transform.position);
+            AudioManager.instance.PlayBulletExplosionAgainstTheWall(collision.transform.position);
             FeedbackController.instance.Particles(ParticleType.smallExplosion, collision.transform.position, Vector3.forward);
 
             TakeDamage(transform.position, bullet.Damage, Random.Range(0, 100) < 10, DamageType.PlayerDamaged);

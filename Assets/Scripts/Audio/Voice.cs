@@ -63,7 +63,9 @@ public class Voice : MonoBehaviour {
 }
 
 public enum VoicePriority : byte {
-    bulletImpact = 0,
-    bulletShoot = 1,
-    explosions = 2,
+    EnemyShoot = 0,
+    BulletExplosion = 1,
+    BulletShoot = 2,
+    EnemyExploded = 3,
+    PlayerExploded = 4,
 }
