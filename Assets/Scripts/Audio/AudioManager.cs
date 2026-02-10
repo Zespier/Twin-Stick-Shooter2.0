@@ -116,7 +116,7 @@ public class AudioManager : MonoBehaviour {
         if (_canShootSoundAgain) {
             _canShootSoundAgain = false;
 
-            Voice _audioSource = audioPool.PlayVoice(shootClips[Random.Range(0, shootClips.Count)], shootsVolume, VoicePriority.BulletShoot, PlayerController.instance.transform.position, defaultSettings);
+            Voice _audioSource = audioPool.PlayVoice(shootClips[Random.Range(0, shootClips.Count)], shootsVolume, VoicePriority.OwnerBulletShoot, PlayerController.instance.transform.position, defaultSettings);
             _audioSource.audioSource.pitch = Random.Range(1 - pitchRange, 1 + pitchRange);
         }
     }

@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public abstract class Damageable : MonoBehaviour, IDamageable {
+public abstract class Damageable : NetworkBehaviour, IDamageable {
 
     #region Inheritance
 

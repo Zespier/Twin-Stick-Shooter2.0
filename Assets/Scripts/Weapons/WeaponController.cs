@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class WeaponController : MonoBehaviour {
+public class WeaponController : NetworkBehaviour {
 
-    public GameObject bullet;
+    public Bullet bullet;
     public GameObject shotgunBullet;
     public Transform bulletParent;
     public List<Transform> shootPoints = new List<Transform>();
@@ -14,7 +15,8 @@ public class WeaponController : MonoBehaviour {
     public int _debugSize;
 
     private bool _shooting;
-    private float _lastShoot;
+    private bool _lastFrameWasShooting;
+    private float _timer;
     public PlayerController _playerController;
     private Camera _cam;
     [HideInInspector] public Rect bulletLivingArea = new Rect();
@@ -34,6 +36,8 @@ public class WeaponController : MonoBehaviour {
     }
 
     private void Update() {
+        if (!IsServer) { return; }
+
         if (PlayerController.instance._dead) {
             return;
         }
@@ -41,29 +45,31 @@ public class WeaponController : MonoBehaviour {
 
         SetBulletLivingArea();
 
-        TryToShoot();
-    }
-
-    /// <summary>
-    /// Checks if the player can shoot taking fireRate in consideration
-    /// </summary>
-    private void TryToShoot() {
-        if (_shooting && _lastShoot + 1f / _playerController.Stats.FireRate < Time.time) {
-            _lastShoot = Time.time;
+        if (_shooting && Time.time > _timer + 1 / _playerController.Stats.FireRate) {
             Shoot();
         }
+
+        _lastFrameWasShooting = _shooting;
     }
 
-    /// <summary>
-    /// Shoots bullet preferably from the pool
-    /// If there is no bullets on the pool, it will instantiate another one
-    /// </summary>
     public void Shoot() {
-        if (PlayerController.instance._dead) {
-            return;
-        }
+        if (PlayerController.instance._dead) { return; }
+
+        SetTimer();
+
+        PrepareProjectile();
+
+        AttackAgainIfPossible();
+    }
+
+    private void SetTimer() {
+        _timer = !_lastFrameWasShooting ? Time.time : _timer + 1 / _playerController.Stats.FireRate;
+    }
+
+    private void PrepareProjectile() {
 
         AudioManager.instance.ShootSound();
+
         for (int i = 0; i < shootPoints.Count; i++) {
 
             if (_generatedBullets != null && _generatedBullets.Count > 0) {
@@ -81,7 +87,7 @@ public class WeaponController : MonoBehaviour {
                 if (_auxBullet != null) {
                     _generatedBullets.Enqueue(_auxBullet);
                 }
-                Bullet newBullet = Instantiate(bullet, shootPoints[i].position, Quaternion.identity, bulletParent).GetComponent<Bullet>();
+                Bullet newBullet = Instantiate(bullet, shootPoints[i].position, Quaternion.identity, bulletParent);
                 newBullet.Shoot(_playerController.body.forward, _playerController.Stats.DesviationAngle, _playerController.Stats);
                 newBullet.weaponController = this;
                 _generatedBullets.Enqueue(newBullet);
@@ -89,9 +95,13 @@ public class WeaponController : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// Shoots the shotgun
-    /// </summary>
+    private void AttackAgainIfPossible() {
+        //It is possible to shoot so fast you need 2 bullets in one frame
+        if (Time.time > _timer + 1 / _playerController.Stats.FireRate) {
+            Shoot();
+        }
+    }
+
     public void ShootShotgun() {
 
         if (PlayerController.instance._dead) {
@@ -132,20 +142,14 @@ public class WeaponController : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// Calculates the living area of bullets based on the screen size
-    /// </summary>
     private void SetBulletLivingArea() {
         bulletLivingArea = new Rect(_cam.transform.position - _offset, _screenSize);
     }
 
     #region InputActions
 
-    /// <summary>
-    /// Sets _shooting true or false depending on the state of context
-    /// </summary>
-    /// <param name="context"></param>
-    public void OnShootButton(InputAction.CallbackContext context) {
+    [ServerRpc]
+    public void SendShotInputServerRpc(InputAction.CallbackContext context) {
         if (context.started) {
             _shooting = true;
         } else if (context.canceled) {
@@ -153,10 +157,11 @@ public class WeaponController : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// Shoots shotgun
-    /// </summary>
-    /// <param name="context"></param>
+    public void OnShootButton(InputAction.CallbackContext context) {
+        if (!IsOwner) { return; }
+        SendShotInputServerRpc(context);
+    }
+
     public void OnShotgunButton(InputAction.CallbackContext context) {
         if (context.started) {
             ShootShotgun();

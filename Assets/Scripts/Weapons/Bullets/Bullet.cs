@@ -5,7 +5,6 @@ using Unity.Netcode;
 
 public class Bullet : NetworkBehaviour, IBullet {
 
-    public Rigidbody rb;
     public float speed = 20f;
     public bool destroyOutOfCamera = false;
 
@@ -27,12 +26,16 @@ public class Bullet : NetworkBehaviour, IBullet {
         if (!weaponController.bulletLivingArea.Contains(transform.position)) {
             Deactivate();
         }
+
+        if (IsServer) {
+            transform.position = Time.deltaTime * speed * Vector3.forward;
+        }
     }
 
     public void Shoot(Vector3 direction, float desviationAngle, Stats ownerStats) {
         Rotate(direction);
         transform.forward = BulletFireDesviation.RandomBulletFireDesviation(transform, desviationAngle);
-        rb.linearVelocity = speed * transform.forward;
+        speed = Random.Range(28 - 0.5f, 28 + 0.5f);
         this.ownerStats = ownerStats;
     }
 

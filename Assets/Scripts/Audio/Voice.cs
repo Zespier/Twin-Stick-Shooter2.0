@@ -66,7 +66,7 @@ public enum VoicePriority : byte {
     EnemyShoot = 0,
     BulletExplosion = 1,
     BulletShoot = 2,
-    OwnerBulletShoots = 3,
+    OwnerBulletShoot = 3,
     EnemyExploded = 4,
     PlayerExploded = 5,
 }
