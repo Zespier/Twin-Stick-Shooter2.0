@@ -22,6 +22,7 @@ public class Voice : MonoBehaviour {
     public float startTime;
     public Vector3 position;
     public float timeOfFade;
+    public float volume;
 
     private double _soundTime;
 
@@ -44,6 +45,7 @@ public class Voice : MonoBehaviour {
     }
 
     public void Activate() {
+        audioSource.volume = volume;
         audioSource.Play();
         startTime = Time.time;
         _soundTime = AudioSettings.dspTime + (double)audioSource.clip.length;

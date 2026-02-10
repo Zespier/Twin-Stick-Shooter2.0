@@ -14,6 +14,7 @@ public class VoicePool : MonoBehaviour {
     public int head;
     public int tail;
     public int count;
+    public AudioSource defaultSettings;
 
     private void Awake() {
         voices = new Voice[maxVoices];
@@ -43,14 +44,15 @@ public class VoicePool : MonoBehaviour {
         }
     }
 
-    public Voice PlayVoice(AudioClip clip, Vector3 position) {
+    public Voice PlayVoice(AudioClip clip, float volume, Vector3 position, AudioSource spatialBlendSettings) {
         if (count == maxVoices) {
             StealVoice();
         }
 
         Voice voice = voices[tail];
         voice.audioSource.clip = clip;
-        voice.audioSource.volume = 1;
+        voice.volume = volume;
+        Transfer3DSpatialBlendSettings(spatialBlendSettings == default ? defaultSettings : spatialBlendSettings, voice.audioSource);
         voice.Activate(position);
 
         tail++;
@@ -107,5 +109,20 @@ public class VoicePool : MonoBehaviour {
             voice.timeOfFade = Time.time;
             _fadingVoices.Add(voice);
         }
+    }
+
+    public void Transfer3DSpatialBlendSettings(AudioSource from, AudioSource to) {
+        to.panStereo = from.panStereo;
+        to.spatialBlend = from.spatialBlend;
+        to.reverbZoneMix = from.reverbZoneMix;
+        to.dopplerLevel = from.dopplerLevel;
+        to.spread = from.spread;
+        to.minDistance = from.minDistance;
+        to.maxDistance = from.maxDistance;
+        to.rolloffMode = from.rolloffMode;
+        to.SetCustomCurve(AudioSourceCurveType.CustomRolloff, from.GetCustomCurve(AudioSourceCurveType.CustomRolloff));
+        to.SetCustomCurve(AudioSourceCurveType.SpatialBlend, from.GetCustomCurve(AudioSourceCurveType.SpatialBlend));
+        to.SetCustomCurve(AudioSourceCurveType.Spread, from.GetCustomCurve(AudioSourceCurveType.Spread));
+        to.SetCustomCurve(AudioSourceCurveType.ReverbZoneMix, from.GetCustomCurve(AudioSourceCurveType.ReverbZoneMix));
     }
 }

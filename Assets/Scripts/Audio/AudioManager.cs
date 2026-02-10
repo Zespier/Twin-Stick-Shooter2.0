@@ -26,8 +26,6 @@ public class AudioManager : MonoBehaviour {
     public AudioClip explosionClip;
     public AudioClip playerExplosionClip;
 
-    private AudioCalls audioCalls;
-
     public static AudioManager instance;
     private void Awake() {
         if (!instance) {
@@ -55,7 +53,7 @@ public class AudioManager : MonoBehaviour {
     }
 
     public void EnemyLaserSound(Vector3 position) {
-        Voice _audioSource = audioPool.PlayVoice(enemyLasersClips[Random.Range(0, enemyLasersClips.Count)], position);
+        Voice _audioSource = audioPool.PlayVoice(enemyLasersClips[Random.Range(0, enemyLasersClips.Count)], enemyLasersVolume, position, defaultSettings);
         _audioSource.audioSource.pitch = Random.Range(1.1f - pitchRange, 1.1f + pitchRange);
     }
 
@@ -79,26 +77,18 @@ public class AudioManager : MonoBehaviour {
                 break;
         }
 
-        Voice _audioSource = audioPool.PlayVoice(audioClip, position);
+        Voice _audioSource = audioPool.PlayVoice(audioClip, volume, position, defaultSettings);
         _audioSource.audioSource.pitch = Random.Range(1.1f - pitchRange, 1.1f + pitchRange);
-
-        audioCalls.PlaySound(AudioCategory.GenericPoolSoundMaxPriority, audioClip, position: position, volume: volume, spatialBlendSettings: defaultSettings);
     }
 
     public void ShootSound() {
-        audioCalls.PlaySound(AudioCategory.GenericPoolSoundLowPriority, shootClips[UnityEngine.Random.Range(0, shootClips.Count)], pitch: UnityEngine.Random.Range(1 - pitchRange, 1 + pitchRange), position: PlayerController.instance.transform.position, spatialBlendSettings: defaultSettings, volume: shootsVolume);
+        Voice _audioSource = audioPool.PlayVoice(shootClips[Random.Range(0, shootClips.Count)], shootsVolume, PlayerController.instance.transform.position, defaultSettings);
+        _audioSource.audioSource.pitch = Random.Range(1 - pitchRange, 1 + pitchRange);
     }
 
-    //TODO: ABCDEFGHIJKLMNOPQRSTUVWXYZ
-    public void PlayShortSound(ShortSound type, Vector3 position) {
-        switch (type) {
-            case ShortSound.smallExplosion:
-                audioCalls.PlaySound(AudioCategory.GenericPoolSoundLowPriority, explosionClip, position: position, spatialBlendSettings: bulletImpactSettings, volume: explosionVolume / 2f);
-                break;
-
-            default:
-                break;
-        }
+    public void PlayShortSound(Vector3 position) {
+        Voice _audioSource = audioPool.PlayVoice(explosionClip, explosionVolume / 2f, position, bulletImpactSettings);
+        _audioSource.audioSource.pitch = Random.Range(1.1f - pitchRange, 1.1f + pitchRange);
     }
 
     #region Volume management
