@@ -26,6 +26,12 @@ public class AudioManager : MonoBehaviour {
     public AudioClip explosionClip;
     public AudioClip playerExplosionClip;
 
+    private bool _canEnemyLaserSoundAgain;
+    private bool _canEnemyExplosionSoundAgain;
+    private bool _canPlayerExplosionSoundAgain;
+    private bool _canShootSoundAgain;
+    private bool _canBulletExplosionAgainstTheWallSoundAgain;
+
     public static AudioManager instance;
     private void Awake() {
         if (!instance) {
@@ -36,6 +42,14 @@ public class AudioManager : MonoBehaviour {
         }
 
         Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow);
+    }
+
+    private void Update() {
+        _canEnemyLaserSoundAgain = true;
+        _canEnemyExplosionSoundAgain = true;
+        _canPlayerExplosionSoundAgain = true;
+        _canShootSoundAgain = true;
+        _canBulletExplosionAgainstTheWallSoundAgain = true;
     }
 
     public void ShipSound(Vector3 speed) {
@@ -51,8 +65,13 @@ public class AudioManager : MonoBehaviour {
     }
 
     public void EnemyLaserSound(Vector3 position) {
-        Voice _audioSource = audioPool.PlayVoice(enemyLasersClips[Random.Range(0, enemyLasersClips.Count)], enemyLasersVolume, VoicePriority.EnemyShoot, position, defaultSettings);
-        _audioSource.audioSource.pitch = Random.Range(1.1f - pitchRange, 1.1f + pitchRange);
+
+        if (_canEnemyLaserSoundAgain) {
+            _canEnemyLaserSoundAgain = false;
+
+            Voice _audioSource = audioPool.PlayVoice(enemyLasersClips[Random.Range(0, enemyLasersClips.Count)], enemyLasersVolume, VoicePriority.EnemyShoot, position, defaultSettings);
+            _audioSource.audioSource.pitch = Random.Range(1.1f - pitchRange, 1.1f + pitchRange);
+        }
     }
 
     public void ExplosionSound(Vector3 position, string whoGotExploded) {
@@ -77,18 +96,40 @@ public class AudioManager : MonoBehaviour {
                 break;
         }
 
-        Voice _audioSource = audioPool.PlayVoice(audioClip, volume, voicePriority, position, defaultSettings);
-        _audioSource.audioSource.pitch = Random.Range(1.1f - pitchRange, 1.1f + pitchRange);
+        if (voicePriority == VoicePriority.EnemyExploded && _canEnemyExplosionSoundAgain) {
+            _canEnemyExplosionSoundAgain = false;
+
+            Voice _audioSource = audioPool.PlayVoice(audioClip, volume, voicePriority, position, defaultSettings);
+            _audioSource.audioSource.pitch = Random.Range(1.1f - pitchRange, 1.1f + pitchRange);
+
+
+        } else if (voicePriority == VoicePriority.PlayerExploded && _canPlayerExplosionSoundAgain) {
+            _canPlayerExplosionSoundAgain = false;
+
+            Voice _audioSource = audioPool.PlayVoice(audioClip, volume, voicePriority, position, defaultSettings);
+            _audioSource.audioSource.pitch = Random.Range(1.1f - pitchRange, 1.1f + pitchRange);
+        }
     }
 
     public void ShootSound() {
-        Voice _audioSource = audioPool.PlayVoice(shootClips[Random.Range(0, shootClips.Count)], shootsVolume, VoicePriority.BulletShoot, PlayerController.instance.transform.position, defaultSettings);
-        _audioSource.audioSource.pitch = Random.Range(1 - pitchRange, 1 + pitchRange);
+
+        if (_canShootSoundAgain) {
+            _canShootSoundAgain = false;
+
+            Voice _audioSource = audioPool.PlayVoice(shootClips[Random.Range(0, shootClips.Count)], shootsVolume, VoicePriority.BulletShoot, PlayerController.instance.transform.position, defaultSettings);
+            _audioSource.audioSource.pitch = Random.Range(1 - pitchRange, 1 + pitchRange);
+        }
     }
 
     public void PlayBulletExplosionAgainstTheWall(Vector3 position) {
-        Voice _audioSource = audioPool.PlayVoice(explosionClip, explosionVolume / 2f, VoicePriority.BulletExplosion, position, bulletImpactSettings);
-        _audioSource.audioSource.pitch = Random.Range(1.1f - pitchRange, 1.1f + pitchRange);
+
+
+        if (_canBulletExplosionAgainstTheWallSoundAgain) {
+            _canBulletExplosionAgainstTheWallSoundAgain = false;
+
+            Voice _audioSource = audioPool.PlayVoice(explosionClip, explosionVolume / 2f, VoicePriority.BulletExplosion, position, bulletImpactSettings);
+            _audioSource.audioSource.pitch = Random.Range(1.1f - pitchRange, 1.1f + pitchRange);
+        }
     }
 
     #region Volume management
