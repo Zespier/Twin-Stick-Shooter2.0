@@ -34663,11 +34663,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79e14f47cb891054e985aecc55218bd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VoicePool
-  maxVoices: 64
+  maxVoicesClamped: 64
+  realMaxVoices: 96
   timeToFadeAVoice: 0.1
   _fadingVoices: []
   prefab: {fileID: 0}
-  voices: []
+  voices:
+  - {fileID: 33862367462483929}
   head: 0
   tail: 0
   count: 0
