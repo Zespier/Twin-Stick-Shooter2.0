@@ -8,7 +8,6 @@ public class WeaponController : NetworkBehaviour {
 
     public Bullet bullet;
     public GameObject shotgunBullet;
-    public Transform bulletParent;
     public List<Transform> shootPoints = new List<Transform>();
     public Queue<Bullet> _generatedBullets = new Queue<Bullet>();
     public Queue<ShotgunBullet> _generatedShotgunBullets = new Queue<ShotgunBullet>();
@@ -36,11 +35,12 @@ public class WeaponController : NetworkBehaviour {
     }
 
     private void Update() {
-        if (!IsServer) { return; }
-
+        if (NetworkManager.Singleton == null) { return; }
+        if (!IsOwner) { return; }
         if (PlayerController.instance._dead) {
             return;
         }
+
         _debugSize = _generatedBullets.Count;
 
         SetBulletLivingArea();
@@ -63,7 +63,9 @@ public class WeaponController : NetworkBehaviour {
     }
 
     private void SetTimer() {
+
         _timer = !_lastFrameWasShooting ? Time.time : _timer + 1 / _playerController.Stats.FireRate;
+
     }
 
     private void PrepareProjectile() {
@@ -78,21 +80,34 @@ public class WeaponController : NetworkBehaviour {
 
             if (_auxBullet != null && !_auxBullet.gameObject.activeSelf) {
 
-                _auxBullet.gameObject.SetActive(true);
-                _auxBullet.transform.position = shootPoints[i].position;
-                _auxBullet.Shoot(_playerController.body.forward, _playerController.Stats.DesviationAngle, _playerController.Stats);
-                _generatedBullets.Enqueue(_auxBullet);
+                SendUsePoolBulletServerRpc(i);
 
             } else {
                 if (_auxBullet != null) {
                     _generatedBullets.Enqueue(_auxBullet);
                 }
-                Bullet newBullet = Instantiate(bullet, shootPoints[i].position, Quaternion.identity, bulletParent);
-                newBullet.Shoot(_playerController.body.forward, _playerController.Stats.DesviationAngle, _playerController.Stats);
-                newBullet.weaponController = this;
-                _generatedBullets.Enqueue(newBullet);
+                SendSpawnBulletServerRpc(i);
             }
         }
+    }
+
+    [ServerRpc]
+    public void SendSpawnBulletServerRpc(int index) {
+
+        Bullet newBullet = Instantiate(bullet, shootPoints[index].position, Quaternion.identity, BulletContainer.instance.transform);
+        newBullet.Shoot(shootPoints[index].position, _playerController.body.forward, _playerController.Stats.DesviationAngle, _playerController.Stats);
+        newBullet.weaponController = this;
+        newBullet.GetComponent<NetworkObject>().Spawn();
+        _generatedBullets.Enqueue(newBullet);
+    }
+
+    [ServerRpc]
+    public void SendUsePoolBulletServerRpc(int index) {
+
+        _auxBullet.gameObject.SetActive(true);
+        _auxBullet.transform.position = shootPoints[index].position;
+        _auxBullet.Shoot(shootPoints[index].position, _playerController.body.forward, _playerController.Stats.DesviationAngle, _playerController.Stats);
+        _generatedBullets.Enqueue(_auxBullet);
     }
 
     private void AttackAgainIfPossible() {
@@ -126,7 +141,7 @@ public class WeaponController : NetworkBehaviour {
 
                 _auxShotgunBullet.gameObject.SetActive(true);
                 _auxShotgunBullet.transform.position = shootPoint;
-                _auxShotgunBullet.Shoot(_playerController.body.forward, 15, _playerController.Stats);
+                _auxShotgunBullet.Shoot(shootPoint, _playerController.body.forward, 15, _playerController.Stats);
                 _generatedShotgunBullets.Enqueue(_auxShotgunBullet);
 
             } else {
@@ -134,8 +149,8 @@ public class WeaponController : NetworkBehaviour {
                     _generatedShotgunBullets.Enqueue(_auxShotgunBullet);
                 }
 
-                ShotgunBullet newShotgunBullet = Instantiate(shotgunBullet, shootPoint, Quaternion.identity, bulletParent).GetComponent<ShotgunBullet>();
-                newShotgunBullet.Shoot(_playerController.body.forward, 15, _playerController.Stats);
+                ShotgunBullet newShotgunBullet = Instantiate(shotgunBullet, shootPoint, Quaternion.identity, BulletContainer.instance.transform).GetComponent<ShotgunBullet>();
+                newShotgunBullet.Shoot(shootPoint, _playerController.body.forward, 15, _playerController.Stats);
                 newShotgunBullet.weaponController = this;
                 _generatedShotgunBullets.Enqueue(newShotgunBullet);
             }
@@ -148,18 +163,26 @@ public class WeaponController : NetworkBehaviour {
 
     #region InputActions
 
-    [ServerRpc]
-    public void SendShotInputServerRpc(InputAction.CallbackContext context) {
-        if (context.started) {
-            _shooting = true;
-        } else if (context.canceled) {
-            _shooting = false;
-        }
-    }
+    //public void SendShotInputServerRpc(InputAction.CallbackContext context) {
+    //    if (context.started) {
+    //        _shooting = true;
+    //    } else if (context.canceled) {
+    //        _shooting = false;
+    //    }
+    //}
 
     public void OnShootButton(InputAction.CallbackContext context) {
-        if (!IsOwner) { return; }
-        SendShotInputServerRpc(context);
+
+        Debug.Log("Se llama al método");
+
+        if (context.started) {
+            Debug.Log("EMPEZAR shooting");
+            _shooting = true;
+        } else if (context.canceled) {
+            Debug.Log("Cancelar Shooting");
+            _shooting = false;
+        }
+        //SendShotInputServerRpc(context);
     }
 
     public void OnShotgunButton(InputAction.CallbackContext context) {

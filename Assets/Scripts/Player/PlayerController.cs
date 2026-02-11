@@ -1,45 +1,39 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerController : Damageable {
 
-    public Rigidbody rb;
     public Transform body;
     public PlayerInputs playerInputs;
     public float hp = 2000f;
     public ParticleSystem deathExplosion;
     public GameObject mesh;
-    public PlayerHealth playerHealth;
-    public TrailRenderer trailRenderer;
+    //public PlayerHealth playerHealth;
     public Stats Stats;
-    public Queue<MovementInput> pendingInputs;
+    public Queue<MovementInput> pendingInputs = new();
 
     [HideInInspector] public bool _dead;
-    [HideInInspector] public Vector2 _moveValue;
-    [HideInInspector] public Vector2 _authoritativeMoveDirectionLerped;
     private float _maxHp;
     private int _currentTick;
-    private int _lastProcessedTick;
     private Vector3 _authoritativePosition;
+    private Vector3 _authoritativeLerpedDirection;
     private Vector3 _predictedPosition;
+    private Queue<PredictedPosition> _predictedPositionsQueue = new();
+    [HideInInspector] public Vector2 _lastMovementDirectionForRotation;
 
     public static PlayerController instance;
-    private void Awake() {
-        Application.targetFrameRate = 100;
-        if (!instance) {
-            instance = this;
+
+    public override void OnNetworkSpawn() {
+        if (IsOwner) {
+            if (!instance) {
+                instance = this;
+            }
+
+            playerInputs = new PlayerInputs();
+            playerInputs.Enable();
+            _maxHp = hp;
         }
-
-        playerInputs = new PlayerInputs();
-        _maxHp = hp;
-    }
-
-    private void OnEnable() {
-        playerInputs.Enable();
     }
 
     private void OnDisable() {
@@ -47,6 +41,7 @@ public class PlayerController : Damageable {
     }
 
     private void Update() {
+        if (NetworkManager.Singleton == null) { return; }
         if (!IsOwner) { return; }
         if (_dead) { return; }
 
@@ -54,42 +49,34 @@ public class PlayerController : Damageable {
         Rotation();
     }
 
+    //THIS IS THE CONCEPT OF THE MOVEMENT
+    //Server moves you
+    //1 2 3 4 5 6 7 8 9    THE SERVER SAYS YOU ARE HERE, EVERYONE SEES THIS 
+
+    //1 2 3 4 5 6 7 8 9 1 2 3 4 5 6 7 8 9 //YOU ARE POOR AND DON'T HAVE INTERNET, so you want to be where the server says + all those inputs
     private void Movement() {
 
-        //if (UpgradeCardManager.instance != null && UpgradeCardManager.instance.canvas.gameObject.activeSelf) {
-        //    _moveValue = Vector2.zero;
-        //    return;
+        Vector3 inputDirection = playerInputs.Player.Move.ReadValue<Vector2>();
+        _lastMovementDirectionForRotation = inputDirection;
 
-        //} else {
-        //_moveValue = playerInputs.Player.Move.ReadValue<Vector2>();
-        //}
+        //Move and clamp
+        _predictedPosition += Time.deltaTime * Stats.Speed * new Vector3(inputDirection.x, 0, inputDirection.y);
+        _predictedPosition = new Vector3(_predictedPosition.x, 0, _predictedPosition.z);
+
+        transform.position = _predictedPosition;
+
         MovementInput input = new() {
             tick = _currentTick++,
-            direction = playerInputs.Player.Move.ReadValue<Vector2>(),
+            direction = inputDirection,
+        };
+
+        PredictedPosition predictedPosition = new() {
+            tick = input.tick,
+            predictedPositionThisTick = _predictedPosition,
         };
 
         pendingInputs.Enqueue(input);
-
-        //Predict the position from the last point the server synced
-        Vector3 predictedPosition = _authoritativePosition;
-
-        Vector3 _predictedDirectionLerped = _authoritativeMoveDirectionLerped;
-
-        foreach (var pendingInput in pendingInputs) {
-            if (pendingInput.tick > _lastProcessedTick) {
-                _predictedDirectionLerped = Vector2.Lerp(_predictedDirectionLerped, input.direction, Time.deltaTime / 0.1f);
-
-                predictedPosition += Time.deltaTime * Stats.Speed * new Vector3(_predictedDirectionLerped.x, 0, _predictedDirectionLerped.y);
-            }
-        }
-
-        while (pendingInputs.Count > 0 && pendingInputs.Peek().tick <= _lastProcessedTick) {
-            pendingInputs.Dequeue();
-        }
-
-        predictedPosition = new Vector3(predictedPosition.x, 0, predictedPosition.z);
-
-        transform.position += predictedPosition;
+        _predictedPositionsQueue.Enqueue(predictedPosition);
 
         SendMovementInputsServerRpc(input);
     }
@@ -97,46 +84,63 @@ public class PlayerController : Damageable {
     [ServerRpc]
     public void SendMovementInputsServerRpc(MovementInput input) {
 
-        _authoritativeMoveDirectionLerped = Vector2.Lerp(_authoritativeMoveDirectionLerped, input.direction, Time.deltaTime / 0.1f);
-        _authoritativePosition += Time.deltaTime * Stats.Speed * new Vector3(_authoritativeMoveDirectionLerped.x, 0, _authoritativeMoveDirectionLerped.y);
+        //TODO: ADD LERP to the movement
+        //_authoritativeLerpedDirection = Vector2.Lerp(_authoritativeLerpedDirection, input.direction, Time.deltaTime / 0.1f);
+        _authoritativePosition += Time.deltaTime * Stats.Speed * new Vector3(input.direction.x, 0, input.direction.y);
         _authoritativePosition = new Vector3(_authoritativePosition.x, 0, _authoritativePosition.z);
-        AudioManager.instance.ShipSound(_authoritativeMoveDirectionLerped * Stats.Speed);
+        AudioManager.instance.ShipSound(_authoritativeLerpedDirection * Stats.Speed);
 
-        _lastProcessedTick = input.tick;
-        SendStateClientRpc(_authoritativePosition, _lastProcessedTick);
+        SendStateClientRpc(_authoritativePosition, input);
     }
 
+    //This is for recalculation
     [ClientRpc]
-    void SendStateClientRpc(Vector3 serverPos, int serverTick) {
+    void SendStateClientRpc(Vector3 serverPos, MovementInput processedInput) {
         if (!IsOwner) { return; }
 
-        // If prediction was wrong
-        float error = Vector3.Distance(_predictedPosition, serverPos);
-        if (error > 0.01f) {
-            _predictedPosition = serverPos;
+        //Every frame the player is predicting his movement, sends the input and where he thinks he is at that tick, when the server checkes and moves him, we have to see if the player was correct, if there is suficient error, then recolocate the player.
+        Vector3 predictedPositionOnServerTick = Vector3.zero;
 
-            // Replay inputs the server hasn't seen yet
+        while (_predictedPositionsQueue.Count > 0) {
+
+            PredictedPosition _predictedPosition = _predictedPositionsQueue.Dequeue();
+            if (_predictedPosition.tick == processedInput.tick) {
+                predictedPositionOnServerTick = _predictedPosition.predictedPositionThisTick;
+            }
+        }
+
+        float error = Vector3.Distance(serverPos, predictedPositionOnServerTick);
+        if (error > 0.05f) {
+            //Reset the prediction to the position of the tick processed
+            _predictedPosition = serverPos;
+            _predictedPositionsQueue.Clear();
+
+            //And again, the player predict his position based on the server + his own inputs that are still on the way to be checked
             foreach (var input in pendingInputs) {
-                if (input.tick > serverTick) {
-                    _predictedPosition += new Vector3(input.move.x, 0, input.move.y)
-                                          * speed * Time.deltaTime;
+                if (input.tick > processedInput.tick) {
+                    _predictedPosition += Time.deltaTime * Stats.Speed * new Vector3(input.direction.x, 0, input.direction.y);
+                    _predictedPosition = new Vector3(_predictedPosition.x, 0, _predictedPosition.z);
+
+                    PredictedPosition predictedPosition = new() {
+                        tick = input.tick,
+                        predictedPositionThisTick = _predictedPosition,
+                    };
+
+                    _predictedPositionsQueue.Enqueue(predictedPosition);
                 }
             }
 
             transform.position = _predictedPosition;
         }
 
-        // Remove confirmed inputs
+        // Remove all inputs processed by the server
         while (pendingInputs.Count > 0 &&
-               pendingInputs.Peek().tick <= serverTick) {
+               pendingInputs.Peek().tick <= processedInput.tick) {
             pendingInputs.Dequeue();
         }
     }
 
     private void Rotation() {
-        if (UpgradeCardManager.instance != null && UpgradeCardManager.instance.canvas.gameObject.activeSelf) {
-            return;
-        }
 
         Vector2 lookValue = GetLookValue();
         Vector3 lookValue3D = new Vector3(lookValue.x, 0, lookValue.y);
@@ -146,15 +150,12 @@ public class PlayerController : Damageable {
         Events.OnTargetMove?.Invoke(lookValue3D.normalized);
     }
 
-    /// <summary>
-    /// Gets the look value
-    /// </summary>
-    /// <returns></returns>
     private Vector2 GetLookValue() {
         Vector2 lookValue = playerInputs.Player.Look.ReadValue<Vector2>();
 
+
         if (lookValue == Vector2.zero) {
-            lookValue = _moveValue;
+            lookValue = _lastMovementDirectionForRotation;
         }
 
         return lookValue;
@@ -178,7 +179,7 @@ public class PlayerController : Damageable {
 
     public void RemoveHealth(float amount) {
         hp -= amount;
-        playerHealth.ReduceHealthBar(hp, Stats.HP);
+        //playerHealth.ReduceHealthBar(hp, Stats.HP);
         if (hp < 0) {
             Death();
         }
@@ -188,8 +189,6 @@ public class PlayerController : Damageable {
         mesh.SetActive(false);
         deathExplosion.Play();
         _dead = true;
-        rb.linearVelocity = Vector3.zero;
-        rb.constraints = RigidbodyConstraints.FreezeAll;
 
         CameraBehaviour.instance.CameraShake();
 
@@ -204,12 +203,24 @@ public class PlayerController : Damageable {
     public void Heal() {
         hp = _maxHp;
 
-        playerHealth.ReduceHealthBar(hp, Stats.HP);
+        //playerHealth.ReduceHealthBar(hp, Stats.HP);
 
     }
 }
 
-public struct MovementInput {
+[System.Serializable]
+public struct MovementInput : INetworkSerializable {
     public int tick;
     public Vector2 direction;
+
+    public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter {
+
+        serializer.SerializeValue(ref tick);
+        serializer.SerializeValue(ref direction);
+    }
+}
+
+public struct PredictedPosition {
+    public int tick;
+    public Vector3 predictedPositionThisTick;
 }

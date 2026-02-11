@@ -14,7 +14,7 @@ public class ZombieState : AttackBaseState {
     /// Checks if it reached the player
     /// </summary>
     public override void StateLateUpdate() {
-        if (Vector3.Distance(controller.player.position, transform.position) < controller.DistanceToReachPlayer) {
+        if (Vector3.Distance(PlayerController.instance.transform.position, transform.position) < controller.DistanceToReachPlayer) {
             controller.ReachingPlayer();
         }
     }
@@ -23,6 +23,6 @@ public class ZombieState : AttackBaseState {
     /// moves towards the player
     /// </summary>
     public override void StateUpdate() {
-        controller.rb.linearVelocity = (controller.player.position - transform.position).normalized * controller.Speed;
+        controller.rb.linearVelocity = (PlayerController.instance.transform.position - transform.position).normalized * controller.Speed;
     }
 }

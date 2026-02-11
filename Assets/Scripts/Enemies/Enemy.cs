@@ -7,15 +7,12 @@ public class Enemy : Damageable {
 
     public EnemyType type;
     [Header("Enemy Base Attributes")]
-    public Rigidbody rb;
     [SerializeField] private float speed = 10f;
-    public Transform player;
     public Transform body;
     public float baseDamage = 1f;
     public float attackRate = 1f;
     [SerializeField] private float distanceToReachPlayer = 0.6f;
     [SerializeField] private float rotationLerpSpeed = 0.1f;
-
 
     public virtual float Speed => speed;
     public virtual float DistanceToReachPlayer => distanceToReachPlayer;
@@ -43,10 +40,11 @@ public class Enemy : Damageable {
 
     private void Start() {
         currentState.OnStateEnter();
-        player = PlayerController.instance.transform;
     }
 
     protected virtual void Update() {
+        if (PlayerController.instance == null) { return; }
+
         if (PlayerController.instance._dead) {
             rb.linearVelocity = Vector3.zero;
             return;
@@ -57,6 +55,8 @@ public class Enemy : Damageable {
     }
 
     private void LateUpdate() {
+        if (PlayerController.instance == null) { return; }
+
         if (PlayerController.instance._dead) {
             rb.linearVelocity = Vector3.zero;
             return;
@@ -72,7 +72,7 @@ public class Enemy : Damageable {
     /// Rotates the body looking at the player with a lerp
     /// </summary>
     protected virtual void RotateBody() {
-        Vector3 targetLookDirection = player.transform.position - transform.position;
+        Vector3 targetLookDirection = PlayerController.instance.transform.position - transform.position;
         targetLookDirection.y = 0f;
         body.forward = Vector3.Lerp(body.forward, targetLookDirection, Time.deltaTime / RotationLerpSpeed);
     }

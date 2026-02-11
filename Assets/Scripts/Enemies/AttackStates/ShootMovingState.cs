@@ -22,7 +22,7 @@ public class ShootMovingState : AttackBaseState {
         for (int i = 0; i < shootPoints.Count; i++) {
 
             Bullet newBullet = Instantiate(bulletPrefab, shootPoints[i].position, Quaternion.identity, BulletContainer.instance.transform).GetComponent<Bullet>();
-            newBullet.Shoot(shootPoints[i].forward, 2f, controller.stats);
+            newBullet.Shoot(shootPoints[i].position, shootPoints[i].forward, 2f, controller.stats);
         }
 
         AudioManager.instance.EnemyLaserSound(transform.position);
@@ -41,7 +41,7 @@ public class ShootMovingState : AttackBaseState {
     /// </summary>
     public override void StateLateUpdate() {
 
-        if (Vector3.Distance(controller.player.position, transform.position) < controller.DistanceToReachPlayer) {
+        if (Vector3.Distance(PlayerController.instance.transform.position, transform.position) < controller.DistanceToReachPlayer) {
             controller.ReachingPlayer();
         }
 
@@ -58,7 +58,7 @@ public class ShootMovingState : AttackBaseState {
     /// </summary>
     public override void StateUpdate() {
 
-        controller.rb.linearVelocity = (controller.player.position - transform.position).normalized * shootingMovementSpeed;
+        controller.rb.linearVelocity = (PlayerController.instance.transform.position - transform.position).normalized * shootingMovementSpeed;
 
         if (_shootTimer + 1f / fireRate < Time.time) {
             _shootTimer = Time.time;

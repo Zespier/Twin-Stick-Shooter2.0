@@ -23,7 +23,7 @@ public class HuntState : AttackBaseState {
         for (int i = 0; i < shootPoints.Count; i++) {
 
             Bullet newBullet = Instantiate(bulletPrefab, shootPoints[i].position, Quaternion.identity, BulletContainer.instance.transform).GetComponent<Bullet>();
-            newBullet.Shoot(shootPoints[i].forward, 1.1f, controller.stats);
+            newBullet.Shoot(shootPoints[i].position,shootPoints[i].forward, 1.1f, controller.stats);
 
         }
         AudioManager.instance.EnemyLaserSound(transform.position);
@@ -54,14 +54,14 @@ public class HuntState : AttackBaseState {
     /// Clamps the position to a circle around the player, so it can't scape
     /// </summary>
     public override void StateUpdate() {
-        Vector3 newForward = controller.player.position - transform.position;
+        Vector3 newForward = PlayerController.instance.transform.position - transform.position;
         newForward.y = 0;
         controller.body.forward = newForward;
 
         Vector3 direction = controller.body.right;
         controller.rb.linearVelocity = controller.Speed * direction;
 
-        Vector3 clampedPosition = controller.player.position;
+        Vector3 clampedPosition = PlayerController.instance.transform.position;
         clampedPosition -= controller.body.forward * selfieStickSize;
         clampedPosition.y = 0;
 

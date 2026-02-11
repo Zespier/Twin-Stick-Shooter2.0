@@ -8,7 +8,6 @@ public class CameraBehaviour : MonoBehaviour {
 
     public Camera mainCamera;
     public Transform player;
-    public PlayerController playerController;
     public float playerSpeedInfluence = 2f;
 
     public float movementDivision = 0.2f;
@@ -41,9 +40,11 @@ public class CameraBehaviour : MonoBehaviour {
     }
 
     public void Update() {
+        if (PlayerController.instance == null) { return; }
+
         DistanceMovement();
         TargetMovement();
-        CameraMovement(player.position, _currentTarget);
+        CameraMovement(PlayerController.instance.transform.position, _currentTarget);
     }
 
     /// <summary>
@@ -84,7 +85,7 @@ public class CameraBehaviour : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     private float GetDistance() {
-        float movementMagnitude = playerController._moveValue.sqrMagnitude;
+        float movementMagnitude = PlayerController.instance._lastMovementDirectionForRotation.sqrMagnitude;
         if (movementMagnitude > 1) {
             movementMagnitude = 1;
         }
@@ -130,7 +131,7 @@ public class CameraBehaviour : MonoBehaviour {
             yield return null;
         }
 
-        nextTarget= new Vector3(0, mainCamera.transform.localPosition.y, 0);
+        nextTarget = new Vector3(0, mainCamera.transform.localPosition.y, 0);
 
         while (Vector3.Distance(mainCamera.transform.localPosition, nextTarget) > 0.1f) {
             mainCamera.transform.localPosition = Vector3.MoveTowards(mainCamera.transform.localPosition, nextTarget, Time.deltaTime * shakeSpeed);

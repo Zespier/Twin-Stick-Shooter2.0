@@ -114,7 +114,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""name"": ""Fire"",
                     ""type"": ""Button"",
                     ""id"": ""660e4f88-c80e-4565-acae-df3f7ee97090"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -123,7 +123,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""name"": ""Select"",
                     ""type"": ""Button"",
                     ""id"": ""5e24902a-66d5-4483-a3c0-34c28e819018"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false

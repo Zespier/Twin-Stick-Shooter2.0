@@ -15,10 +15,19 @@ public class Debris : MonoBehaviour {
     public float Speed { get; set; }
 
     private void Awake() {
+        StartCoroutine(C_WaitForPlayer());
+    }
+
+    private IEnumerator C_WaitForPlayer() {
+        while (PlayerController.instance == null) {
+            yield return null;
+        }
+
         ChooseDirection(false);
     }
 
     private void Update() {
+        if (PlayerController.instance == null) { return; }
 
         if (Vector3.Distance(PlayerController.instance.transform.position, transform.position) > 30) {
             ChooseDirection(true);

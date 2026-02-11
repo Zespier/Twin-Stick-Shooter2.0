@@ -209,7 +209,7 @@ public class Stats : MonoBehaviour {
                     enemy.hp = enemy.stats.HP;
                 } else {
                     PlayerController.instance.hp = PlayerController.instance.Stats.HP;
-                    PlayerController.instance.playerHealth.ReduceHealthBar(1, 1);
+                    //PlayerController.instance.playerHealth.ReduceHealthBar(1, 1);
                 }
                 break;
 
@@ -219,7 +219,7 @@ public class Stats : MonoBehaviour {
                     enemy.hp = enemy.stats.HP;
                 } else {
                     PlayerController.instance.hp = PlayerController.instance.Stats.HP;
-                    PlayerController.instance.playerHealth.ReduceHealthBar(1, 1);
+                    //PlayerController.instance.playerHealth.ReduceHealthBar(1, 1);
                 }
                 break;
 
@@ -229,7 +229,7 @@ public class Stats : MonoBehaviour {
                     enemy.hp = enemy.stats.HP;
                 } else {
                     PlayerController.instance.hp = PlayerController.instance.Stats.HP;
-                    PlayerController.instance.playerHealth.ReduceHealthBar(1, 1);
+                    //PlayerController.instance.playerHealth.ReduceHealthBar(1, 1);
                 }
                 break;
 

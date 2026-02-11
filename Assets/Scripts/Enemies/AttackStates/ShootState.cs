@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class ShootState : AttackBaseState {
@@ -21,7 +22,8 @@ public class ShootState : AttackBaseState {
         for (int i = 0; i < shootPoints.Count; i++) {
 
             Bullet newBullet = Instantiate(bulletPrefab, shootPoints[i].position, Quaternion.identity, BulletContainer.instance.transform).GetComponent<Bullet>();
-            newBullet.Shoot(shootPoints[i].forward, 2f, controller.stats);
+            newBullet.Shoot(shootPoints[i].position,shootPoints[i].forward, 2f, controller.stats);
+            newBullet.GetComponent<NetworkObject>().Spawn();
         }
 
         AudioManager.instance.EnemyLaserSound(transform.position);
@@ -42,7 +44,7 @@ public class ShootState : AttackBaseState {
     /// </summary>
     public override void StateLateUpdate() {
 
-        if (changeStateWhenPlayerOutOfReach && Vector3.Distance(controller.player.position, transform.position) > controller.DistanceToReachPlayer) {
+        if (changeStateWhenPlayerOutOfReach && Vector3.Distance(PlayerController.instance.transform.position, transform.position) > controller.DistanceToReachPlayer) {
             controller.PlayerOutOfReach();
         }
 

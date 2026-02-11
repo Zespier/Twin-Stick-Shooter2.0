@@ -39,7 +39,7 @@ public class Turret : Enemy {
     #endregion
 
     protected override void RotateBody() {
-        float rotationValue = Vector3.SignedAngle(Body.up, player.position - Body.transform.position, Vector3.forward) > 0 ? RotationSpeed : -RotationSpeed;
+        float rotationValue = Vector3.SignedAngle(Body.up, PlayerController.instance.transform.position - Body.transform.position, Vector3.forward) > 0 ? RotationSpeed : -RotationSpeed;
         Body.up = Quaternion.AngleAxis(rotationValue * Time.deltaTime, Vector3.forward) * Body.up;
     }
 

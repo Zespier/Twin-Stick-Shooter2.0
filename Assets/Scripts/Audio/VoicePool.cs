@@ -20,6 +20,7 @@ public class VoicePool : MonoBehaviour {
         voices = new Voice[realMaxVoices];
         for (int i = 0; i < realMaxVoices; i++) {
             voices[i] = Instantiate(prefab, transform);
+            voices[i].pool = this;
         }
     }
 

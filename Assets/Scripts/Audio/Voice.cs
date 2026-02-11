@@ -31,17 +31,17 @@ public class Voice : MonoBehaviour {
     void Update() {
         position = transform.position;
 
-        if (AudioSettings.dspTime >= _soundTime) {
+        //if (AudioSettings.dspTime >= _soundTime) {
 
-            pool.StopVoice(this);
-        }
+        //    pool.StopVoice(this);
+        //}
 
-        if (_audioListener != null) {
-            //TODO: audioSource.maxDistance seems to be expensive, I want to manually set the maxDistance for every sound so this is just a check
-            if ((position - _audioListener.transform.position).sqrMagnitude <= audioSource.maxDistance) {
-                pool.StopVoice(this);
-            }
-        }
+        //if (_audioListener != null) {
+        //    //TODO: audioSource.maxDistance seems to be expensive, I want to manually set the maxDistance for every sound so this is just a check
+        //    if ((position - _audioListener.transform.position).sqrMagnitude <= audioSource.maxDistance) {
+        //        pool.StopVoice(this);
+        //    }
+        //}
     }
 
     public void Activate() {
