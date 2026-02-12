@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : Damageable {
 
+    public WeaponController weaponController;
     public Transform body;
     public PlayerInputs playerInputs;
     public float hp = 2000f;

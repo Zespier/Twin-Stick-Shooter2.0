@@ -22,8 +22,7 @@ public class ShootState : AttackBaseState {
         for (int i = 0; i < shootPoints.Count; i++) {
 
             Bullet newBullet = Instantiate(bulletPrefab, shootPoints[i].position, Quaternion.identity, BulletContainer.instance.transform).GetComponent<Bullet>();
-            newBullet.Shoot(shootPoints[i].position,shootPoints[i].forward, 2f, controller.stats);
-            newBullet.GetComponent<NetworkObject>().Spawn();
+            newBullet.Shoot(shootPoints[i].forward, 2f, controller.stats, spawnNetworkObject: true);
         }
 
         AudioManager.instance.EnemyLaserSound(transform.position);
@@ -32,8 +31,6 @@ public class ShootState : AttackBaseState {
     public override void OnStateEnter() {
         _shootDurationTime = 0;
         _shootTimer = Time.time;
-
-        controller.rb.linearVelocity = Vector3.zero;
     }
 
     public override void OnStateExit() {

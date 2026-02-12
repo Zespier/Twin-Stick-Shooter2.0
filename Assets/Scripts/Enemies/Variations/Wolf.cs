@@ -32,8 +32,6 @@ public class Wolf : Enemy {
         _exploded = true;
 
         explosion.Play();
-        rb.linearVelocity = Vector3.zero;
-        rb.isKinematic = false;
         enabled = false;
 
 

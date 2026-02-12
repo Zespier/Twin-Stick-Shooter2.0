@@ -766,7 +766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2984141505
+  GlobalObjectIdHash: 2086072370
   InScenePlacedSourceGlobalObjectIdHash: 3496159541
   DeferredDespawnTick: 0
   Ownership: 1
@@ -792,13 +792,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  weaponController: {fileID: 5875837670570415519}
   body: {fileID: 2643551671206084190}
   hp: 2000
   deathExplosion: {fileID: 1459968403502998864}
   mesh: {fileID: 5276117829953504725}
   Stats: {fileID: 2287462726565255884}
   _dead: 0
-  _moveValue: {x: 0, y: 0}
+  _lastMovementDirectionForRotation: {x: 0, y: 0}
 --- !u!114 &5875837670570415519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -819,7 +820,6 @@ MonoBehaviour:
   - {fileID: 7328156308229568428}
   - {fileID: 3270373860169958245}
   _debugSize: 0
-  _playerController: {fileID: 7608750160662181039}
   bulletLivingArea:
     serializedVersion: 2
     x: 0

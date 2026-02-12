@@ -16,7 +16,6 @@ public class WeaponController : NetworkBehaviour {
     private bool _shooting;
     private bool _lastFrameWasShooting;
     private float _timer;
-    public PlayerController _playerController;
     private Camera _cam;
     [HideInInspector] public Rect bulletLivingArea = new Rect();
 
@@ -26,7 +25,6 @@ public class WeaponController : NetworkBehaviour {
     private ShotgunBullet _auxShotgunBullet;
 
     private void Awake() {
-        _playerController = GetComponent<PlayerController>();
         _cam = Camera.main;
 
         _screenSize = new Vector2(_cam.orthographicSize * 2.4f * ((float)_cam.pixelWidth / _cam.pixelHeight), _cam.orthographicSize * 2.4f);
@@ -45,7 +43,8 @@ public class WeaponController : NetworkBehaviour {
 
         SetBulletLivingArea();
 
-        if (_shooting && Time.time > _timer + 1 / _playerController.Stats.FireRate) {
+        //TODO: I need to change this, the server should be the one to calculate all these things form all the players right? I should only read the inputs on the clients, not decide wheter they can shoot or not, that is hackeable
+        if (_shooting && Time.time > _timer + 1 / PlayerController.instance.Stats.FireRate) {
             Shoot();
         }
 
@@ -64,7 +63,7 @@ public class WeaponController : NetworkBehaviour {
 
     private void SetTimer() {
 
-        _timer = !_lastFrameWasShooting ? Time.time : _timer + 1 / _playerController.Stats.FireRate;
+        _timer = !_lastFrameWasShooting ? Time.time : _timer + 1 / PlayerController.instance.Stats.FireRate;
 
     }
 
@@ -95,9 +94,7 @@ public class WeaponController : NetworkBehaviour {
     public void SendSpawnBulletServerRpc(int index) {
 
         Bullet newBullet = Instantiate(bullet, shootPoints[index].position, Quaternion.identity, BulletContainer.instance.transform);
-        newBullet.Shoot(shootPoints[index].position, _playerController.body.forward, _playerController.Stats.DesviationAngle, _playerController.Stats);
-        newBullet.weaponController = this;
-        newBullet.GetComponent<NetworkObject>().Spawn();
+        newBullet.Shoot(PlayerController.instance.body.forward, PlayerController.instance.Stats.DesviationAngle, PlayerController.instance.Stats, spawnNetworkObject: true);
         _generatedBullets.Enqueue(newBullet);
     }
 
@@ -106,13 +103,13 @@ public class WeaponController : NetworkBehaviour {
 
         _auxBullet.gameObject.SetActive(true);
         _auxBullet.transform.position = shootPoints[index].position;
-        _auxBullet.Shoot(shootPoints[index].position, _playerController.body.forward, _playerController.Stats.DesviationAngle, _playerController.Stats);
+        _auxBullet.Shoot(PlayerController.instance.body.forward, PlayerController.instance.Stats.DesviationAngle, PlayerController.instance.Stats);
         _generatedBullets.Enqueue(_auxBullet);
     }
 
     private void AttackAgainIfPossible() {
         //It is possible to shoot so fast you need 2 bullets in one frame
-        if (Time.time > _timer + 1 / _playerController.Stats.FireRate) {
+        if (Time.time > _timer + 1 / PlayerController.instance.Stats.FireRate) {
             Shoot();
         }
     }
@@ -141,7 +138,7 @@ public class WeaponController : NetworkBehaviour {
 
                 _auxShotgunBullet.gameObject.SetActive(true);
                 _auxShotgunBullet.transform.position = shootPoint;
-                _auxShotgunBullet.Shoot(shootPoint, _playerController.body.forward, 15, _playerController.Stats);
+                _auxShotgunBullet.Shoot(PlayerController.instance.body.forward, 15, PlayerController.instance.Stats);
                 _generatedShotgunBullets.Enqueue(_auxShotgunBullet);
 
             } else {
@@ -150,8 +147,7 @@ public class WeaponController : NetworkBehaviour {
                 }
 
                 ShotgunBullet newShotgunBullet = Instantiate(shotgunBullet, shootPoint, Quaternion.identity, BulletContainer.instance.transform).GetComponent<ShotgunBullet>();
-                newShotgunBullet.Shoot(shootPoint, _playerController.body.forward, 15, _playerController.Stats);
-                newShotgunBullet.weaponController = this;
+                newShotgunBullet.Shoot(PlayerController.instance.body.forward, 15, PlayerController.instance.Stats, true);
                 _generatedShotgunBullets.Enqueue(newShotgunBullet);
             }
         }

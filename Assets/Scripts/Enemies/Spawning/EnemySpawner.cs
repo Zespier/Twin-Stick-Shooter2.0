@@ -42,10 +42,16 @@ public class EnemySpawner : MonoBehaviour {
         _nextWaveSaveCounter -= Time.deltaTime;
     }
 
-    private async void Start() {
+    private void Start() {
+        StartCoroutine(C_WaitForPlayer());
+    }
 
+    private IEnumerator C_WaitForPlayer() {
         InitializeWaves(waves1);
-        await Task.Delay(1000);
+        while (PlayerController.instance == null) {
+            yield return null;
+        }
+
         SetNewWaveList(0);
     }
 
@@ -81,9 +87,6 @@ public class EnemySpawner : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// Reset all Scriptable Object variables 
-    /// </summary>
     private void ResetWaves(List<Wave> waveList) {
         for (int i = 0; i < waveList.Count; i++) {
             for (int j = 0; j < waveList[i].initialEnemies.Count; j++) {
@@ -95,9 +98,6 @@ public class EnemySpawner : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// Initializes all waves
-    /// </summary>
     private void InitializeWaves(List<Wave> waveList) {
 
         _currentWave = waveList[0];
@@ -131,19 +131,12 @@ public class EnemySpawner : MonoBehaviour {
         _startingWave = false;
     }
 
-    /// <summary>
-    /// Spawns initial enemies of a wave
-    /// </summary>
-    /// <param name="wave"></param>
     public void SpawnWaveInitialEnemies(Wave wave) {
         for (int i = 0; i < wave.initialEnemies.Count; i++) {
             SpawnEnemy(wave.initialEnemies[i], wave.initialSpawnPointList, i);
         }
     }
 
-    /// <summary>
-    /// Spawn Every enemy on a wave
-    /// </summary>
     public void SpawnAllEnemies() {
 
         for (int i = 0; i < _currentWave.initialEnemies.Count; i++) {
@@ -162,9 +155,7 @@ public class EnemySpawner : MonoBehaviour {
             }
         }
     }
-    /// <summary>
-    /// Spawn an enemy
-    /// </summary>
+
     public void SpawnEnemy(WaveEnemy enemy, List<int> spawnPointList, int index) {
 
         if (enemy.spawned) { return; }
@@ -187,10 +178,6 @@ public class EnemySpawner : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// returns a random spawn point that is not near the player
-    /// </summary>
-    /// <returns></returns>
     private Vector3 SpawnPointRandom(Vector3 originPoint) {
 
         float newPositionX = Random.Range(-circunferenceRadius, circunferenceRadius);
@@ -204,11 +191,6 @@ public class EnemySpawner : MonoBehaviour {
         return new Vector3(originPoint.x + newPositionX, originPoint.y, originPoint.z + newPositionZ);
     }
 
-    /// <summary>
-    /// Judges whether it should spawn an enemy or not
-    /// </summary>
-    /// <param name="waveEnemy"></param>
-    /// <param name="healthRemaining"></param>
     public void EnemyTookDamage(WaveEnemy waveEnemy, float healthRemaining) {
 
         waveEnemy.healthRemaining = healthRemaining;
@@ -250,10 +232,6 @@ public class EnemySpawner : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// Checks if all enemies are dead
-    /// </summary>
-    /// <returns></returns>
     private bool AreAllEnemiesDead() {
 
         bool allDead = true;

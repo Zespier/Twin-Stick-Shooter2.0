@@ -5,9 +5,10 @@ using Unity.Netcode;
 
 public class Bullet : NetworkBehaviour, IBullet {
 
+    public bool isEnemyBullet;
+    public float hitRadius = 1f;
     public float speed = 20f;
     public bool destroyOutOfCamera = false;
-    public WeaponController weaponController;
 
     protected Stats _ownerStats;
     protected float _deathTimer;
@@ -28,11 +29,12 @@ public class Bullet : NetworkBehaviour, IBullet {
             Deactivate();
         }
 
-        if (destroyOutOfCamera && !weaponController.bulletLivingArea.Contains(transform.position)) {
+        if (destroyOutOfCamera && !PlayerController.instance.weaponController.bulletLivingArea.Contains(transform.position)) {
             Deactivate();
         }
 
         Movement();
+        CheckDamage();
     }
 
     private void Movement() {
@@ -44,11 +46,14 @@ public class Bullet : NetworkBehaviour, IBullet {
         transform.position = newPosition;
     }
 
-    public void Shoot(Vector3 position, Vector3 direction, float desviationAngle, Stats ownerStats) {
+    public void Shoot(Vector3 direction, float desviationAngle, Stats ownerStats, bool spawnNetworkObject = false) {
         Rotate(direction);
         transform.forward = BulletFireDesviation.RandomBulletFireDesviation(transform, desviationAngle);
         speed = Random.Range(28 - 0.5f, 28 + 0.5f);
         this._ownerStats = ownerStats;
+        if (spawnNetworkObject) {
+            GetComponent<NetworkObject>().Spawn();
+        }
     }
 
     private void Rotate(Vector3 direction) {
@@ -58,5 +63,28 @@ public class Bullet : NetworkBehaviour, IBullet {
     public virtual void Deactivate() {
         gameObject.SetActive(false);
         _deathTimer = 0;
+    }
+
+    //The damage works a little different, real bullets move on the server, so the enemies are on the same tick, and so, I can perfectly hit them without any predictions.
+    //TODO: Maybe send to the clients that the enemy received damage so they can see the numbers? Yeah, I want the numbers from other players too
+    public void CheckDamage() {
+        if (isEnemyBullet) {
+
+            if ((transform.position - PlayerController.instance.transform.position).sqrMagnitude < hitRadius * hitRadius) {
+                PlayerController.instance.TakeDamage(PlayerController.instance.transform.position, damage: Damage, false, DamageType.PlayerDamaged);
+                Deactivate();
+            }
+
+
+        } else {
+
+            for (int i = 0; i < EnemyContainer.instance.activeEnemies.Count; i++) {
+                Enemy enemy = EnemyContainer.instance.activeEnemies[i];
+                if ((transform.position - enemy.transform.position).sqrMagnitude < hitRadius * hitRadius) {
+                    EnemyContainer.instance.activeEnemies[i].TakeDamage(enemy.transform.position, damage: Damage, false, DamageType.DefaultWhite);
+                    Deactivate();
+                }
+            }
+        }
     }
 }

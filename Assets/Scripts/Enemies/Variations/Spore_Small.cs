@@ -48,8 +48,6 @@ public class Spore_Small : Enemy {
         _exploded = true;
 
         explosion.Play();
-        rb.linearVelocity = Vector3.zero;
-        rb.isKinematic = false;
         boxCollider.enabled = false;
         enabled = false;
 

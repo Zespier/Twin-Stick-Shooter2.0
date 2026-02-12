@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class MejoritasRecogiblesManager : MonoBehaviour {
@@ -18,7 +19,7 @@ public class MejoritasRecogiblesManager : MonoBehaviour {
         _currentEnemies++;
         if (_currentEnemies >= enemiesPerUpgrade) {
             _currentEnemies = 0;
-            Instantiate(prefab, position, Quaternion.identity);
+            Instantiate(prefab, position, Quaternion.identity).GetComponent<NetworkObject>().Spawn();
         }
     }
 }

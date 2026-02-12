@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class ShootMovingState : AttackBaseState {
@@ -22,7 +23,7 @@ public class ShootMovingState : AttackBaseState {
         for (int i = 0; i < shootPoints.Count; i++) {
 
             Bullet newBullet = Instantiate(bulletPrefab, shootPoints[i].position, Quaternion.identity, BulletContainer.instance.transform).GetComponent<Bullet>();
-            newBullet.Shoot(shootPoints[i].position, shootPoints[i].forward, 2f, controller.stats);
+            newBullet.Shoot(shootPoints[i].forward, 2f, controller.stats, spawnNetworkObject: true);
         }
 
         AudioManager.instance.EnemyLaserSound(transform.position);
@@ -58,7 +59,7 @@ public class ShootMovingState : AttackBaseState {
     /// </summary>
     public override void StateUpdate() {
 
-        controller.rb.linearVelocity = (PlayerController.instance.transform.position - transform.position).normalized * shootingMovementSpeed;
+        transform.position += Time.deltaTime * shootingMovementSpeed * (PlayerController.instance.transform.position - transform.position).normalized;
 
         if (_shootTimer + 1f / fireRate < Time.time) {
             _shootTimer = Time.time;

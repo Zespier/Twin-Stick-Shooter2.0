@@ -20,6 +20,6 @@ public class RunAwayState : AttackBaseState {
 
     public override void StateUpdate() {
         Vector2 direction = (transform.position - PlayerController.instance.transform.position).normalized;
-        controller.rb.linearVelocity = controller.Speed * direction;
+        transform.position += Time.deltaTime * controller.Speed * new Vector3(direction.x, 0, direction.y);
     }
 }

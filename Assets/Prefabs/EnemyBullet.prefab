@@ -104,9 +104,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  isEnemyBullet: 1
+  hitRadius: 1
   speed: 12
   destroyOutOfCamera: 0
-  weaponController: {fileID: 0}
 --- !u!1 &7694871784341226649
 GameObject:
   m_ObjectHideFlags: 0

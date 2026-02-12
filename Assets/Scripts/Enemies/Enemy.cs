@@ -38,15 +38,23 @@ public class Enemy : Damageable {
         hp = stats.HP;
     }
 
+    private void OnEnable() {
+        EnemyContainer.instance.AddEnemy(this);
+    }
+
+    private void OnDisable() {
+        EnemyContainer.instance.RemoveEnemy(this);
+    }
+
     private void Start() {
         currentState.OnStateEnter();
     }
 
     protected virtual void Update() {
         if (PlayerController.instance == null) { return; }
+        if (!IsServer) { return; }
 
         if (PlayerController.instance._dead) {
-            rb.linearVelocity = Vector3.zero;
             return;
         }
 
@@ -56,11 +64,12 @@ public class Enemy : Damageable {
 
     private void LateUpdate() {
         if (PlayerController.instance == null) { return; }
+        if (!IsServer) { return; }
 
         if (PlayerController.instance._dead) {
-            rb.linearVelocity = Vector3.zero;
             return;
         }
+
         currentState.StateLateUpdate();
     }
 
@@ -68,19 +77,12 @@ public class Enemy : Damageable {
         hp = stats.HP;
     }
 
-    /// <summary>
-    /// Rotates the body looking at the player with a lerp
-    /// </summary>
     protected virtual void RotateBody() {
         Vector3 targetLookDirection = PlayerController.instance.transform.position - transform.position;
         targetLookDirection.y = 0f;
         body.forward = Vector3.Lerp(body.forward, targetLookDirection, Time.deltaTime / RotationLerpSpeed);
     }
 
-    /// <summary>
-    /// Changes state, calling the OnStateExit and onStateEnter
-    /// </summary>
-    /// <param name="state"></param>
     public virtual void ChangeState(Type state) {
         if (currentState.GetType() == state) { return; }
 

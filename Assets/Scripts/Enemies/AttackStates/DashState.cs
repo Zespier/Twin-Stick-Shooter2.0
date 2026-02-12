@@ -12,8 +12,7 @@ public class DashState : AttackBaseState {
 
     public override void OnStateEnter() {
         _distanceTraveled = 0;
-        _dashDirection = controller .body.forward;
-        controller.rb.linearVelocity = controller.Speed * 1.5f * _dashDirection;
+        _dashDirection = controller.body.forward;
     }
 
     public override void OnStateExit() {
@@ -32,6 +31,7 @@ public class DashState : AttackBaseState {
     /// Calculates the distance traveled
     /// </summary>
     public override void StateUpdate() {
+        transform.position += Time.deltaTime * controller.Speed * 1.5f * _dashDirection;
         _distanceTraveled += (Time.deltaTime * controller.Speed * _dashDirection).magnitude;
     }
 

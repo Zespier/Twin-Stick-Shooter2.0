@@ -23,6 +23,6 @@ public class ZombieState : AttackBaseState {
     /// moves towards the player
     /// </summary>
     public override void StateUpdate() {
-        controller.rb.linearVelocity = (PlayerController.instance.transform.position - transform.position).normalized * controller.Speed;
+        transform.position += Time.deltaTime * controller.Speed * (PlayerController.instance.transform.position - transform.position).normalized ;
     }
 }
