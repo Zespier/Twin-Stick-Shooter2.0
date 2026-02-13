@@ -732,13 +732,13 @@ public class InputManager : MonoBehaviour, ISystemActions, ICharacterActions, IB
     #endregion
 }
 
-public enum MineralEnum : byte{
+public enum MineralEnum : byte {
     Mineral1, Mineral2, Mineral3, Mineral4, Mineral5, Mineral6, Mineral7,
 }
 
 //Un arma tiene sizeUI para colocarla, tiene sell value y todo lo demas si
 
-public enum MadnessChant : byte{
+public enum MadnessChant : byte {
     Hunter,
     Fighter,
     Tank,
@@ -1129,5 +1129,28 @@ public class GroupForController : MonoBehaviour {
             posibleItem.Hover();
             //menu.hoveredItem = posibleItem;
         }
+    }
+}
+
+public class Ship : PlayerController {
+
+    public virtual void StartSpecialHability() {
+    }
+
+    public virtual void EndSpecialHability() {
+    }
+}
+
+public class Hunter : Ship {
+
+    public override void StartSpecialHability() {
+        //TODO: FUCKING RUN MORE AND INMUNE AND NO ATTACK
+
+        Stats.HunterSpeed = 1.2f;
+    }
+
+    public override void EndSpecialHability() {
+
+        Stats.HunterSpeed = 1f;
     }
 }

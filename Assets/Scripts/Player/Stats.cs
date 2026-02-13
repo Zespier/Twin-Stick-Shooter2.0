@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Stats : MonoBehaviour {
 
+    public const float firstShipBaseSpeed = 10;
+
     public UpgradeHolder upgradeHolder;
 
     public List<float> baseDamages;
@@ -25,10 +27,11 @@ public class Stats : MonoBehaviour {
     public List<float> fireRatePercentages;
 
     public float baseAtk = 10;
-    public virtual float Atk => (baseAtk + BaseDamages) * (DamagePercentages / 100f) + FlatDamages;
+    public virtual float Atk => ((baseAtk + BaseDamages) * (DamagePercentages / 100f) + FlatDamages) * OverSpeed;
     public virtual float BaseDamages => GetAllBuffs(Buff.BaseDamage);
     public virtual float DamagePercentages => GetAllBuffs(Buff.DamagePercentage);
     public virtual float FlatDamages => GetAllBuffs(Buff.FlatDamage);
+    public virtual float OverSpeed => Speed / firstShipBaseSpeed;
 
     public float baseHP = 100;
     public virtual float HP => (baseHP + BaseHps) * (HpPercentages / 100f) + FlatHps;
@@ -39,7 +42,8 @@ public class Stats : MonoBehaviour {
     //No defense, too hard to manage
 
     public float baseSpeed = 2;
-    public virtual float Speed => (baseSpeed + BaseSpeeds) * (SpeedPercentages / 100f) + FlatSpeeds;
+    public virtual float Speed => ((baseSpeed + BaseSpeeds) * (SpeedPercentages / 100f) + FlatSpeeds) * HunterSpeed;
+    public virtual float HunterSpeed { get; set; }
     public virtual float BaseSpeeds => GetAllBuffs(Buff.BaseSpeed);
     public virtual float SpeedPercentages => GetAllBuffs(Buff.SpeedPercentage);
     public virtual float FlatSpeeds => GetAllBuffs(Buff.FlatSpeed);
@@ -306,17 +310,17 @@ public class Stats : MonoBehaviour {
 
             case Buff.FlatSpeed:
                 flatSpeeds.Remove(amount);
-                break; 
-                
-                case Buff.BaseDesviationAngle:
+                break;
+
+            case Buff.BaseDesviationAngle:
                 baseDesviationAngles.Remove(amount);
-                break; 
-                
-                case Buff.BaseFireRate:
+                break;
+
+            case Buff.BaseFireRate:
                 baseFireRates.Remove(amount);
-                break; 
-                
-                case Buff.FireRatePercentage:
+                break;
+
+            case Buff.FireRatePercentage:
                 fireRatePercentages.Remove(amount);
                 break;
 
