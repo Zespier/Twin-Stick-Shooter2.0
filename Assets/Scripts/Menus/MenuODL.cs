@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class Menu : MonoBehaviour {
+public class MenuODL : MonoBehaviour {
 
     public CanvasGroup canvasGroup;
     public List<Button> buttons;
