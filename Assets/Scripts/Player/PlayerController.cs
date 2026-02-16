@@ -1135,22 +1135,54 @@ public class GroupForController : MonoBehaviour {
 public class Ship : PlayerController {
 
     public List<Ammo> ammoInventory = new();
-    public Ammo laserBeingUsed;
+    public Ammo[] lasserAmmo = new Ammo[5];
+    public int laserBeingUsed;
+    public Ammo tier1Laser;
 
-    public void AddAmmo(AmmoType type, Tier tier, int amount) {
-        for (int i = 0; i < ammoInventory.Count; i++) {
-            if (ammoInventory[i].type == type && ammoInventory[i].tier == tier) {
-                ammoInventory[i].amount += amount;
-            }
-        }
+    public void AddLaserAmmo(Tier tier, int amount) {
+        lasserAmmo[(int)tier - 1].amount += amount; //Tiers index go from 1 to 5, not 0 to 4
     }
 
-    public void RemoveLaserAmmo() {
-        for (int i = 0; i < ammoInventory.Count; i++) {
-            if (ammoInventory[i].type == laserBeingUsed.type && ammoInventory[i].tier == laserBeingUsed.tier) {
-                ammoInventory[i].amount -= 1;
+    public bool RemoveLaserAmmo() {
+
+        if (laserBeingUsed == (int)Tier.tier1) { return true; } //There is infinite tier 1 ammo
+
+        Ammo _currentAmmo = lasserAmmo[laserBeingUsed - 1];
+
+        if (_currentAmmo.amount > 0) {
+            _currentAmmo.amount -= 1; //TODO: Anything else needed when removing laser ammo?
+            return true;
+
+        } else if (laserBeingUsed == (int)Tier.tier2) { //return to the infinite tier1 ammo
+            laserBeingUsed = 1;
+            return true;
+
+        } else if (laserBeingUsed >= (int)Tier.tier3) {
+            //Down one tier of lasers
+
+            do {
+                laserBeingUsed--;
+                _currentAmmo = lasserAmmo[laserBeingUsed - 1];
+
+            } while (_currentAmmo.amount <= 0 && laserBeingUsed >= 2);
+
+            //If there is actually any kind of special ammo available, use it
+            if (lasserAmmo[laserBeingUsed - 1].amount > 0 && laserBeingUsed >= 2) {
+                lasserAmmo[laserBeingUsed - 1].amount -= 1; //TODO: Anything else needed when removing laser ammo?
+                return true;
             }
         }
+
+        for (int i = 0; i < ammoInventory.Count; i++) {
+            Ammo ammo = ammoInventory[i];
+            if (ammo.type == laserBeingUsed.type && ammo.tier == laserBeingUsed.tier) {
+                //Found the laser to use
+
+
+            }
+        }
+
+        return false;
     }
 
     public virtual void StartSpecialHability() {
@@ -1196,6 +1228,6 @@ public class LaserBuyUI : SelectableItemForController {
     public override void Use() {
         base.Use();
         Ship ship = (PlayerController.instance) as Ship;
-        ship.AddAmmo(ammo.type, ammo.tier, amountToBuy);
+        ship.AddLaserAmmo(ammo.type, ammo.tier, amountToBuy);
     }
 }
