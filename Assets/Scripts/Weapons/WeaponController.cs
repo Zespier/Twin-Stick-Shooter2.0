@@ -54,6 +54,9 @@ public class WeaponController : NetworkBehaviour {
     public void Shoot() {
         if (PlayerController.instance._dead) { return; }
 
+        Ship ship = (PlayerController.instance) as Ship;
+        ship.RemoveLaserAmmo();
+
         SetTimer();
 
         PrepareProjectile();

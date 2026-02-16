@@ -1134,6 +1134,25 @@ public class GroupForController : MonoBehaviour {
 
 public class Ship : PlayerController {
 
+    public List<Ammo> ammoInventory = new();
+    public Ammo laserBeingUsed;
+
+    public void AddAmmo(AmmoType type, Tier tier, int amount) {
+        for (int i = 0; i < ammoInventory.Count; i++) {
+            if (ammoInventory[i].type == type && ammoInventory[i].tier == tier) {
+                ammoInventory[i].amount += amount;
+            }
+        }
+    }
+
+    public void RemoveLaserAmmo() {
+        for (int i = 0; i < ammoInventory.Count; i++) {
+            if (ammoInventory[i].type == laserBeingUsed.type && ammoInventory[i].tier == laserBeingUsed.tier) {
+                ammoInventory[i].amount -= 1;
+            }
+        }
+    }
+
     public virtual void StartSpecialHability() {
     }
 
@@ -1152,5 +1171,31 @@ public class Hunter : Ship {
     public override void EndSpecialHability() {
 
         Stats.HunterSpeed = 1f;
+    }
+}
+
+public enum AmmoType {
+    Laser,
+    Missile,
+}
+
+[Serializable]
+public class Ammo {
+
+    public AmmoType type;
+    public Tier tier;
+    public int amount;
+
+}
+
+public class LaserBuyUI : SelectableItemForController {
+
+    public Ammo ammo;
+    public int amountToBuy = 100; //Solo 3 numeros => 100 / 1.000 / 10.000
+
+    public override void Use() {
+        base.Use();
+        Ship ship = (PlayerController.instance) as Ship;
+        ship.AddAmmo(ammo.type, ammo.tier, amountToBuy);
     }
 }
