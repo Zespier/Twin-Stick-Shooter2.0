@@ -734,11 +734,9 @@ public class InputManager : MonoBehaviour, ISystemActions, ICharacterActions, IB
     #endregion
 }
 
-public enum MineralEnum : byte {
+public enum MineralType : byte {
     Mineral1, Mineral2, Mineral3, Mineral4, Mineral5, Mineral6, Mineral7,
 }
-
-//Un arma tiene sizeUI para colocarla, tiene sell value y todo lo demas si
 
 public enum MadnessChant : byte {
     Hunter,
@@ -758,10 +756,30 @@ public class Weapon : InventoryItem {
 
 public class InventoryItem {
 
+    public int currentStacks;
+
     public virtual Vector2 SizeInUI => new Vector2(600, 200);
     public virtual bool Stackable => false;
     public virtual int MaxStacks => 999;
     public virtual float SellValue => 0;
+
+    public bool AddStacks(int amount) {
+        if (currentStacks >= MaxStacks) {
+            return false;
+        }
+
+        if (currentStacks + amount > MaxStacks) {
+            currentStacks = MaxStacks;
+            return false;
+        } else {
+            currentStacks += amount;
+            return true;
+        }
+    }
+
+    public void RemoveStacks(int amount) {
+        currentStacks = Mathf.Clamp(currentStacks - amount, 0, MaxStacks);
+    }
 }
 
 public class MineralsDropManager : MonoBehaviour {
@@ -1145,10 +1163,57 @@ public class GroupForController : MonoBehaviour {
 
 public class Ship : PlayerController {
 
-    public List<Ammo> ammoInventory = new();
+    public int maxMineralCapacity = 4000;
+    public int[] minerals = new int[7];
     public Ammo[] lasserAmmo = new Ammo[5];
     public int laserBeingUsed;
     public Ammo tier1Laser;
+
+    public void AddMineral(int mineralTier, int amount) {
+        int currentTotal = CurrentMineralTotal();
+        int availableSpace = maxMineralCapacity - currentTotal;
+
+        if (availableSpace >= amount) {
+            minerals[mineralTier] += amount;
+
+            return;
+        }
+
+        int spaceToFree = amount - availableSpace;
+
+        FreeSpace(spaceToFree, mineralTier);
+
+        minerals[mineralTier] += amount;
+    }
+
+    private void FreeSpace(int spaceToFree, int incomingTier) {
+
+        for (int tier = 0; tier < incomingTier; tier++) {
+
+            if (spaceToFree <= 0) { return; }
+                
+            int availableInTier = minerals[tier];
+
+            if (availableInTier <= 0) { continue; }
+
+            int removeAmount = spaceToFree;
+            if (availableInTier < spaceToFree) {
+                removeAmount = availableInTier;
+            }
+
+            minerals[tier] -= removeAmount;
+            spaceToFree -= removeAmount;
+        }
+    }
+
+    public int CurrentMineralTotal() {
+        int total = 0;
+        for (int i = 0; i < minerals.Length; i++) {
+            total += minerals[i];
+        }
+
+        return total;
+    }
 
     public void AddLaserAmmo(Tier tier, int amount) {
         lasserAmmo[(int)tier - 1].amount += amount; //Tiers index go from 1 to 5, not 0 to 4
