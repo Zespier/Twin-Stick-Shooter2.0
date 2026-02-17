@@ -20,6 +20,8 @@ public class PlayerController : Damageable {
     //public PlayerHealth playerHealth;
     public Stats Stats;
     public Queue<MovementInput> pendingInputs = new();
+    public float monedaBarata;
+    public float monedaCara;
 
     [HideInInspector] public bool _dead;
     private float _maxHp;
@@ -1167,18 +1169,9 @@ public class Ship : PlayerController {
             } while (_currentAmmo.amount <= 0 && laserBeingUsed >= 2);
 
             //If there is actually any kind of special ammo available, use it
-            if (lasserAmmo[laserBeingUsed - 1].amount > 0 && laserBeingUsed >= 2) {
-                lasserAmmo[laserBeingUsed - 1].amount -= 1; //TODO: Anything else needed when removing laser ammo?
+            if (_currentAmmo.amount > 0 && laserBeingUsed >= 2) {
+                _currentAmmo.amount -= 1; //TODO: Anything else needed when removing laser ammo?
                 return true;
-            }
-        }
-
-        for (int i = 0; i < ammoInventory.Count; i++) {
-            Ammo ammo = ammoInventory[i];
-            if (ammo.type == laserBeingUsed.type && ammo.tier == laserBeingUsed.tier) {
-                //Found the laser to use
-
-
             }
         }
 
@@ -1224,10 +1217,19 @@ public class LaserBuyUI : SelectableItemForController {
 
     public Ammo ammo;
     public int amountToBuy = 100; //Solo 3 numeros => 100 / 1.000 / 10.000
+    public int monedaBarataPerLaser = 100;
+    public int monedaCaraPerLaser = 0;
 
     public override void Use() {
         base.Use();
         Ship ship = (PlayerController.instance) as Ship;
-        ship.AddLaserAmmo(ammo.type, ammo.tier, amountToBuy);
+
+        if (ship.monedaBarata >= monedaBarataPerLaser * amountToBuy) {
+            ship.monedaBarata -= monedaBarataPerLaser * amountToBuy;
+            ship.AddLaserAmmo(ammo.tier, amountToBuy);
+
+        } else {
+            //TODO: lo que sea que me digan si no tengo dinero
+        } 
     }
 }
