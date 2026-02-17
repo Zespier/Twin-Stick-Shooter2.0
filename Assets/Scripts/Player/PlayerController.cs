@@ -20,8 +20,8 @@ public class PlayerController : Damageable {
     //public PlayerHealth playerHealth;
     public Stats Stats;
     public Queue<MovementInput> pendingInputs = new();
-    public float monedaBarata;
-    public float monedaCara;
+    public int monedaBarata;
+    public int monedaCara;
 
     [HideInInspector] public bool _dead;
     private float _maxHp;
@@ -778,6 +778,15 @@ public class MineralsDropManager : MonoBehaviour {
 
 public class EnemyWithDrops {
     public List<MineralDrop> mineralDrops = new();
+    public int monedaBarataDrop;
+    public int monedaCaraDrop;
+
+    public void Death() {
+        //TODO: Instantiate client drops and put the list inside
+
+        PlayerController.instance.monedaBarata += monedaBarataDrop;
+        PlayerController.instance.monedaCara += monedaCaraDrop;
+    }
 }
 
 public struct MineralDrop {
@@ -1230,6 +1239,6 @@ public class LaserBuyUI : SelectableItemForController {
 
         } else {
             //TODO: lo que sea que me digan si no tengo dinero
-        } 
+        }
     }
 }
