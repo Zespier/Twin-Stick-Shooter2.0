@@ -32,6 +32,14 @@ public class WeaponController : NetworkBehaviour {
         _offset = new Vector2(_screenSize.x / 2f, _screenSize.y / 2f);
     }
 
+    private void OnEnable() {
+        InputManager.OnCharacterAttack += OnShootButton;
+    }
+
+    private void OnDisable() {
+        InputManager.OnCharacterAttack -= OnShootButton;
+    }
+
     private void Update() {
         if (NetworkManager.Singleton == null) { return; }
         if (!IsOwner) { return; }
@@ -171,14 +179,12 @@ public class WeaponController : NetworkBehaviour {
     //}
 
     public void OnShootButton(InputAction.CallbackContext context) {
-
         Debug.Log("Se llama al método");
-
         if (context.started) {
-            Debug.Log("EMPEZAR shooting");
+            Debug.Log("Started");
             _shooting = true;
         } else if (context.canceled) {
-            Debug.Log("Cancelar Shooting");
+            Debug.Log("Canceled");
             _shooting = false;
         }
         //SendShotInputServerRpc(context);

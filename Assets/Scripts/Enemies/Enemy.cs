@@ -5,8 +5,13 @@ using UnityEngine;
 
 public class Enemy : Damageable {
 
-    public EnemyType type;
+    [Header("Drops")]
+    public List<MineralDrop> mineralDrops;
+    public int monedaBarataDrop;
+    public int monedaCaraDrop;
+
     [Header("Enemy Base Attributes")]
+    public EnemyType type;
     [SerializeField] private float speed = 10f;
     public Transform body;
     public float baseDamage = 1f;
@@ -152,6 +157,7 @@ public class Enemy : Damageable {
     /// <param name="crit"></param>
     /// <param name="damageType"></param>
     public override void TakeDamage(Vector3 position, float damage, bool crit, DamageType damageType) {
+
         base.TakeDamage(position, damage, crit, damageType);
 
         hp -= damage;
@@ -165,10 +171,17 @@ public class Enemy : Damageable {
     protected virtual void CheckDeath() {
         if (hp < 0) {
             Deactivate();
+            DeathDrops();
             GameEvents.OnEnemyDeath?.Invoke(this);
         }
     }
 
+    public void DeathDrops() {
+        MineralsDropManager.instance.DropMinerals(this);
+
+        PlayerController.instance.monedaBarata += monedaBarataDrop;
+        PlayerController.instance.monedaCara += monedaCaraDrop;
+    }
     /// <summary>
     /// Deactivates the enemy for future pooling
     /// little explosion for feedback

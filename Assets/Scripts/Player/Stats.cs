@@ -42,7 +42,7 @@ public class Stats : MonoBehaviour {
     //No defense, too hard to manage
 
     public float baseSpeed = 2;
-    public virtual float Speed => ((baseSpeed + BaseSpeeds) * (SpeedPercentages / 100f) + FlatSpeeds) * HunterSpeed;
+    public virtual float Speed => ((baseSpeed + BaseSpeeds) * (SpeedPercentages / 100f) + FlatSpeeds) * (HunterSpeed == 0 ? 1 : HunterSpeed);
     public virtual float HunterSpeed { get; set; }
     public virtual float BaseSpeeds => GetAllBuffs(Buff.BaseSpeed);
     public virtual float SpeedPercentages => GetAllBuffs(Buff.SpeedPercentage);

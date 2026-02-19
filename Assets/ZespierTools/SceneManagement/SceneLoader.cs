@@ -9,10 +9,6 @@ public class SceneLoader : MonoBehaviour {
         Time.timeScale = 1.0f;
     }
 
-    /// <summary>
-    /// Loads the parameter scene
-    /// </summary>
-    /// <param name="sceneName"></param>
     public void LoadScene(string sceneName) {
         SceneManager.LoadScene(sceneName);
     }
