@@ -6,6 +6,7 @@ using UnityEngine;
 public class Stats : MonoBehaviour {
 
     public const float firstShipBaseSpeed = 10;
+    public bool isPlayer;
 
     public UpgradeHolder upgradeHolder;
 
@@ -28,6 +29,7 @@ public class Stats : MonoBehaviour {
 
     public float baseAtk = 10;
     public virtual float Atk => ((baseAtk + BaseDamages) * (DamagePercentages / 100f) + FlatDamages) * OverSpeed;
+    public virtual float WeaponBaseDamage => GetAllBuffs(Buff.BaseDamage);
     public virtual float BaseDamages => GetAllBuffs(Buff.BaseDamage);
     public virtual float DamagePercentages => GetAllBuffs(Buff.DamagePercentage);
     public virtual float FlatDamages => GetAllBuffs(Buff.FlatDamage);
