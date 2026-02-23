@@ -57,7 +57,6 @@ public class Enemy : Damageable {
 
     protected virtual void Update() {
         if (PlayerController.instance == null) { return; }
-        if (!IsServer) { return; }
 
         if (PlayerController.instance._dead) {
             return;
@@ -69,7 +68,6 @@ public class Enemy : Damageable {
 
     private void LateUpdate() {
         if (PlayerController.instance == null) { return; }
-        if (!IsServer) { return; }
 
         if (PlayerController.instance._dead) {
             return;
