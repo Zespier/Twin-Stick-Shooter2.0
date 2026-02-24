@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class EnemyContainer : MonoBehaviour {
@@ -19,7 +20,7 @@ public class EnemyContainer : MonoBehaviour {
 
         SetInitialPoolAmountByDefaultIfNotSet();
 
-        InitializePool();
+        StartCoroutine(C_InitializePool());
     }
 
     public void SetInitialPoolAmountByDefaultIfNotSet() {
@@ -39,19 +40,47 @@ public class EnemyContainer : MonoBehaviour {
         }
     }
 
-    public void NewEnemy(EnemyType enemyType) {
-        for (int i = 0; i < enemyPrefabs.Count; i++) {
-            if (enemyPrefabs[i].type == enemyType) {
-
-                Enemy newEnemy = Instantiate(enemyPrefabs[i], transform);
-                _enemyPool.Add(newEnemy);
-
-                newEnemy.gameObject.SetActive(false);
-                return;
-            }
+    private IEnumerator C_InitializePool() {
+        while (NetworkManager.Singleton == null) {
+            yield return null;
         }
 
-        Debug.LogError("Enemy not defined");
+        InitializePool();
+    }
+
+    public void NewEnemy(EnemyType enemyType) {
+
+        if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsListening) {
+            StartCoroutine(C_NewEnemy(enemyType));
+        } else {
+
+            for (int i = 0; i < enemyPrefabs.Count; i++) {
+                if (enemyPrefabs[i].type == enemyType) {
+
+                    Enemy newEnemy = Instantiate(enemyPrefabs[i], transform);
+
+                    NetworkObject networkObject = newEnemy.GetComponent<NetworkObject>();
+                    if (networkObject != null) {
+                        networkObject.Spawn();
+                    }
+
+                    _enemyPool.Add(newEnemy);
+
+                    newEnemy.gameObject.SetActive(false);
+                    return;
+                }
+            }
+
+            Debug.LogError("Enemy not defined");
+        }
+    }
+
+    private IEnumerator C_NewEnemy(EnemyType enemyType) {
+        while (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsListening) {
+            yield return null;
+        }
+
+        NewEnemy(enemyType);
     }
 
     public void StoreEnemyInPool(Enemy enemy) {

@@ -90,12 +90,14 @@ public class WeaponController : NetworkBehaviour {
 
             if (_auxBullet != null && !_auxBullet.gameObject.activeSelf) {
 
+                BytesUsedCounter.AddBytesUsed(4); //bytes used by int
                 SendUsePoolBulletServerRpc(i);
 
             } else {
                 if (_auxBullet != null) {
                     _generatedBullets.Enqueue(_auxBullet);
                 }
+                BytesUsedCounter.AddBytesUsed(4); //bytes used by int
                 SendSpawnBulletServerRpc(i);
             }
         }

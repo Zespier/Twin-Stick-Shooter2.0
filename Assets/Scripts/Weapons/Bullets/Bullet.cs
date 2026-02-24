@@ -21,7 +21,7 @@ public class Bullet : NetworkBehaviour, IBullet {
     }
 
     protected virtual void Update() {
-        if (NetworkManager.Singleton != null && !NetworkManager.Singleton.IsListening) { return; }
+        if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsListening) { return; }
         if (!IsServer) { return; }
         _deathTimer += Time.deltaTime;
 
@@ -61,6 +61,8 @@ public class Bullet : NetworkBehaviour, IBullet {
     }
 
     public virtual void Deactivate() {
+        FeedbackController.instance.Particles(ParticleType.smallExplosion, transform.position, Vector3.forward);
+        AudioManager.instance.PlayBulletExplosionAgainstTheWall(transform.position);
         gameObject.SetActive(false);
         _deathTimer = 0;
     }
@@ -71,7 +73,7 @@ public class Bullet : NetworkBehaviour, IBullet {
         if (isEnemyBullet) {
 
             if ((transform.position - PlayerController.instance.transform.position).sqrMagnitude < hitRadius * hitRadius) {
-                PlayerController.instance.TakeDamage(PlayerController.instance.transform.position, damage: Damage, false, DamageType.PlayerDamaged);
+                PlayerController.instance.TakeDamage(transform.position, damage: Damage, Random.Range(0, 100) < 10, DamageType.PlayerDamaged);
                 Deactivate();
             }
 
@@ -81,7 +83,7 @@ public class Bullet : NetworkBehaviour, IBullet {
             for (int i = 0; i < EnemyContainer.instance.activeEnemies.Count; i++) {
                 Enemy enemy = EnemyContainer.instance.activeEnemies[i];
                 if ((transform.position - enemy.transform.position).sqrMagnitude < hitRadius * hitRadius) {
-                    EnemyContainer.instance.activeEnemies[i].TakeDamage(enemy.transform.position, damage: Damage, false, DamageType.DefaultWhite);
+                    EnemyContainer.instance.activeEnemies[i].TakeDamage(transform.position, damage: Damage, Random.Range(0, 100) < 10, DamageType.DefaultWhite);
                     Deactivate();
                 }
             }

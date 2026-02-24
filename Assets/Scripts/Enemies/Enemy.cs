@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class Enemy : Damageable {
@@ -26,12 +27,16 @@ public class Enemy : Damageable {
 
     [Header("Damageable")]
     public float hp = 1000f;
+    public Stats stats;
 
     [Header("States")]
     public List<AttackBaseState> states;
     [HideInInspector] public AttackBaseState currentState;
 
-    public Stats stats;
+    public NetworkVariable<Vector3> NetPosition =
+    new NetworkVariable<Vector3>(
+        writePerm: NetworkVariableWritePermission.Server
+    );
 
     protected virtual void Awake() {
         if (states != null && states.Count > 0) {
@@ -56,14 +61,27 @@ public class Enemy : Damageable {
     }
 
     protected virtual void Update() {
-        if (PlayerController.instance == null) { return; }
-
-        if (PlayerController.instance._dead) {
-            return;
+        if (IsServer) {
+            ServerTick();
         }
+
+        if (!IsServer) {
+            ClientTick();
+        }
+    }
+
+    private void ServerTick() {
+        if (PlayerController.instance == null) return;
+        if (PlayerController.instance._dead) return;
 
         RotateBody();
         currentState.StateUpdate();
+
+        NetPosition.Value = transform.position;
+    }
+
+    private void ClientTick() {
+        transform.position = Vector3.Lerp(transform.position, NetPosition.Value, Time.deltaTime * 10f);
     }
 
     private void LateUpdate() {
@@ -97,16 +115,6 @@ public class Enemy : Damageable {
         currentState.OnStateExit();
         currentState = states.Find(s => s.GetType() == state);
         currentState.OnStateEnter();
-    }
-
-    private void OnTriggerEnter(Collider collision) {
-        if (collision.TryGetComponent(out IBullet bullet)) {
-            FeedbackController.instance.Particles(ParticleType.smallExplosion, collision.transform.position, Vector3.forward);
-            AudioManager.instance.PlayBulletExplosionAgainstTheWall(collision.transform.position);
-
-            TakeDamage(transform.position, bullet.Damage, UnityEngine.Random.Range(0, 100) < 10, DamageType.DefaultWhite);
-            bullet.Deactivate();
-        }
     }
 
     #region Behaviour with player

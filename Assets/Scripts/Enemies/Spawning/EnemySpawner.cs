@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.Netcode;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour {
@@ -48,7 +49,7 @@ public class EnemySpawner : MonoBehaviour {
 
     private IEnumerator C_WaitForPlayer() {
         InitializeWaves(waves1);
-        while (PlayerController.instance == null) {
+        while (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsListening) {
             yield return null;
         }
 

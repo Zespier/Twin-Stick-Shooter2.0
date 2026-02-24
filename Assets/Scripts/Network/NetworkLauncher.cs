@@ -25,7 +25,7 @@ public class NetworkLauncher : MonoBehaviour {
 
     private IEnumerator C_StartHostWaitForServicesInitialization() {
         _hosting = true;
-        while (GameBootstrap.instance == null) {
+        while (!GameBootstrap.Initialized) {
             yield return null;
         }
 
@@ -35,7 +35,7 @@ public class NetworkLauncher : MonoBehaviour {
 
     private IEnumerator C_StartClientWaitForServicesInitialization() {
         _clienting = true;
-        while (GameBootstrap.instance == null) {
+        while (!GameBootstrap.Initialized) {
             yield return null;
         }
 

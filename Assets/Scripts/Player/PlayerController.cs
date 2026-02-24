@@ -76,6 +76,7 @@ public class PlayerController : Damageable {
         pendingInputs.Enqueue(input);
         _predictedPositionsQueue.Enqueue(predictedPosition);
 
+        BytesUsedCounter.AddBytesUsed(16); //The bytes used by MovementInput
         SendMovementInputsServerRpc(input);
     }
 
@@ -88,6 +89,7 @@ public class PlayerController : Damageable {
         _authoritativePosition = new Vector3(_authoritativePosition.x, 0, _authoritativePosition.z);
         //AudioManager.instance.ShipSound(_authoritativeLerpedDirection * Stats.Speed);
 
+        BytesUsedCounter.AddBytesUsed(16 + 12); //The bytes used by MovementInput + _authoritativePosition
         SendStateClientRpc(_authoritativePosition, input);
     }
 
@@ -99,11 +101,10 @@ public class PlayerController : Damageable {
         //Every frame the player is predicting his movement, sends the input and where he thinks he is at that tick, when the server checkes and moves him, we have to see if the player was correct, if there is suficient error, then recolocate the player.
         Vector3 predictedPositionOnServerTick = Vector3.zero;
 
-        while (_predictedPositionsQueue.Count > 0) {
-
-            PredictedPosition _predictedPosition = _predictedPositionsQueue.Dequeue();
+        foreach (var _predictedPosition in _predictedPositionsQueue) {
             if (_predictedPosition.tick == processedInput.tick) {
                 predictedPositionOnServerTick = _predictedPosition.predictedPositionThisTick;
+                break;
             }
         }
 
@@ -156,22 +157,6 @@ public class PlayerController : Damageable {
         }
 
         return lookValue;
-    }
-
-    private void OnTriggerEnter(Collider collision) {
-        if (_dead) {
-            return;
-        }
-
-        if (collision.GetComponent<Collider>().TryGetComponent(out IBullet bullet)) {
-
-            AudioManager.instance.PlayBulletExplosionAgainstTheWall(collision.transform.position);
-            FeedbackController.instance.Particles(ParticleType.smallExplosion, collision.transform.position, Vector3.forward);
-
-            TakeDamage(transform.position, bullet.Damage, UnityEngine.Random.Range(0, 100) < 10, DamageType.PlayerDamaged);
-            bullet.Deactivate();
-            RemoveHealth(bullet.Damage);
-        }
     }
 
     public void RemoveHealth(float amount) {
