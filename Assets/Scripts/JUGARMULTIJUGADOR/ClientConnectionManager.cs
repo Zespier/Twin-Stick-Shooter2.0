@@ -50,9 +50,9 @@ public class ClientConnectionManager : MonoBehaviour {
                 joinAllocation.RelayServer.IpV4,
                 (ushort)joinAllocation.RelayServer.Port,
                 joinAllocation.AllocationIdBytes,
-                joinAllocation.Key,
                 joinAllocation.ConnectionData,
                 joinAllocation.HostConnectionData, // THIS is different for client
+                joinAllocation.Key,
                 //joinAllocation.IsSecure
                 true
             );

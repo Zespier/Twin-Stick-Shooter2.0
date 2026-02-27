@@ -6,6 +6,7 @@ using Unity.Services.Relay.Models;
 using Unity.Services.Relay;
 using UnityEngine;
 using System.Threading.Tasks;
+using System.Collections;
 
 public class HostConnectionManager : MonoBehaviour {
 
@@ -14,6 +15,26 @@ public class HostConnectionManager : MonoBehaviour {
 
     private void Awake() {
         _cts = new CancellationTokenSource(15000); //15 seconds timeout
+    }
+
+    private void Start() {
+        NetworkManager.Singleton.OnTransportFailure += HandleTransportFailure;
+    }
+
+    private void HandleTransportFailure() {
+        Debug.LogWarning("Transport failed. Restarting Relay...");
+
+        NetworkManager.Singleton.Shutdown();
+
+        // Optional delay to let shutdown complete
+        StartCoroutine(RestartHostCoroutine());
+    }
+
+    private IEnumerator RestartHostCoroutine() {
+        yield return new WaitForSeconds(1f);
+
+        // Recreate Relay allocation
+        yield return CreateRelayHost().AsIEnumerator();
     }
 
     private void OnDestroy() {
@@ -48,10 +69,9 @@ public class HostConnectionManager : MonoBehaviour {
                 allocation.RelayServer.IpV4,
                 (ushort)allocation.RelayServer.Port,
                 allocation.AllocationIdBytes,
-                allocation.Key,
-                allocation.ConnectionData,
-                allocation.ConnectionData, // host uses its own connection data here
-                                           //allocation.IsSecure
+                allocation.ConnectionData,        // connectionData
+                allocation.ConnectionData,        // hostConnectionData (host uses same)
+                allocation.Key,                   // key (MUST be here)
                 true
             );
 
@@ -64,5 +84,15 @@ public class HostConnectionManager : MonoBehaviour {
         } finally {
             _isCreating = false;
         }
+    }
+}
+
+public static class TaskExtensions {
+    public static IEnumerator AsIEnumerator(this Task task) {
+        while (!task.IsCompleted)
+            yield return null;
+
+        if (task.IsFaulted)
+            throw task.Exception;
     }
 }

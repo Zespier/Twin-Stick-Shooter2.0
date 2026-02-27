@@ -76,7 +76,6 @@ public class PlayerController : Damageable {
         pendingInputs.Enqueue(input);
         _predictedPositionsQueue.Enqueue(predictedPosition);
 
-        BytesUsedCounter.AddBytesUsed(16); //The bytes used by MovementInput
         SendMovementInputsServerRpc(input);
     }
 
@@ -89,7 +88,6 @@ public class PlayerController : Damageable {
         _authoritativePosition = new Vector3(_authoritativePosition.x, 0, _authoritativePosition.z);
         //AudioManager.instance.ShipSound(_authoritativeLerpedDirection * Stats.Speed);
 
-        BytesUsedCounter.AddBytesUsed(16 + 12); //The bytes used by MovementInput + _authoritativePosition
         SendStateClientRpc(_authoritativePosition, input);
     }
 
