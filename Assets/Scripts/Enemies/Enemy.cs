@@ -48,16 +48,23 @@ public class Enemy : Damageable {
         hp = stats.HP;
     }
 
-    private void OnEnable() {
-        EnemyContainer.instance.AddEnemy(this);
+    public override void OnNetworkSpawn() { 
+        base.OnNetworkSpawn();
+
+        if (IsServer) {
+            EnemyContainer.instance.AddEnemy(this);
+        }
     }
 
-    private void OnDisable() {
-        EnemyContainer.instance.RemoveEnemy(this);
-    }
+    public override void OnNetworkDespawn() {
 
-    private void Start() {
-        currentState.OnStateEnter();
+        if (IsServer) {
+            EnemyContainer.instance.RemoveEnemy(this);
+        }
+
+        gameObject.SetActive(false); //Safe to o after the despawn
+
+        base.OnNetworkDespawn();
     }
 
     protected virtual void Update() {
@@ -71,8 +78,8 @@ public class Enemy : Damageable {
     }
 
     private void ServerTick() {
-        if (PlayerController.instance == null) return;
-        if (PlayerController.instance._dead) return;
+        if (Ship.instance == null) return;
+        if (Ship.instance._dead) return;
 
         RotateBody();
         currentState.StateUpdate();
@@ -85,9 +92,9 @@ public class Enemy : Damageable {
     }
 
     private void LateUpdate() {
-        if (PlayerController.instance == null) { return; }
+        if (Ship.instance == null) { return; }
 
-        if (PlayerController.instance._dead) {
+        if (Ship.instance._dead) {
             return;
         }
 
@@ -99,7 +106,7 @@ public class Enemy : Damageable {
     }
 
     protected virtual void RotateBody() {
-        Vector3 targetLookDirection = PlayerController.instance.transform.position - transform.position;
+        Vector3 targetLookDirection = Ship.instance.transform.position - transform.position;
         targetLookDirection.y = 0f;
         body.forward = Vector3.Lerp(body.forward, targetLookDirection, Time.deltaTime / RotationLerpSpeed);
     }
@@ -155,13 +162,6 @@ public class Enemy : Damageable {
 
     #region Taking damage and deactivation
 
-    /// <summary>
-    /// basic override for every enemy, it will send a damage feedback from the damageable and reduce health
-    /// </summary>
-    /// <param name="position"></param>
-    /// <param name="damage"></param>
-    /// <param name="crit"></param>
-    /// <param name="damageType"></param>
     public override void TakeDamage(Vector3 position, float damage, bool crit, DamageType damageType) {
 
         base.TakeDamage(position, damage, crit, damageType);
@@ -171,34 +171,29 @@ public class Enemy : Damageable {
         CheckDeath();
     }
 
-    /// <summary>
-    /// Checks if the enemy us dead
-    /// </summary>
     protected virtual void CheckDeath() {
         if (hp < 0) {
-            Deactivate();
             DeathDrops();
             GameEvents.OnEnemyDeath?.Invoke(this);
+            Deactivate();
         }
     }
 
     public void DeathDrops() {
         MineralsDropManager.instance.DropMinerals(this);
 
-        PlayerController.instance.monedaBarata += monedaBarataDrop;
-        PlayerController.instance.monedaCara += monedaCaraDrop;
+        Ship.instance.monedaBarata += monedaBarataDrop;
+        Ship.instance.monedaCara += monedaCaraDrop;
     }
-    /// <summary>
-    /// Deactivates the enemy for future pooling
-    /// little explosion for feedback
-    /// </summary>
+
     public void Deactivate() {
         Events.OnEnemyDeath?.Invoke(this);
 
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
         AudioManager.instance.ExplosionSound(transform.position, "enemy");
 
         MejoritasRecogiblesManager.instance.SpawnMejoritaRecogible(transform.position);
+        GetComponent<NetworkObject>().Despawn();
     }
 
     public void ResetSpecificVariables() {

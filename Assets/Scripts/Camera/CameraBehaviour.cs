@@ -40,11 +40,11 @@ public class CameraBehaviour : MonoBehaviour {
     }
 
     public void Update() {
-        if (PlayerController.instance == null) { return; }
+        if (Ship.instance == null) { return; }
 
         DistanceMovement();
         TargetMovement();
-        CameraMovement(PlayerController.instance.transform.position, _currentTarget);
+        CameraMovement(Ship.instance.transform.position, _currentTarget);
     }
 
     /// <summary>
@@ -85,7 +85,7 @@ public class CameraBehaviour : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     private float GetDistance() {
-        float movementMagnitude = PlayerController.instance._lastMovementDirectionForRotation.sqrMagnitude;
+        float movementMagnitude = Ship.instance._lastMovementDirectionForRotation.sqrMagnitude;
         if (movementMagnitude > 1) {
             movementMagnitude = 1;
         }

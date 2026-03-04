@@ -607,6 +607,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  mineralDrops: []
+  monedaBarataDrop: 1000
+  monedaCaraDrop: 10
   type: 1
   speed: 10
   body: {fileID: 7603049488738761871}
@@ -615,11 +618,13 @@ MonoBehaviour:
   distanceToReachPlayer: 0.6
   rotationLerpSpeed: 0.4
   hp: 1500
+  stats: {fileID: 7223279504798114144}
   states:
   - {fileID: 4103163787759368633}
   - {fileID: 3261515849167882871}
   currentState: {fileID: 0}
-  stats: {fileID: 7223279504798114144}
+  NetPosition:
+    m_InternalValue: {x: 0, y: 0, z: 0}
   speed_Spore_Small: 3.7
   distanceToReachPlayer_Boss_Small: 6
   rotationLerpSpeed_Minion: 0.35
@@ -676,6 +681,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6836d8fbf85a63c4984d1d2b437872da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 0
   upgradeHolder: {fileID: 4409693636789779097}
   baseDamages: []
   damagePercentages: []

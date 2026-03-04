@@ -13,13 +13,13 @@ public class RunAwayState : AttackBaseState {
     }
 
     public override void StateLateUpdate() {
-        if (Vector3.Distance(transform.position, PlayerController.instance.transform.position) > maxDistance) {
+        if (Vector3.Distance(transform.position, Ship.instance.transform.position) > maxDistance) {
             controller.ChangeState(typeof(HuntState));
         }
     }
 
     public override void StateUpdate() {
-        Vector2 direction = (transform.position - PlayerController.instance.transform.position).normalized;
+        Vector2 direction = (transform.position - Ship.instance.transform.position).normalized;
         transform.position += Time.deltaTime * controller.Speed * new Vector3(direction.x, 0, direction.y);
     }
 }

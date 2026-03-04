@@ -11,19 +11,17 @@ public class ShootMovingState : AttackBaseState {
     public float fireRate = 8f;
     public float shootingDuration = -1f;
 
-
     private float _shootTimer;
     private float _shootDurationTime;
 
-    /// <summary>
-    /// Shots a bullet
-    /// </summary>
     public void Shoot() {
 
         for (int i = 0; i < shootPoints.Count; i++) {
 
-            Bullet newBullet = Instantiate(bulletPrefab, shootPoints[i].position, Quaternion.identity, BulletContainer.instance.transform).GetComponent<Bullet>();
-            newBullet.Shoot(shootPoints[i].forward, 2f, controller.stats, spawnNetworkObject: true);
+            float speed = 20;
+            Vector3 direction = BulletFireDesviation.RandomBulletFireDesviation(shootPoints[i], controller.stats.DesviationAngle);
+
+            BulletContainer.instance.CreateBullet(shootPoints[i].position, direction, speed, true);
         }
 
         AudioManager.instance.EnemyLaserSound(transform.position);
@@ -42,7 +40,7 @@ public class ShootMovingState : AttackBaseState {
     /// </summary>
     public override void StateLateUpdate() {
 
-        if (Vector3.Distance(PlayerController.instance.transform.position, transform.position) < controller.DistanceToReachPlayer) {
+        if (Vector3.Distance(Ship.instance.transform.position, transform.position) < controller.DistanceToReachPlayer) {
             controller.ReachingPlayer();
         }
 
@@ -59,7 +57,7 @@ public class ShootMovingState : AttackBaseState {
     /// </summary>
     public override void StateUpdate() {
 
-        transform.position += Time.deltaTime * shootingMovementSpeed * (PlayerController.instance.transform.position - transform.position).normalized;
+        transform.position += Time.deltaTime * shootingMovementSpeed * (Ship.instance.transform.position - transform.position).normalized;
 
         if (_shootTimer + 1f / fireRate < Time.time) {
             _shootTimer = Time.time;

@@ -54,7 +54,7 @@ public class AudioManager : MonoBehaviour {
 
     public void ShipSound(Vector3 speed) {
         float max = Mathf.Abs(speed.x) > Mathf.Abs(speed.y) ? Mathf.Abs(speed.x) : Mathf.Abs(speed.y);
-        float targetValue = Mathf.Lerp(shipSoundMinPitch, shipSoundMaxPitch, (PlayerController.instance.Stats.Speed * max) / PlayerController.instance.Stats.Speed);
+        float targetValue = Mathf.Lerp(shipSoundMinPitch, shipSoundMaxPitch, (Ship.instance.Stats.Speed * max) / Ship.instance.Stats.Speed);
 
         float pitchLerpSpeed = 0.1f;
         if (shipSoundSource.pitch > targetValue) {
@@ -116,7 +116,7 @@ public class AudioManager : MonoBehaviour {
         if (_canShootSoundAgain) {
             _canShootSoundAgain = false;
 
-            Voice _audioSource = audioPool.PlayVoice(shootClips[Random.Range(0, shootClips.Count)], shootsVolume, VoicePriority.OwnerBulletShoot, PlayerController.instance.transform.position, defaultSettings);
+            Voice _audioSource = audioPool.PlayVoice(shootClips[Random.Range(0, shootClips.Count)], shootsVolume, VoicePriority.OwnerBulletShoot, Ship.instance.transform.position, defaultSettings);
             _audioSource.audioSource.pitch = Random.Range(1 - pitchRange, 1 + pitchRange);
         }
     }

@@ -21,21 +21,21 @@ public class UpgradeCardManager : MonoBehaviour {
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
             for (int i = 0; i < upgradeCards[0].upgradeAsset.upgradeTypes.Count; i++) {
-                PlayerController.instance.Stats.AddBuff(upgradeCards[0].upgradeAsset.upgradeTypes[i], upgradeCards[0].upgradeAsset.upgradeAmounts[i]);
+                Ship.instance.Stats.AddBuff(upgradeCards[0].upgradeAsset.upgradeTypes[i], upgradeCards[0].upgradeAsset.upgradeAmounts[i]);
                 canvas.gameObject.SetActive(false);
                 Time.timeScale = 1;
             }
         } 
         if (Input.GetKeyDown(KeyCode.Alpha2)) {
             for (int i = 0; i < upgradeCards[1].upgradeAsset.upgradeTypes.Count; i++) {
-                PlayerController.instance.Stats.AddBuff(upgradeCards[1].upgradeAsset.upgradeTypes[i], upgradeCards[1].upgradeAsset.upgradeAmounts[i]);
+                Ship.instance.Stats.AddBuff(upgradeCards[1].upgradeAsset.upgradeTypes[i], upgradeCards[1].upgradeAsset.upgradeAmounts[i]);
                 canvas.gameObject.SetActive(false);
                 Time.timeScale = 1;
             }
         }
         if (Input.GetKeyDown(KeyCode.Alpha3)) {
             for (int i = 0; i < upgradeCards[2].upgradeAsset.upgradeTypes.Count; i++) {
-                PlayerController.instance.Stats.AddBuff(upgradeCards[2].upgradeAsset.upgradeTypes[i], upgradeCards[2].upgradeAsset.upgradeAmounts[i]);
+                Ship.instance.Stats.AddBuff(upgradeCards[2].upgradeAsset.upgradeTypes[i], upgradeCards[2].upgradeAsset.upgradeAmounts[i]);
                 canvas.gameObject.SetActive(false);
                 Time.timeScale = 1;
             }
@@ -71,7 +71,7 @@ public class UpgradeCardManager : MonoBehaviour {
         int currentImage = GetCurrentImageOutlined();
 
         for (int i = 0; i < upgradeCards[currentImage].upgradeAsset.upgradeTypes.Count; i++) {
-            PlayerController.instance.Stats.AddBuff(upgradeCards[currentImage].upgradeAsset.upgradeTypes[i], upgradeCards[currentImage].upgradeAsset.upgradeAmounts[i]);
+            Ship.instance.Stats.AddBuff(upgradeCards[currentImage].upgradeAsset.upgradeTypes[i], upgradeCards[currentImage].upgradeAsset.upgradeAmounts[i]);
         }
     }
 

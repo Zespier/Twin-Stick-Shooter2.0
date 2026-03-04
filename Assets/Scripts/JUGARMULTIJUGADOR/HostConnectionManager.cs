@@ -7,9 +7,11 @@ using Unity.Services.Relay;
 using UnityEngine;
 using System.Threading.Tasks;
 using System.Collections;
+using TMPro;
 
 public class HostConnectionManager : MonoBehaviour {
 
+    public TMP_Text friendCodeText;
     private CancellationTokenSource _cts;
     private bool _isCreating;
 
@@ -56,12 +58,11 @@ public class HostConnectionManager : MonoBehaviour {
 
         try {
 
-            Debug.Log("Creating relay allocation...");
-
             Allocation allocation = await RelayService.Instance.CreateAllocationAsync(3);
             string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
 
             Debug.Log($"Join Code: {joinCode}");
+            friendCodeText.text = joinCode;
 
             var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
 

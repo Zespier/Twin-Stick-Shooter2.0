@@ -90,7 +90,7 @@ public class PauseMenu : MonoBehaviour {
     /// On escape, opesn the menu
     /// </summary>
     public void MimicEscapeButton() {
-        if (PlayerController.instance._dead) { return; }
+        if (Ship.instance._dead) { return; }
 
         PauseGame(canvasGroup.alpha == 0 ? true : false);
         Canvas_SetActive(canvasGroup.alpha == 0 ? true : false);
@@ -101,7 +101,7 @@ public class PauseMenu : MonoBehaviour {
     /// </summary>
     /// <param name="pause"></param>
     public void PauseGame(bool pause) {
-        if (PlayerController.instance != null && PlayerController.instance._dead) { Time.timeScale = 1; return; }
+        if (Ship.instance != null && Ship.instance._dead) { Time.timeScale = 1; return; }
 
         Time.timeScale = pause ? 0 : 1;
     }
@@ -111,7 +111,7 @@ public class PauseMenu : MonoBehaviour {
     /// </summary>
     /// <param name="active"></param>
     public void Canvas_SetActive(bool active) {
-        if (PlayerController.instance != null && PlayerController.instance._dead) { return; }
+        if (Ship.instance != null && Ship.instance._dead) { return; }
 
         canvasGroup.alpha = active ? 1 : 0;
         canvasGroup.interactable = active;

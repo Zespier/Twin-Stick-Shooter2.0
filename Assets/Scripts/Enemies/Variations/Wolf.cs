@@ -36,7 +36,5 @@ public class Wolf : Enemy {
 
 
         explosion.transform.SetParent(EnemyContainer.instance.transform);
-        Deactivate();
     }
-
 }

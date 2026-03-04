@@ -6,17 +6,19 @@ public class MineralInventoryUI : MonoBehaviour {
 
     public List<Image> fills = new();
 
-    public void UpdateInventoryBars() {
+    public void Update() {
+        UpdateInventoryBars();
+    }
 
-        Ship ship = (PlayerController.instance) as Ship;
+    public void UpdateInventoryBars() {
 
         float cumulative = 0f;
 
         // We go from highest tier DOWN
         for (int i = 0; i < fills.Count; i++) {
-            cumulative += ship.minerals[i];
+            cumulative += Ship.instance.minerals[i];
 
-            float fill = cumulative / ship.maxMineralCapacity;
+            float fill = cumulative / Ship.instance.maxMineralCapacity;
 
             fills[i].fillAmount = fill;
         }

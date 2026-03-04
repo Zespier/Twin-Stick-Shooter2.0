@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class Debris : MonoBehaviour {
@@ -19,7 +18,7 @@ public class Debris : MonoBehaviour {
     }
 
     private IEnumerator C_WaitForPlayer() {
-        while (PlayerController.instance == null) {
+        while (Ship.instance == null) {
             yield return null;
         }
 
@@ -27,12 +26,12 @@ public class Debris : MonoBehaviour {
     }
 
     private void Update() {
-        if (PlayerController.instance == null) { return; }
+        if (Ship.instance == null) { return; }
 
-        if (Vector3.Distance(PlayerController.instance.transform.position, transform.position) > 30) {
+        if (Vector3.Distance(Ship.instance.transform.position, transform.position) > 30) {
             ChooseDirection(true);
 
-        } else if (Vector3.Distance(PlayerController.instance.transform.position, transform.position) > 20 && _timer >= 15) {
+        } else if (Vector3.Distance(Ship.instance.transform.position, transform.position) > 20 && _timer >= 15) {
             _timer = 0;
             ChooseDirection(false);
         }
@@ -64,7 +63,7 @@ public class Debris : MonoBehaviour {
     /// <param name="toPlayer"></param>
     private void ChooseDirection(bool toPlayer) {
         if (toPlayer) {
-            _direction = PlayerController.instance.transform.position - transform.position;
+            _direction = Ship.instance.transform.position - transform.position;
         } else {
 
             _direction = new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1));

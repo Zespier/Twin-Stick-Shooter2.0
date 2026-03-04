@@ -132,6 +132,11 @@ TrailRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
@@ -153,6 +158,7 @@ TrailRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -238,6 +244,7 @@ GameObject:
   - component: {fileID: 4798652945367271929}
   - component: {fileID: 1677940680394099865}
   - component: {fileID: 8554645450917094216}
+  - component: {fileID: -3753958156933552435}
   - component: {fileID: 3436487638459248250}
   - component: {fileID: 3309871037971691416}
   - component: {fileID: 568618742530149507}
@@ -273,10 +280,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6033318669788209936}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -314,6 +321,31 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.02, y: 1, z: 0.88}
   m_Center: {x: 0.00000011920929, y: 0, z: -0.018465757}
+--- !u!114 &-3753958156933552435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6033318669788209936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 1532711513
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 0
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 0
+  SyncOwnerTransformWhenParented: 0
+  AllowOwnerToParent: 0
 --- !u!114 &3436487638459248250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,27 +358,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a12d79ce76148c34faff7c2cdfb1d9cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  mineralDrops: []
+  monedaBarataDrop: 0
+  monedaCaraDrop: 0
   type: 2
-  rb: {fileID: 1677940680394099865}
   speed: 8.9
-  player: {fileID: 0}
   body: {fileID: 3746152818658498379}
   baseDamage: 1
   attackRate: 1
   distanceToReachPlayer: 0.6
   rotationLerpSpeed: 0.1
   hp: 200
+  stats: {fileID: 8256937135218615289}
   states:
   - {fileID: 568618742530149507}
   currentState: {fileID: 568618742530149507}
-  stats: {fileID: 8256937135218615289}
+  NetPosition:
+    m_InternalValue: {x: 0, y: 0, z: 0}
   speed_Spore_Small: 10
   distanceToReachPlayer_Boss_Small: 0.1
   explosion: {fileID: 4770038662735427949}
   boxCollider: {fileID: 8554645450917094216}
 --- !u!95 &3309871037971691416
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -360,6 +396,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -390,6 +427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6836d8fbf85a63c4984d1d2b437872da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 0
   upgradeHolder: {fileID: 4233753281840246275}
   baseDamages: []
   damagePercentages: []
@@ -400,9 +438,14 @@ MonoBehaviour:
   baseSpeeds: []
   speedPercentages: []
   flatSpeeds: []
+  baseDesviationAngles: []
+  baseFireRates: []
+  fireRatePercentages: []
   baseAtk: 500
   baseHP: 400
   baseSpeed: 2
+  baseDesviationAngle: 1
+  baseFireRate: 10
 --- !u!1 &6343469572335038439
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,6 +496,11 @@ TrailRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
@@ -474,6 +522,7 @@ TrailRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -628,22 +677,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 7dc1830b52852ce44857f7f45e363494,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 61bf5b419df30d8438613f02f6927fad, type: 2}
     - target: {fileID: -7511558181221131132, guid: 7dc1830b52852ce44857f7f45e363494,
         type: 3}
-      propertyPath: m_Materials.Array.data[1]
+      propertyPath: 'm_Materials.Array.data[1]'
       value: 
       objectReference: {fileID: 2100000, guid: 779ce689bc66b2b4dbed091f4fc5963f, type: 2}
     - target: {fileID: -7511558181221131132, guid: 7dc1830b52852ce44857f7f45e363494,
         type: 3}
-      propertyPath: m_Materials.Array.data[2]
+      propertyPath: 'm_Materials.Array.data[2]'
       value: 
       objectReference: {fileID: 2100000, guid: 63a3266bbfea9a84790799786d1e2cce, type: 2}
     - target: {fileID: -7511558181221131132, guid: 7dc1830b52852ce44857f7f45e363494,
         type: 3}
-      propertyPath: m_Materials.Array.data[3]
+      propertyPath: 'm_Materials.Array.data[3]'
       value: 
       objectReference: {fileID: 2100000, guid: 48e033fa143750b4f9dba132f7fb69b9, type: 2}
     - target: {fileID: 919132149155446097, guid: 7dc1830b52852ce44857f7f45e363494,

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,9 +8,32 @@ public class Ship : PlayerController {
     public int maxMineralCapacity = 4000;
     public int[] minerals = new int[7];
     public Ammo[] lasserAmmo = new Ammo[5];
-    public int laserBeingUsed;
+    public int laserTierBeingUsed = 1;
     public Ammo tier1Laser;
     public List<Weapon> weaponInventory;
+    public int monedaBarata;
+    public int monedaCara;
+
+    public static Ship instance;
+    private void Awake() {
+        if (!instance) {
+            instance = this;
+        }
+    }
+
+    public override void OnNetworkSpawn() {
+        base.OnNetworkSpawn();
+        if (IsOwner) {
+            CharacterSaveManager.LoadCharacter("");
+        }
+    }
+
+    public override void OnNetworkDespawn() {
+        base.OnNetworkDespawn();
+        if (IsOwner) {
+            CharacterSaveManager.SaveCharacter();
+        }
+    }
 
     public void AddMineral(int mineralTier, int amount) {
         int currentTotal = CurrentMineralTotal();
@@ -68,29 +92,29 @@ public class Ship : PlayerController {
 
     public bool RemoveLaserAmmo() {
 
-        if (laserBeingUsed == (int)Tier.tier1) { return true; } //There is infinite tier 1 ammo
+        if (laserTierBeingUsed == (int)Tier.tier1) { return true; } //There is infinite tier 1 ammo
 
-        Ammo _currentAmmo = lasserAmmo[laserBeingUsed - 1];
+        Ammo _currentAmmo = lasserAmmo[laserTierBeingUsed - 1];
 
         if (_currentAmmo.amount > 0) {
             _currentAmmo.amount -= 1; //TODO: Anything else needed when removing laser ammo?
             return true;
 
-        } else if (laserBeingUsed == (int)Tier.tier2) { //return to the infinite tier1 ammo
-            laserBeingUsed = 1;
+        } else if (laserTierBeingUsed == (int)Tier.tier2) { //return to the infinite tier1 ammo
+            laserTierBeingUsed = 1;
             return true;
 
-        } else if (laserBeingUsed >= (int)Tier.tier3) {
+        } else if (laserTierBeingUsed >= (int)Tier.tier3) {
             //Down one tier of lasers
 
             do {
-                laserBeingUsed--;
-                _currentAmmo = lasserAmmo[laserBeingUsed - 1];
+                laserTierBeingUsed--;
+                _currentAmmo = lasserAmmo[laserTierBeingUsed - 1];
 
-            } while (_currentAmmo.amount <= 0 && laserBeingUsed >= 2);
+            } while (_currentAmmo.amount <= 0 && laserTierBeingUsed >= 2);
 
             //If there is actually any kind of special ammo available, use it
-            if (_currentAmmo.amount > 0 && laserBeingUsed >= 2) {
+            if (_currentAmmo.amount > 0 && laserTierBeingUsed >= 2) {
                 _currentAmmo.amount -= 1; //TODO: Anything else needed when removing laser ammo?
                 return true;
             }
@@ -108,4 +132,12 @@ public class Ship : PlayerController {
 
     public virtual void EndSpecialHability(InputAction.CallbackContext context) {
     }
+}
+
+public enum ShipTypes {
+    Initial,
+    Hunter,
+    Fighter,
+    Tank,
+    Healer,
 }

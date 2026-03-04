@@ -520,8 +520,8 @@ MonoBehaviour:
     amount: 1000
   - tier: 1
     amount: 500
-  monedaBarataDrop: 0
-  monedaCaraDrop: 0
+  monedaBarataDrop: 100
+  monedaCaraDrop: 1
   type: 0
   speed: 10
   body: {fileID: 2069516773735851332}
@@ -530,11 +530,13 @@ MonoBehaviour:
   distanceToReachPlayer: 0.6
   rotationLerpSpeed: 0.4
   hp: 300
+  stats: {fileID: 7676667555637059995}
   states:
   - {fileID: 5248904484379842114}
   - {fileID: 7461271921984709546}
   currentState: {fileID: 0}
-  stats: {fileID: 7676667555637059995}
+  NetPosition:
+    m_InternalValue: {x: 0, y: 0, z: 0}
   speed_Spore_Small: 3.3
   distanceToReachPlayer_Boss_Small: 5.5
   rotationLerpSpeed_Minion: 0.3
@@ -591,6 +593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6836d8fbf85a63c4984d1d2b437872da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 0
   upgradeHolder: {fileID: 7313281789901751946}
   baseDamages: []
   damagePercentages: []

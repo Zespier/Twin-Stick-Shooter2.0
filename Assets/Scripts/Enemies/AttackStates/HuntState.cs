@@ -16,15 +16,12 @@ public class HuntState : AttackBaseState {
     private int _bulletsShot;
     private float _waitingToShoot;
 
-    /// <summary>
-    /// Shots a bullet
-    /// </summary>
     public void Shoot() {
         for (int i = 0; i < shootPoints.Count; i++) {
+            float speed = 20;
+            Vector3 direction = BulletFireDesviation.RandomBulletFireDesviation(shootPoints[i], controller.stats.DesviationAngle);
 
-            Bullet newBullet = Instantiate(bulletPrefab, shootPoints[i].position, Quaternion.identity, BulletContainer.instance.transform).GetComponent<Bullet>();
-            newBullet.Shoot(shootPoints[i].forward, 1.1f, controller.stats, spawnNetworkObject: true);
-
+            BulletContainer.instance.CreateBullet(shootPoints[i].position, direction, speed, true);
         }
         AudioManager.instance.EnemyLaserSound(transform.position);
 
@@ -40,9 +37,6 @@ public class HuntState : AttackBaseState {
     public override void OnStateExit() {
     }
 
-    /// <summary>
-    /// Check wheter it should change to dash state
-    /// </summary>
     public override void StateLateUpdate() {
         _huntTimer += Time.deltaTime;
         if (_huntTimer >= huntTime) {
@@ -50,11 +44,8 @@ public class HuntState : AttackBaseState {
         }
     }
 
-    /// <summary>
-    /// Clamps the position to a circle around the player, so it can't scape
-    /// </summary>
     public override void StateUpdate() {
-        Vector3 newForward = PlayerController.instance.transform.position - transform.position;
+        Vector3 newForward = Ship.instance.transform.position - transform.position;
         newForward.y = 0;
         controller.body.forward = newForward;
 
@@ -62,7 +53,7 @@ public class HuntState : AttackBaseState {
         /*??*/
         transform.position += Time.deltaTime * controller.Speed * direction;
 
-        Vector3 clampedPosition = PlayerController.instance.transform.position;
+        Vector3 clampedPosition = Ship.instance.transform.position;
         clampedPosition -= controller.body.forward * selfieStickSize;
         clampedPosition.y = 0;
 

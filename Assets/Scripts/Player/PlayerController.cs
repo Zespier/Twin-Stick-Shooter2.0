@@ -14,8 +14,6 @@ public class PlayerController : Damageable {
     //public PlayerHealth playerHealth;
     public Stats Stats;
     public Queue<MovementInput> pendingInputs = new();
-    public int monedaBarata;
-    public int monedaCara;
 
     [HideInInspector] public bool _dead;
     private float _maxHp;
@@ -26,14 +24,9 @@ public class PlayerController : Damageable {
     private Queue<PredictedPosition> _predictedPositionsQueue = new();
     [HideInInspector] public Vector2 _lastMovementDirectionForRotation;
 
-    public static PlayerController instance;
 
     public override void OnNetworkSpawn() {
-        if (IsOwner) {
-            if (!instance) {
-                instance = this;
-            }
-
+        if (IsServer) {
             _maxHp = hp;
         }
     }
@@ -210,11 +203,11 @@ public enum MineralTier : byte {
 }
 
 public enum MadnessChant : byte {
+    None,
     Hunter,
     Fighter,
     Tank,
     Healer,
     Hell,
     Speedster,
-
 }

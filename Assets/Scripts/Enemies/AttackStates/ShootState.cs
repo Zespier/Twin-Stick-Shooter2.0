@@ -20,9 +20,10 @@ public class ShootState : AttackBaseState {
     public void Shoot() {
 
         for (int i = 0; i < shootPoints.Count; i++) {
+            float speed = 20;
+            Vector3 direction = BulletFireDesviation.RandomBulletFireDesviation(shootPoints[i], controller.stats.DesviationAngle);
 
-            Bullet newBullet = Instantiate(bulletPrefab, shootPoints[i].position, Quaternion.identity, BulletContainer.instance.transform).GetComponent<Bullet>();
-            newBullet.Shoot(shootPoints[i].forward, 2f, controller.stats, spawnNetworkObject: true);
+            BulletContainer.instance.CreateBullet(shootPoints[i].position, direction, speed, true);
         }
 
         AudioManager.instance.EnemyLaserSound(transform.position);
@@ -41,7 +42,7 @@ public class ShootState : AttackBaseState {
     /// </summary>
     public override void StateLateUpdate() {
 
-        if (changeStateWhenPlayerOutOfReach && Vector3.Distance(PlayerController.instance.transform.position, transform.position) > controller.DistanceToReachPlayer) {
+        if (changeStateWhenPlayerOutOfReach && Vector3.Distance(Ship.instance.transform.position, transform.position) > controller.DistanceToReachPlayer) {
             controller.PlayerOutOfReach();
         }
 

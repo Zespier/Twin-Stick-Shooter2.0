@@ -5,21 +5,59 @@ using UnityEngine;
 public static class CharacterSaveManager {
     private static string SaveFolder => Application.persistentDataPath + "/Characters/";
 
-    public static void SaveCharacter(CharacterData data) {
-        if (!Directory.Exists(SaveFolder))
+    public static void SaveCharacter() {
+        if (!Directory.Exists(SaveFolder)) {
             Directory.CreateDirectory(SaveFolder);
+        }
 
-        string json = JsonUtility.ToJson(data, true);
-        File.WriteAllText(SaveFolder + data.characterId + ".json", json);
+        CharacterData characterData = FillCharacterDataWithShip();
+
+        string json = JsonUtility.ToJson(characterData, true);
+        File.WriteAllText(SaveFolder + characterData.characterId + ".json", json);
     }
 
-    public static CharacterData LoadCharacter(string id) {
+    public static void LoadCharacter(string id) {
         string path = SaveFolder + id + ".json";
-        if (!File.Exists(path))
-            return null;
+        if (!File.Exists(path)) { return; }
 
         string json = File.ReadAllText(path);
-        return JsonUtility.FromJson<CharacterData>(json);
+        CharacterData characterData = JsonUtility.FromJson<CharacterData>(json);
+        FillShipWithCharacterData( characterData);
+    }
+
+    public static void FillShipWithCharacterData(CharacterData characterData) {
+
+        if (characterData != null) {
+            Ship.instance.monedaBarata = characterData.monedaBarata;
+            Ship.instance.monedaCara = characterData.monedaCara;
+            Ship.instance.minerals = characterData.minerals;
+            Ship.instance.lasserAmmo = characterData.lasserAmmo;
+            Ship.instance.laserTierBeingUsed = characterData.equippedLaserAmmo;
+            Ship.instance.weaponInventory = characterData.weaponInventory;
+        } else {
+
+            CharacterData newCharacterData = new();
+            Ship.instance.monedaBarata = newCharacterData.monedaBarata;
+            Ship.instance.monedaCara = newCharacterData.monedaCara;
+            Ship.instance.minerals = newCharacterData.minerals;
+            Ship.instance.lasserAmmo = newCharacterData.lasserAmmo;
+            Ship.instance.laserTierBeingUsed = newCharacterData.equippedLaserAmmo;
+            Ship.instance.weaponInventory = newCharacterData.weaponInventory;
+        }
+    }
+
+    public static CharacterData FillCharacterDataWithShip() {
+
+        CharacterData characterData = new();
+
+        characterData.monedaBarata = Ship.instance.monedaBarata;
+        characterData.monedaCara = Ship.instance.monedaCara;
+        characterData.minerals = Ship.instance.minerals;
+        characterData.lasserAmmo = Ship.instance.lasserAmmo;
+        characterData.equippedLaserAmmo = Ship.instance.laserTierBeingUsed;
+        characterData.weaponInventory = Ship.instance.weaponInventory;
+
+        return characterData;
     }
 }
 
@@ -35,15 +73,15 @@ public class CharacterData {
     public string characterId;
     public string characterName;
 
-    public int level;
-    public int experience;
+    public int monedaBarata;
+    public int monedaCara;
+    public int[] minerals;
+    public Ammo[] lasserAmmo;
+    public List<Weapon> weaponInventory = new();
+    public List<ShipTypes> ownedShips = new();
 
-    public int materials;
-    public List<string> ownedWeapons;
-    public List<string> ownedShips;
-
-    public string equippedShip;
-    public string equippedWeapon;
+    public ShipTypes equippedShip;
+    public int equippedLaserAmmo = 1;
 
     public long lastSaveTime;
 }

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -30,10 +29,11 @@ public class EnemySpawner : MonoBehaviour {
 
     private void OnEnable() {
         GameEvents.OnEnemyDeath += NextWaveIfFinished;
+        StartCoroutine(C_WaitForPlayer());
     }
+
     private void OnDisable() {
         GameEvents.OnEnemyDeath -= NextWaveIfFinished;
-
         ResetWaves(waves1);
         ResetWaves(waves2);
         ResetWaves(waves3);
@@ -41,10 +41,6 @@ public class EnemySpawner : MonoBehaviour {
 
     private void Update() {
         _nextWaveSaveCounter -= Time.deltaTime;
-    }
-
-    private void Start() {
-        StartCoroutine(C_WaitForPlayer());
     }
 
     private IEnumerator C_WaitForPlayer() {
@@ -133,6 +129,7 @@ public class EnemySpawner : MonoBehaviour {
     }
 
     public void SpawnWaveInitialEnemies(Wave wave) {
+
         for (int i = 0; i < wave.initialEnemies.Count; i++) {
             SpawnEnemy(wave.initialEnemies[i], wave.initialSpawnPointList, i);
         }
@@ -150,6 +147,7 @@ public class EnemySpawner : MonoBehaviour {
     }
 
     public void SpawnAllDeadConditionEnemies() {
+
         for (int i = 0; i < _currentWave.conditionsToSpawn.Count; i++) {
             if (_currentWave.conditionsToSpawn[i].condition == ConditionType.AllDead) {
                 SpawnEnemy(_currentWave.enemiesAdditional[i], _currentWave.additionalSpawnPointList, i);

@@ -10,6 +10,8 @@ public class BulletFireDesviation {
         shootDesviation = Quaternion.AngleAxis(randomDesviationX, shootPoint.right) * shootDesviation;
         shootDesviation = Quaternion.AngleAxis(randomDesviationY, shootPoint.up) * shootDesviation;
 
+        shootDesviation.y = 0;
+
         return shootDesviation;
     }
 

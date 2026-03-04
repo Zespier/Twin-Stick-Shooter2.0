@@ -1421,7 +1421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3496159541
+  GlobalObjectIdHash: 2086072370
   InScenePlacedSourceGlobalObjectIdHash: 3496159541
   DeferredDespawnTick: 0
   Ownership: 1
@@ -1454,8 +1454,6 @@ MonoBehaviour:
   deathExplosion: {fileID: 1459968403502998864}
   mesh: {fileID: 5276117829953504725}
   Stats: {fileID: 2287462726565255884}
-  monedaBarata: 0
-  monedaCara: 0
   _dead: 0
   _lastMovementDirectionForRotation: {x: 0, y: 0}
   maxMineralCapacity: 4000
@@ -1463,24 +1461,27 @@ MonoBehaviour:
   lasserAmmo:
   - type: 0
     tier: 1
-    amount: 0
+    amount: 100
   - type: 0
     tier: 2
-    amount: 0
+    amount: 100
   - type: 0
     tier: 3
-    amount: 0
+    amount: 100
   - type: 0
     tier: 4
-    amount: 0
+    amount: 100
   - type: 0
     tier: 5
-    amount: 0
-  laserBeingUsed: 1
+    amount: 100
+  laserTierBeingUsed: 5
   tier1Laser:
     type: 0
     tier: 1
     amount: 2147483647
+  weaponInventory: []
+  monedaBarata: 0
+  monedaCara: 0
   _sprinting: 0
 --- !u!114 &5875837670570415519
 MonoBehaviour:
@@ -1495,19 +1496,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  bullet: {fileID: 6280941574443639161, guid: dab878634bb1b72428b9e74f0c6bd471, type: 3}
-  shotgunBullet: {fileID: 7204759068860087085, guid: 226569b021c0d404fa7d6aa6c4b79e0a,
-    type: 3}
   shootPoints:
   - {fileID: 7328156308229568428}
   - {fileID: 3270373860169958245}
-  _debugSize: 0
-  bulletLivingArea:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0
-    height: 0
 --- !u!114 &2287462726565255884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1520,6 +1511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6836d8fbf85a63c4984d1d2b437872da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 0
   upgradeHolder: {fileID: 5763839800338470459}
   baseDamages: []
   damagePercentages: []

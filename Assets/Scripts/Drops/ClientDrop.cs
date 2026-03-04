@@ -20,16 +20,21 @@ public class ClientDrop : MonoBehaviour {
     }
 
     private void OnDisable() {
-        StopCoroutine(c_Drop);
-        StopCoroutine(c_GoToPlayer);
+        if (c_Drop != null) {
+            StopCoroutine(c_Drop);
+        }
+
+        if (c_GoToPlayer != null) {
+            StopCoroutine(c_GoToPlayer);
+        }
     }
 
     private void Update() {
-        if (PlayerController.instance == null) {
+        if (Ship.instance == null) {
             return;
         }
 
-        if ((PlayerController.instance.transform.position - transform.position).sqrMagnitude < distanceForPlayerToReachThisDrop * distanceForPlayerToReachThisDrop) {
+        if ((Ship.instance.transform.position - transform.position).sqrMagnitude < distanceForPlayerToReachThisDrop * distanceForPlayerToReachThisDrop) {
             _playerReached = true;
         }
 
@@ -59,15 +64,16 @@ public class ClientDrop : MonoBehaviour {
         Vector3 initialPosition = transform.position;
         float timer = Time.time;
         while (Time.time - timer < reachPlayerTime) {
-            transform.position = Vector3.Slerp(initialPosition, PlayerController.instance.transform.position, (Time.time - timer) / reachPlayerTime);
+            if (Ship.instance == null) { yield break; }
+
+            transform.position = Vector3.Slerp(initialPosition, Ship.instance.transform.position, (Time.time - timer) / reachPlayerTime);
             yield return null;
         }
 
-        Ship ship = (PlayerController.instance) as Ship;
+        Ship ship = (Ship.instance) as Ship;
         for (int i = 0; i < mineralDrops.Count; i++) {
             ship.AddMineral((int)mineralDrops[i].tier, mineralDrops[i].amount);
         }
-        PlayerController.instance.mineralInventoryUI.UpdateInventoryBars();
         Destroy(gameObject);
 
         _goingToPlayer = false;

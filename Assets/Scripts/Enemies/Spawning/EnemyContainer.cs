@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class EnemyContainer : MonoBehaviour {
+public class EnemyContainer : NetworkBehaviour {
 
     public List<Enemy> activeEnemies = new List<Enemy>(capacity: 64);
     [Tooltip("Just for reference")]
@@ -17,6 +17,7 @@ public class EnemyContainer : MonoBehaviour {
     public static EnemyContainer instance;
     private void Awake() {
         if (!instance) { instance = this; }
+        if (!IsServer) { return; }
 
         SetInitialPoolAmountByDefaultIfNotSet();
 
@@ -49,10 +50,10 @@ public class EnemyContainer : MonoBehaviour {
     }
 
     public void NewEnemy(EnemyType enemyType) {
-
         if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsListening) {
             StartCoroutine(C_NewEnemy(enemyType));
         } else {
+            if (!IsServer) { return; }
 
             for (int i = 0; i < enemyPrefabs.Count; i++) {
                 if (enemyPrefabs[i].type == enemyType) {

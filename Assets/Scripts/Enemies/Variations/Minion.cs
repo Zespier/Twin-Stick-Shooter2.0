@@ -17,10 +17,6 @@ public class Minion : Enemy {
     public override float DistanceToReachPlayer => distanceToReachPlayer_Boss_Small;
     public override float RotationLerpSpeed => rotationLerpSpeed_Minion;
 
-
-    /// <summary>
-    /// Also explodes
-    /// </summary>
     protected override void CheckDeath() {
         if (hp < 0) {
             Explode();
@@ -28,9 +24,6 @@ public class Minion : Enemy {
         base.CheckDeath();
     }
 
-    /// <summary>
-    /// Expllodes
-    /// </summary>
     private void Explode() {
         if (_exploded) { return; }
         _exploded = true;
@@ -40,19 +33,12 @@ public class Minion : Enemy {
 
 
         explosion.transform.SetParent(EnemyContainer.instance.transform);
-        Deactivate();
     }
 
-    /// <summary>
-    /// Change to shootstate when reaching the player
-    /// </summary>
     public override void ReachingPlayer() {
         ChangeState(typeof(ShootState));
     }
 
-    /// <summary>
-    /// Change to ShootMovingState when PlayerOutOfReach
-    /// </summary>
     public override void PlayerOutOfReach() {
         ChangeState(typeof(ShootMovingState));
     }
