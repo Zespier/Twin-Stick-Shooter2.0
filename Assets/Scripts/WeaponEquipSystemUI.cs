@@ -3,9 +3,11 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class WeaponEquipSystemUI : MonoBehaviour {
+public class WeaponEquipSystemUI : Menu {
 
     public const byte TotalRam = 128;
+    public List<ItemWithSpaceUI> verticalMovementItems;
+    public List<ItemWithSpaceUI> horizontalMovementItems;
 
     private int _selectedIndex = 0;
     private byte _cursorPosition = 0;
@@ -23,7 +25,38 @@ public class WeaponEquipSystemUI : MonoBehaviour {
     }
 
     private void Update() {
+        if (Input.GetKeyDown(KeyCode.L)) {
+            ActiveCanvasGroup(!IsOpen);
+        }
+
+        if (IsOpen) {
+            PrepareEveryWeapon();
+        }
+
         HandlePlacementInput();
+    }
+
+    public void PrepareEveryWeapon() {
+        while (verticalMovementItems.Count < Ship.instance.weaponInventory.Count) {
+            verticalMovementItems.Add(Instantiate(verticalMovementItems[0], verticalMovementItems[0].transform.parent));
+        }
+
+        while (horizontalMovementItems.Count < Ship.instance.weaponInventory.Count) {
+            horizontalMovementItems.Add(Instantiate(horizontalMovementItems[0], horizontalMovementItems[0].transform.parent));
+        }
+
+
+        int count = Ship.instance.weaponInventory.Count;
+        for (int i = 0; i < count; i++) {
+            Weapon weapon = Ship.instance.weaponInventory[i];
+
+            verticalMovementItems[i].weapon = weapon;
+            horizontalMovementItems[i].weapon = weapon;
+
+            if (weapon.equipped) {
+
+            }
+        }
     }
 
     public bool IsPreviewValid(Weapon weapon, byte previewStart) {
