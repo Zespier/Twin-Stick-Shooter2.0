@@ -57,6 +57,8 @@ public class WeaponEquipSystemUI : Menu {
 
             }
         }
+
+        horizontalMovementItems[_cu]
     }
 
     public bool IsPreviewValid(Weapon weapon, byte previewStart) {
