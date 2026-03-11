@@ -40,11 +40,11 @@ public class CameraBehaviour : MonoBehaviour {
     }
 
     public void Update() {
-        if (Ship.instance == null) { return; }
+        if (Ship.instanceOfClient == null) { return; }
 
         DistanceMovement();
         TargetMovement();
-        CameraMovement(Ship.instance.transform.position, _currentTarget);
+        CameraMovement(Ship.instanceOfClient.transform.position, _currentTarget);
     }
 
     /// <summary>
@@ -85,7 +85,7 @@ public class CameraBehaviour : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     private float GetDistance() {
-        float movementMagnitude = Ship.instance._lastMovementDirectionForRotation.sqrMagnitude;
+        float movementMagnitude = Ship.instanceOfClient._lastMovementDirectionForRotation.sqrMagnitude;
         if (movementMagnitude > 1) {
             movementMagnitude = 1;
         }

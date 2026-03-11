@@ -18,7 +18,7 @@ public class Debris : MonoBehaviour {
     }
 
     private IEnumerator C_WaitForPlayer() {
-        while (Ship.instance == null) {
+        while (Ship.instanceOfClient == null) {
             yield return null;
         }
 
@@ -26,12 +26,12 @@ public class Debris : MonoBehaviour {
     }
 
     private void Update() {
-        if (Ship.instance == null) { return; }
+        if (Ship.instanceOfClient == null) { return; }
 
-        if (Vector3.Distance(Ship.instance.transform.position, transform.position) > 30) {
+        if (Vector3.Distance(Ship.instanceOfClient.transform.position, transform.position) > 30) {
             ChooseDirection(true);
 
-        } else if (Vector3.Distance(Ship.instance.transform.position, transform.position) > 20 && _timer >= 15) {
+        } else if (Vector3.Distance(Ship.instanceOfClient.transform.position, transform.position) > 20 && _timer >= 15) {
             _timer = 0;
             ChooseDirection(false);
         }
@@ -63,7 +63,7 @@ public class Debris : MonoBehaviour {
     /// <param name="toPlayer"></param>
     private void ChooseDirection(bool toPlayer) {
         if (toPlayer) {
-            _direction = Ship.instance.transform.position - transform.position;
+            _direction = Ship.instanceOfClient.transform.position - transform.position;
         } else {
 
             _direction = new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1));

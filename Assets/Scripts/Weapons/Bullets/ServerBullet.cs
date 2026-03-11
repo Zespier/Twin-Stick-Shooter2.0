@@ -56,8 +56,8 @@ public class ServerBullet : MonoBehaviour {
     public void CheckDamage() {
         if (isEnemyBullet) {
 
-            if ((transform.position - Ship.instance.transform.position).sqrMagnitude < hitRadius * hitRadius) {
-                Ship.instance.TakeDamage(transform.position, damage * damageMultiplier, Random.Range(0, 100) < 10, DamageType.PlayerDamaged);
+            if ((transform.position - Ship.instanceOfClient.transform.position).sqrMagnitude < hitRadius * hitRadius) {
+                Ship.instanceOfClient.TakeDamage(transform.position, damage * damageMultiplier, Random.Range(0, 100) < 10, DamageType.PlayerDamaged);
                 Deactivate();
             }
 

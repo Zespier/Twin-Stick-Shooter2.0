@@ -12,7 +12,7 @@ public class WeaponEquipSystemUI : Menu {
     private int _selectedIndex = 0;
     private byte _cursorPosition = 0;
 
-    private Weapon HoveredWeapon => Ship.instance.weaponInventory[_selectedIndex];
+    private Weapon HoveredWeapon => Ship.instanceOfClient.weaponInventory[_selectedIndex];
 
     private void OnEnable() {
         InputManager.OnInterfaceNavigation += OnMoveHoveredItemVERTICALLY;
@@ -37,18 +37,18 @@ public class WeaponEquipSystemUI : Menu {
     }
 
     public void PrepareEveryWeapon() {
-        while (verticalMovementItems.Count < Ship.instance.weaponInventory.Count) {
+        while (verticalMovementItems.Count < Ship.instanceOfClient.weaponInventory.Count) {
             verticalMovementItems.Add(Instantiate(verticalMovementItems[0], verticalMovementItems[0].transform.parent));
         }
 
-        while (horizontalMovementItems.Count < Ship.instance.weaponInventory.Count) {
+        while (horizontalMovementItems.Count < Ship.instanceOfClient.weaponInventory.Count) {
             horizontalMovementItems.Add(Instantiate(horizontalMovementItems[0], horizontalMovementItems[0].transform.parent));
         }
 
 
-        int count = Ship.instance.weaponInventory.Count;
+        int count = Ship.instanceOfClient.weaponInventory.Count;
         for (int i = 0; i < count; i++) {
-            Weapon weapon = Ship.instance.weaponInventory[i];
+            Weapon weapon = Ship.instanceOfClient.weaponInventory[i];
 
             verticalMovementItems[i].weapon = weapon;
             horizontalMovementItems[i].weapon = weapon;
@@ -58,7 +58,7 @@ public class WeaponEquipSystemUI : Menu {
             }
         }
 
-        horizontalMovementItems[_cu]
+        //horizontalMovementItems[_cu]
     }
 
     public bool IsPreviewValid(Weapon weapon, byte previewStart) {
@@ -78,7 +78,7 @@ public class WeaponEquipSystemUI : Menu {
     public List<Weapon> GetOverlappingWeapons(byte start, byte size) {
         byte end = (byte)(start + size - 1);
 
-        return Ship.instance.weaponInventory.Where(w => w.equipped && !(end < w.initialIndex || start > w.EndIndex)).ToList();
+        return Ship.instanceOfClient.weaponInventory.Where(w => w.equipped && !(end < w.initialIndex || start > w.EndIndex)).ToList();
     }
 
     public EquipResult TryPlaceWeapon(Weapon weapon, byte newStart) {
@@ -110,7 +110,7 @@ public class WeaponEquipSystemUI : Menu {
     }
 
     public void OptimizeLayout() {
-        var equipped = Ship.instance.weaponInventory.Where(w => w.equipped).OrderBy(w => w.initialIndex).ToList();
+        var equipped = Ship.instanceOfClient.weaponInventory.Where(w => w.equipped).OrderBy(w => w.initialIndex).ToList();
 
         byte currentIndex = 0;
 
@@ -155,12 +155,12 @@ public class WeaponEquipSystemUI : Menu {
                 //TODO: UP
                 _selectedIndex--;
                 if (_selectedIndex < 0) {
-                    _selectedIndex = Ship.instance.weaponInventory.Count - 1;
+                    _selectedIndex = Ship.instanceOfClient.weaponInventory.Count - 1;
                 }
 
             } else if (input.y < 0) {
                 //TODO: DOWN
-                _selectedIndex = (_selectedIndex + 1) % Ship.instance.weaponInventory.Count;
+                _selectedIndex = (_selectedIndex + 1) % Ship.instanceOfClient.weaponInventory.Count;
             }
         }
     }

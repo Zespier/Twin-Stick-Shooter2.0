@@ -28,21 +28,21 @@ public static class CharacterSaveManager {
     public static void FillShipWithCharacterData(CharacterData characterData) {
 
         if (characterData != null) {
-            Ship.instance.monedaBarata = characterData.monedaBarata;
-            Ship.instance.monedaCara = characterData.monedaCara;
-            Ship.instance.minerals = characterData.minerals;
-            Ship.instance.lasserAmmo = characterData.lasserAmmo;
-            Ship.instance.laserTierBeingUsed = characterData.equippedLaserAmmo;
-            Ship.instance.weaponInventory = characterData.weaponInventory;
+            Ship.instanceOfClient.monedaBarata = characterData.monedaBarata;
+            Ship.instanceOfClient.monedaCara = characterData.monedaCara;
+            Ship.instanceOfClient.minerals = characterData.minerals;
+            Ship.instanceOfClient.lasserAmmo = characterData.lasserAmmo;
+            Ship.instanceOfClient.laserTierBeingUsed = characterData.equippedLaserAmmo;
+            Ship.instanceOfClient.weaponInventory = characterData.weaponInventory;
         } else {
 
             CharacterData newCharacterData = new();
-            Ship.instance.monedaBarata = newCharacterData.monedaBarata;
-            Ship.instance.monedaCara = newCharacterData.monedaCara;
-            Ship.instance.minerals = newCharacterData.minerals;
-            Ship.instance.lasserAmmo = newCharacterData.lasserAmmo;
-            Ship.instance.laserTierBeingUsed = newCharacterData.equippedLaserAmmo;
-            Ship.instance.weaponInventory = newCharacterData.weaponInventory;
+            Ship.instanceOfClient.monedaBarata = newCharacterData.monedaBarata;
+            Ship.instanceOfClient.monedaCara = newCharacterData.monedaCara;
+            Ship.instanceOfClient.minerals = newCharacterData.minerals;
+            Ship.instanceOfClient.lasserAmmo = newCharacterData.lasserAmmo;
+            Ship.instanceOfClient.laserTierBeingUsed = newCharacterData.equippedLaserAmmo;
+            Ship.instanceOfClient.weaponInventory = newCharacterData.weaponInventory;
         }
     }
 
@@ -50,12 +50,12 @@ public static class CharacterSaveManager {
 
         CharacterData characterData = new();
 
-        characterData.monedaBarata = Ship.instance.monedaBarata;
-        characterData.monedaCara = Ship.instance.monedaCara;
-        characterData.minerals = Ship.instance.minerals;
-        characterData.lasserAmmo = Ship.instance.lasserAmmo;
-        characterData.equippedLaserAmmo = Ship.instance.laserTierBeingUsed;
-        characterData.weaponInventory = Ship.instance.weaponInventory;
+        characterData.monedaBarata = Ship.instanceOfClient.monedaBarata;
+        characterData.monedaCara = Ship.instanceOfClient.monedaCara;
+        characterData.minerals = Ship.instanceOfClient.minerals;
+        characterData.lasserAmmo = Ship.instanceOfClient.lasserAmmo;
+        characterData.equippedLaserAmmo = Ship.instanceOfClient.laserTierBeingUsed;
+        characterData.weaponInventory = Ship.instanceOfClient.weaponInventory;
 
         return characterData;
     }

@@ -30,11 +30,11 @@ public class ClientDrop : MonoBehaviour {
     }
 
     private void Update() {
-        if (Ship.instance == null) {
+        if (Ship.instanceOfClient == null) {
             return;
         }
 
-        if ((Ship.instance.transform.position - transform.position).sqrMagnitude < distanceForPlayerToReachThisDrop * distanceForPlayerToReachThisDrop) {
+        if ((Ship.instanceOfClient.transform.position - transform.position).sqrMagnitude < distanceForPlayerToReachThisDrop * distanceForPlayerToReachThisDrop) {
             _playerReached = true;
         }
 
@@ -64,13 +64,13 @@ public class ClientDrop : MonoBehaviour {
         Vector3 initialPosition = transform.position;
         float timer = Time.time;
         while (Time.time - timer < reachPlayerTime) {
-            if (Ship.instance == null) { yield break; }
+            if (Ship.instanceOfClient == null) { yield break; }
 
-            transform.position = Vector3.Slerp(initialPosition, Ship.instance.transform.position, (Time.time - timer) / reachPlayerTime);
+            transform.position = Vector3.Slerp(initialPosition, Ship.instanceOfClient.transform.position, (Time.time - timer) / reachPlayerTime);
             yield return null;
         }
 
-        Ship ship = (Ship.instance) as Ship;
+        Ship ship = (Ship.instanceOfClient) as Ship;
         for (int i = 0; i < mineralDrops.Count; i++) {
             ship.AddMineral((int)mineralDrops[i].tier, mineralDrops[i].amount);
         }

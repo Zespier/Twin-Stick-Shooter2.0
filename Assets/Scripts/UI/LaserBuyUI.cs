@@ -10,9 +10,9 @@ public class LaserBuyUI : SelectableItemForController {
     public override void Use() {
         base.Use();
 
-        if (Ship.instance.monedaBarata >= monedaBarataPerLaser * amountToBuy) {
-            Ship.instance.monedaBarata -= monedaBarataPerLaser * amountToBuy;
-            Ship.instance.AddLaserAmmo(ammo.tier, amountToBuy);
+        if (Ship.instanceOfClient.monedaBarata >= monedaBarataPerLaser * amountToBuy) {
+            Ship.instanceOfClient.monedaBarata -= monedaBarataPerLaser * amountToBuy;
+            Ship.instanceOfClient.AddLaserAmmo(ammo.tier, amountToBuy);
 
         } else {
             //TODO: lo que sea que me digan si no tengo dinero

@@ -58,7 +58,7 @@ public class BulletContainer : NetworkBehaviour {
                 serverBullet.transform.forward = direction;
                 serverBullet.speed = speed;
                 serverBullet.isEnemyBullet = isEnemyBullet;
-                serverBullet.damage = isEnemyBullet ? 20 : Ship.instance.Stats.Atk * bulletTier;
+                serverBullet.damage = isEnemyBullet ? 20 : Ship.instanceOfClient.Stats.Atk * bulletTier;
                 serverBullet.damageMultiplier = bulletTier;
                 return;
             }
@@ -70,7 +70,7 @@ public class BulletContainer : NetworkBehaviour {
         newServerBullet.transform.forward = direction;
         newServerBullet.speed = speed;
         newServerBullet.isEnemyBullet = isEnemyBullet;
-        newServerBullet.damage = isEnemyBullet ? 20 : Ship.instance.Stats.Atk;
+        newServerBullet.damage = isEnemyBullet ? 20 : Ship.instanceOfClient.Stats.Atk;
         newServerBullet.damageMultiplier = bulletTier;
         serverBulletQueue.Add(newServerBullet);
     }

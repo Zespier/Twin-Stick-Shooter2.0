@@ -97,7 +97,7 @@ public class MenuDeTrucos : MonoBehaviour {
     /// Opens the tricks menu
     /// </summary>
     public void MimicF1() {
-        if (Ship.instance._dead) { return; }
+        if (Ship.instanceOfClient._dead) { return; }
 
         Canvas_SetActive(canvasGroup.alpha == 0 ? true : false);
     }
@@ -107,7 +107,7 @@ public class MenuDeTrucos : MonoBehaviour {
     /// </summary>
     /// <param name="active"></param>
     public void Canvas_SetActive(bool active) {
-        if (Ship.instance != null && Ship.instance._dead) { return; }
+        if (Ship.instanceOfClient != null && Ship.instanceOfClient._dead) { return; }
 
         canvasGroup.alpha = active ? 1 : 0;
         canvasGroup.interactable = active;

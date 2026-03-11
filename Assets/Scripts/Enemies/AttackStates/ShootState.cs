@@ -42,7 +42,7 @@ public class ShootState : AttackBaseState {
     /// </summary>
     public override void StateLateUpdate() {
 
-        if (changeStateWhenPlayerOutOfReach && Vector3.Distance(Ship.instance.transform.position, transform.position) > controller.DistanceToReachPlayer) {
+        if (changeStateWhenPlayerOutOfReach && Vector3.Distance(Ship.instanceOfClient.transform.position, transform.position) > controller.DistanceToReachPlayer) {
             controller.PlayerOutOfReach();
         }
 

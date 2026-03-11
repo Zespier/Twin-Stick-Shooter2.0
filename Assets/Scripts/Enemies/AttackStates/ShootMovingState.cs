@@ -40,7 +40,7 @@ public class ShootMovingState : AttackBaseState {
     /// </summary>
     public override void StateLateUpdate() {
 
-        if (Vector3.Distance(Ship.instance.transform.position, transform.position) < controller.DistanceToReachPlayer) {
+        if (Vector3.Distance(Ship.instanceOfClient.transform.position, transform.position) < controller.DistanceToReachPlayer) {
             controller.ReachingPlayer();
         }
 
@@ -57,7 +57,7 @@ public class ShootMovingState : AttackBaseState {
     /// </summary>
     public override void StateUpdate() {
 
-        transform.position += Time.deltaTime * shootingMovementSpeed * (Ship.instance.transform.position - transform.position).normalized;
+        transform.position += Time.deltaTime * shootingMovementSpeed * (Ship.instanceOfClient.transform.position - transform.position).normalized;
 
         if (_shootTimer + 1f / fireRate < Time.time) {
             _shootTimer = Time.time;

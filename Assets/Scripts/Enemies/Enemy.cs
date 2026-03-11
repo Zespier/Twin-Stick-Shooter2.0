@@ -78,8 +78,8 @@ public class Enemy : Damageable {
     }
 
     private void ServerTick() {
-        if (Ship.instance == null) return;
-        if (Ship.instance._dead) return;
+        if (Ship.instanceOfClient == null) return;
+        if (Ship.instanceOfClient._dead) return;
 
         RotateBody();
         currentState.StateUpdate();
@@ -92,9 +92,9 @@ public class Enemy : Damageable {
     }
 
     private void LateUpdate() {
-        if (Ship.instance == null) { return; }
+        if (Ship.instanceOfClient == null) { return; }
 
-        if (Ship.instance._dead) {
+        if (Ship.instanceOfClient._dead) {
             return;
         }
 
@@ -106,7 +106,7 @@ public class Enemy : Damageable {
     }
 
     protected virtual void RotateBody() {
-        Vector3 targetLookDirection = Ship.instance.transform.position - transform.position;
+        Vector3 targetLookDirection = Ship.instanceOfClient.transform.position - transform.position;
         targetLookDirection.y = 0f;
         body.forward = Vector3.Lerp(body.forward, targetLookDirection, Time.deltaTime / RotationLerpSpeed);
     }
@@ -182,8 +182,8 @@ public class Enemy : Damageable {
     public void DeathDrops() {
         MineralsDropManager.instance.DropMinerals(this);
 
-        Ship.instance.monedaBarata += monedaBarataDrop;
-        Ship.instance.monedaCara += monedaCaraDrop;
+        Ship.instanceOfClient.monedaBarata += monedaBarataDrop;
+        Ship.instanceOfClient.monedaCara += monedaCaraDrop;
     }
 
     public void Deactivate() {

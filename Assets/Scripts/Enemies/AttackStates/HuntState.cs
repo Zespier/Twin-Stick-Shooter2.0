@@ -45,7 +45,7 @@ public class HuntState : AttackBaseState {
     }
 
     public override void StateUpdate() {
-        Vector3 newForward = Ship.instance.transform.position - transform.position;
+        Vector3 newForward = Ship.instanceOfClient.transform.position - transform.position;
         newForward.y = 0;
         controller.body.forward = newForward;
 
@@ -53,7 +53,7 @@ public class HuntState : AttackBaseState {
         /*??*/
         transform.position += Time.deltaTime * controller.Speed * direction;
 
-        Vector3 clampedPosition = Ship.instance.transform.position;
+        Vector3 clampedPosition = Ship.instanceOfClient.transform.position;
         clampedPosition -= controller.body.forward * selfieStickSize;
         clampedPosition.y = 0;
 

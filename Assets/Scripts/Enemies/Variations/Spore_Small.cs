@@ -22,7 +22,7 @@ public class Spore_Small : Enemy {
     /// </summary>
     public override void ReachingPlayer() {
         if (_exploded) { return; }
-        Ship.instance.RemoveHealth(500);
+        Ship.instanceOfClient.RemoveHealth(500);
 
         hp -= 500;
         EnemySpawner.instance.EnemyTookDamage(AssetReference, (hp / stats.HP) * 100f);
@@ -51,7 +51,7 @@ public class Spore_Small : Enemy {
         boxCollider.enabled = false;
         enabled = false;
 
-        Ship.instance.TakeDamage(transform.position, 500, true, DamageType.PlayerDamaged);
+        Ship.instanceOfClient.TakeDamage(transform.position, 500, true, DamageType.PlayerDamaged);
 
 
         explosion.transform.SetParent(EnemyContainer.instance.transform);

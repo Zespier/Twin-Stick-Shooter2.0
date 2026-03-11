@@ -14,25 +14,40 @@ public class Ship : PlayerController {
     public int monedaBarata;
     public int monedaCara;
 
-    public static Ship instance;
-    private void Awake() {
-        if (!instance) {
-            instance = this;
-        }
-    }
+    public static Ship instanceOfClient;
+    public static List<Ship> allinstances = new();
 
     public override void OnNetworkSpawn() {
         base.OnNetworkSpawn();
+
+        if (IsOwner && !instanceOfClient) {
+            instanceOfClient = this;
+        }
+
+        if (!allinstances.Contains(this)) {
+            allinstances.Add(this);
+        }
+
         if (IsOwner) {
-            CharacterSaveManager.LoadCharacter("");
+            CharacterSaveManager.LoadCharacter(""); //The order is very important
         }
     }
 
     public override void OnNetworkDespawn() {
-        base.OnNetworkDespawn();
+
         if (IsOwner) {
-            CharacterSaveManager.SaveCharacter();
+            CharacterSaveManager.SaveCharacter(); //The order is very important
         }
+
+        if (instanceOfClient == this) {
+            instanceOfClient = null;
+        }
+
+        if (allinstances.Contains(this)) {
+            allinstances.Remove(this);
+        }
+
+        base.OnNetworkDespawn();
     }
 
     public void AddMineral(int mineralTier, int amount) {

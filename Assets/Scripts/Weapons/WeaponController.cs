@@ -40,7 +40,7 @@ public class WeaponController : NetworkBehaviour {
     private void Update() {
         if (NetworkManager.Singleton == null) { return; }
         if (!IsOwner) { return; }
-        if (Ship.instance._dead) {
+        if (Ship.instanceOfClient._dead) {
             return;
         }
 
@@ -48,7 +48,7 @@ public class WeaponController : NetworkBehaviour {
 
         //TODO: I need to change this, the server should be the one to calculate all these things form all the players right? I should only read the inputs on the clients, not decide wheter they can shoot or not, that is hackeable
         //TODO: Also change this to 120 fps for inputs
-        if (_shooting && Time.time > _timer + 1 / Ship.instance.Stats.FireRate) {
+        if (_shooting && Time.time > _timer + 1 / Ship.instanceOfClient.Stats.FireRate) {
             Shoot();
         }
 
@@ -56,9 +56,9 @@ public class WeaponController : NetworkBehaviour {
     }
 
     public void Shoot() {
-        if (Ship.instance._dead) { return; }
+        if (Ship.instanceOfClient._dead) { return; }
 
-        Ship ship = (Ship.instance) as Ship;
+        Ship ship = (Ship.instanceOfClient) as Ship;
         if (ship != null) {
 
             if (ship.RemoveLaserAmmo()) {
@@ -75,7 +75,7 @@ public class WeaponController : NetworkBehaviour {
     }
 
     private void SetTimer() {
-        _timer = !_lastFrameWasShooting ? Time.time : _timer + 1 / Ship.instance.Stats.FireRate;
+        _timer = !_lastFrameWasShooting ? Time.time : _timer + 1 / Ship.instanceOfClient.Stats.FireRate;
     }
 
     private void PrepareProjectile() {
@@ -85,9 +85,9 @@ public class WeaponController : NetworkBehaviour {
         for (int i = 0; i < shootPoints.Count; i++) {
 
             float speed = Random.Range(28 - 0.5f, 28 + 0.5f);
-            Vector3 direction = BulletFireDesviation.RandomBulletFireDesviation(shootPoints[i], Ship.instance.Stats.DesviationAngle);
+            Vector3 direction = BulletFireDesviation.RandomBulletFireDesviation(shootPoints[i], Ship.instanceOfClient.Stats.DesviationAngle);
 
-            BulletContainer.instance.CreateBullet(shootPoints[i].position, direction, speed, false, (byte)Ship.instance.laserTierBeingUsed);
+            BulletContainer.instance.CreateBullet(shootPoints[i].position, direction, speed, false, (byte)Ship.instanceOfClient.laserTierBeingUsed);
 
             //if (_generatedBullets != null && _generatedBullets.Count > 0) {
             //    _auxBullet = _generatedBullets.Dequeue();
@@ -123,7 +123,7 @@ public class WeaponController : NetworkBehaviour {
 
     private void AttackAgainIfPossible() {
         //It is possible to shoot so fast you need 2 bullets in one frame
-        if (Time.time > _timer + 1 / Ship.instance.Stats.FireRate) {
+        if (Time.time > _timer + 1 / Ship.instanceOfClient.Stats.FireRate) {
             Shoot();
         }
     }

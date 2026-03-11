@@ -16,9 +16,9 @@ public class MineralInventoryUI : MonoBehaviour {
 
         // We go from highest tier DOWN
         for (int i = 0; i < fills.Count; i++) {
-            cumulative += Ship.instance.minerals[i];
+            cumulative += Ship.instanceOfClient.minerals[i];
 
-            float fill = cumulative / Ship.instance.maxMineralCapacity;
+            float fill = cumulative / Ship.instanceOfClient.maxMineralCapacity;
 
             fills[i].fillAmount = fill;
         }

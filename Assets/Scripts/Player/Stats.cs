@@ -214,7 +214,7 @@ public class Stats : MonoBehaviour {
                 if (this.TryGetComponent(out Enemy enemy)) {
                     enemy.hp = enemy.stats.HP;
                 } else {
-                    Ship.instance.hp = Ship.instance.Stats.HP;
+                    Ship.instanceOfClient.hp = Ship.instanceOfClient.Stats.HP;
                     //PlayerController.instance.playerHealth.ReduceHealthBar(1, 1);
                 }
                 break;
@@ -224,7 +224,7 @@ public class Stats : MonoBehaviour {
                 if (this.TryGetComponent(out enemy)) {
                     enemy.hp = enemy.stats.HP;
                 } else {
-                    Ship.instance.hp = Ship.instance.Stats.HP;
+                    Ship.instanceOfClient.hp = Ship.instanceOfClient.Stats.HP;
                     //PlayerController.instance.playerHealth.ReduceHealthBar(1, 1);
                 }
                 break;
@@ -234,7 +234,7 @@ public class Stats : MonoBehaviour {
                 if (this.TryGetComponent(out enemy)) {
                     enemy.hp = enemy.stats.HP;
                 } else {
-                    Ship.instance.hp = Ship.instance.Stats.HP;
+                    Ship.instanceOfClient.hp = Ship.instanceOfClient.Stats.HP;
                     //PlayerController.instance.playerHealth.ReduceHealthBar(1, 1);
                 }
                 break;
